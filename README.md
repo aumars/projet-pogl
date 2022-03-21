@@ -6,15 +6,23 @@ title Classes - Class Diagram
 class Modele {
   +Int largeur
   +Int longueur
+  +initialise()
+  +tourSuivant()
+  +verifieGagnant()
 }
 
-class Grille {}
+class Grille {
+  +metAJour()
+  +inondeAleatoirement()
+}
 
 class Personnage {
   +Boolean estVivant
   +Int * Int position
   +Boolean aTresor
   +Boolean aGagner
+  +seDeplace()
+  +meurt()
 }
 
 class Case{
@@ -22,6 +30,7 @@ class Case{
   +Boolean helicopter
   +Boolean tresor
   +Boolean etat
+  +inonde()
 }
 
 class Controller{
@@ -31,7 +40,13 @@ class Controller{
 }
 
 class Vue{}
-class VueGrille{}
+class VueGrille{
+  +afficheGrille()
+  
+}
+class VueCase{
+  +afficheCase()
+}
 class VueCommande{}
 
 Modele -> Grille
@@ -40,6 +55,7 @@ Grille -> Case
 Grille -> Personnage
 
 Vue -> VueGrille
+VueGrille -> VueCase
 Vue -> VueCommande
 
 
