@@ -23,4 +23,8 @@ public class Case {
     public boolean estTraversable() {
         return this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE;
     }
+
+    void ajoutObjet(Objet o) {
+        this.objet = o;
+    }
 }
