@@ -6,7 +6,7 @@ public class Case {
     private int positionX;
     private int positionY;
     private Inondation etat = Inondation.SECHE;
-    private Terrain terrain;
+    private final Terrain terrain;
 
     public Case(int i, int j, boolean m) {
         this.positionX = i;
