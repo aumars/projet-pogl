@@ -1,62 +1,86 @@
 @startuml
+title L'Île Interdite - Diagramme de classe
 
-title Classes - Class Diagram
+interface Observable
+interface Observer
+abstract class Objet
 
+class Personnage {
+  -estVivant: boolean
+  -positionX: int
+  -positionY: int
+  +meurt(): void
+}
+
+class Joueur {
+  -aTresor: boolean
+  -aGagne: boolean
+  -seDeplace()
+}
 
 class Modele {
-  +Int largeur
-  +Int longueur
-  +initialise()
-  +tourSuivant()
-  +verifieGagnant()
+  -largeur: int
+  -longueur: int
+  +initialise(): void
+  +tourSuivant(): void
+  +verifieGagnant(): boolean
 }
 
 class Grille {
-  +metAJour()
-  +inondeAleatoirement()
+  +metAJour(): void
+  +inondeAleatoirement(): void
 }
 
-class Personnage {
-  +Boolean estVivant
-  +Int * Int position
-  +Boolean aTresor
-  +Boolean aGagner
-  +seDeplace()
-  +meurt()
+enum Inondation {
+    SECHE
+    INONDEE
+    SUBMERGEE
 }
 
-class Case{
-  +Personnage personnage
-  +Boolean helicopter
-  +Boolean tresor
-  +Boolean etat
-  +inonde()
+class Case {
+  -x: int
+  -y: int
+  +inonde(): void
 }
 
-class Controller{
-  +demarrer()
-  +tourSuivant()
-  +seDeplacer()
+class Artefact
+
+class Clef
+
+class Controleur {
+  +demarrer(): void
+  +tourSuivant(): void
+  +seDeplacer(): void
 }
 
-class Vue{}
+class Vue
 class VueGrille{
-  +afficheGrille()
+  +afficheGrille(): void
 
 }
 class VueCase{
-  +afficheCase()
+  +afficheCase(): void
 }
-class VueCommande{}
+class VueCommande
+class VueBouton
 
-Modele -> Grille
-Modele -> Personnage
-Grille -> Case
-Grille -> Personnage
-
-Vue -> VueGrille
-VueGrille -> VueCase
-Vue -> VueCommande
-
-
+Observable <-[dashed]- Modele
+Modele "1" *-- "1" Grille
+Modele "1" *-- "1" Joueur
+Modele "1" -- "1" Vue
+Modele "1" -- "1" Controleur
+Objet <-- Personnage
+Personnage <-- Joueur
+Observer <-[dashed]- Vue
+Observable <-[dashed]- Controleur
+Grille "1" *-- "n*n" Case
+Case "1" -- "1" Joueur
+Case "0..1" -- "0..1" Artefact
+Objet <-- Artefact
+Objet <-- Clef
+Vue <-- VueGrille
+Vue <-- VueCase
+Vue <-- VueCommande
+Vue <-- VueBouton
+Vue "1" -- "1" Controleur
 @enduml
