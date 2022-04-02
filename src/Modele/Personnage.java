@@ -13,5 +13,14 @@ class Personnage {
     public void meurt() {
         this.estVivant = false;
     }
-
+    public int posX() { return this.positionX; }
+    public int posY() { return this.positionY; }
+    void deplace(Direction dir) {
+        switch (dir) {
+            case HAUT: this.positionX--;
+            case BAS: this.positionX++;
+            case GAUCHE: this.positionY--;
+            case DROITE: this.positionY++;
+        }
+    }
 }
