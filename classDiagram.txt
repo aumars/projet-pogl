@@ -20,7 +20,7 @@ class Joueur {
 
 class Modele {
   -largeur: int
-  -longueur: int
+  -hauteur: int
   +initialise(): void
   +tourSuivant(): void
   +verifieGagnant(): boolean
