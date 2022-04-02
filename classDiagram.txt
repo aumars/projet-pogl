@@ -78,9 +78,9 @@ Case "1" -- "1" Joueur
 Case "0..1" -- "0..1" Artefact
 Objet <-- Artefact
 Objet <-- Clef
-Vue <-- VueGrille
-Vue <-- VueCase
-Vue <-- VueCommande
-Vue <-- VueBouton
+Vue "1" *-- "1" VueGrille
+VueGrille "1" *-- "n*n" VueCase
+Vue "1" *- "1" VueCommande
+Vue "1" *-- "0..n" VueBouton
 Vue "1" -- "1" Controleur
 @enduml
