@@ -10,7 +10,7 @@ public class Grille {
         cases = new Case[this.hauteur][this.largeur];
         for (int i = 0; i < this.hauteur; i++) {
             for (int j = 0; j < this.largeur; j++) {
-                cases[i][j] = new Case(i, j);
+                cases[i][j] = new Case(i, j, i >= 2 && i <= hauteur - 2 && j >= 2 && j <= largeur - 2);
             }
         }
     }
