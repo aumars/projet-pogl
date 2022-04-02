@@ -1,14 +1,14 @@
 package Modele;
 
 public class Case {
-    private boolean helicopter;
+    private final boolean helipad;
     private Objet objet;
     private int positionX;
     private int positionY;
     private Inondation etat = Inondation.SECHE;
     private final Terrain terrain;
 
-    public Case(int i, int j, boolean m) {
+    public Case(int i, int j, boolean m, boolean h) {
         this.positionX = i;
         this.positionY = j;
         if (m) {
@@ -17,6 +17,7 @@ public class Case {
         else {
             this.terrain = Terrain.MER;
         }
+        this.helipad = h;
     }
 
     public boolean estTraversable() {
