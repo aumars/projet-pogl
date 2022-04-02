@@ -1,6 +1,6 @@
 package Modele;
 
-class Personnage extends Objet {
+class Personnage {
     private boolean estVivant = true;
     private int positionX;
     private int positionY;
