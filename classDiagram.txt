@@ -7,6 +7,26 @@ interface Observer
 package Modele {
     abstract class Objet
 
+    enum Inondation {
+        SECHE
+        INONDEE
+        SUBMERGEE
+    }
+
+    enum Direction {
+        HAUT
+        BAS
+        GAUCHE
+        DROITE
+    }
+
+    enum Element {
+        AIRE
+        EAU
+        TERRE
+        FEU
+    }
+
     class Personnage {
       -estVivant: boolean
       -positionX: int
@@ -31,12 +51,6 @@ package Modele {
     class Grille {
       +metAJour(): void
       +inondeAleatoirement(): void
-    }
-
-    enum Inondation {
-        SECHE
-        INONDEE
-        SUBMERGEE
     }
 
     class Case {
