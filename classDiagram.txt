@@ -2,7 +2,9 @@
 title L'Île Interdite - Diagramme de classe
 
 interface Observable
+Observable <-[dashed]- Controleur
 interface Observer
+Observer <-[dashed]- Vue
 
 package Modele {
     abstract class Objet
@@ -37,13 +39,15 @@ package Modele {
       -positionX: int
       -positionY: int
       +meurt(): void
+      +posX(): int
+      +posY(): int
+      ~deplace(Direction): void
     }
 
     class Joueur {
-      -aTresor: boolean
-      -aGagne: boolean
-      -seDeplace()
     }
+    Objet "0..n" *-- "1" Joueur
+    Personnage <-- Joueur
 
     class Modele {
       -largeur: int
@@ -51,22 +55,39 @@ package Modele {
       +initialise(): void
       +tourSuivant(): void
       +verifieGagnant(): boolean
+      +deplaceJoueur(): boolean
     }
+    Observable <-[dashed]- Modele
+    Modele "1" *-- "1" Grille
+    Modele "1" *-- "1..n" Personnage
+    Modele "1" *-- "1" Joueur
+    Modele "1" -- "1" Vue
+    Modele "1" -- "1" Controleur
 
     class Grille {
       +metAJour(): void
       +inondeAleatoirement(): void
     }
+    Grille "1" *-- "n*n" Case
 
     class Case {
       -x: int
       -y: int
+      -etat: Inondation
+      -terrain: Terrain
       +inonde(): void
+      +estTraversable(): boolean
     }
+    Case "1" -- "1" Joueur
+    Case "0..1" -- "0..1" Artefact
 
-    class Artefact
+    class Artefact {
+      -element: Element
+    }
+    Objet <-- Artefact
 
     class Clef
+    Objet <-- Clef
 }
 
 package Controleur {
@@ -79,34 +100,22 @@ package Controleur {
 
 package Vue {
     class Vue
+    Vue "1" -- "1" Controleur
+
     class VueGrille{
       +afficheGrille(): void
-
     }
+    Vue "1" *-- "1" VueGrille
+
     class VueCase{
       +afficheCase(): void
     }
-    class VueCommande
-    class VueBouton
-}
+    VueGrille "1" *-- "n*n" VueCase
 
-Observable <-[dashed]- Modele
-Modele "1" *-- "1" Grille
-Modele "1" *-- "1" Joueur
-Modele "1" -- "1" Vue
-Modele "1" -- "1" Controleur
-Objet <-- Personnage
-Personnage <-- Joueur
-Observer <-[dashed]- Vue
-Observable <-[dashed]- Controleur
-Grille "1" *-- "n*n" Case
-Case "1" -- "1" Joueur
-Case "0..1" -- "0..1" Artefact
-Objet <-- Artefact
-Objet <-- Clef
-Vue "1" *-- "1" VueGrille
-VueGrille "1" *-- "n*n" VueCase
-Vue "1" *- "1" VueCommande
-Vue "1" *-- "0..n" VueBouton
-Vue "1" -- "1" Controleur
+    class VueCommande
+    Vue "1" *- "1" VueCommande
+
+    class VueBouton
+    Vue "1" *-- "0..n" VueBouton
+}
 @enduml
