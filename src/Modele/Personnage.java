@@ -1,20 +1,17 @@
 package Modele;
 
-import javafx.util.Pair;
-
-public class Personnage {
+class Personnage extends Objet {
     private boolean estVivant = true;
-    private Pair<Integer, Integer> position;
-    private boolean aTresor = false;
-    private boolean aGagne = false;
+    private int positionX;
+    private int positionY;
 
     public Personnage(int x, int y) {
-        this.position = new Pair<>(x, y);
+        this.positionX = x;
+        this.positionY = y;
     }
 
     public void meurt() {
         this.estVivant = false;
     }
-
 
 }

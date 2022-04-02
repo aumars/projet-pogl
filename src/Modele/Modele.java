@@ -1,11 +1,12 @@
 package Modele;
-import java.util.*;
+
+import java.util.Observable;
 
 public class Modele extends Observable {
-    public static final int HAUTEUR=8, LARGEUR=8;
+    private static final int largeur = 8, hauteur = 8;
     private Grille grille;
-
+    private Joueur joueur;
     public Modele() {
-        this.grille = new Grille(this.HAUTEUR, this.LARGEUR);
+        this.grille = new Grille(hauteur, largeur);
     }
 }

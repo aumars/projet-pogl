@@ -1,7 +1,5 @@
 package Modele;
 
-import Modele.Case;
-
 public class Grille {
     private int hauteur, largeur;
     private Case[][] cases;
