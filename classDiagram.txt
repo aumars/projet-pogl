@@ -27,6 +27,11 @@ package Modele {
         FEU
     }
 
+    enum Terrain {
+        TERRE
+        MER
+    }
+
     class Personnage {
       -estVivant: boolean
       -positionX: int
