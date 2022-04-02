@@ -2,7 +2,7 @@ package Modele;
 
 public class Case {
     private boolean helicopter;
-    private boolean tresor;
+    private Objet objet;
     private int positionX;
     private int positionY;
     private Inondation etat = Inondation.SECHE;
