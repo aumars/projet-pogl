@@ -3,66 +3,73 @@ title L'Île Interdite - Diagramme de classe
 
 interface Observable
 interface Observer
-abstract class Objet
 
-class Personnage {
-  -estVivant: boolean
-  -positionX: int
-  -positionY: int
-  +meurt(): void
+package Modele {
+    abstract class Objet
+
+    class Personnage {
+      -estVivant: boolean
+      -positionX: int
+      -positionY: int
+      +meurt(): void
+    }
+
+    class Joueur {
+      -aTresor: boolean
+      -aGagne: boolean
+      -seDeplace()
+    }
+
+    class Modele {
+      -largeur: int
+      -hauteur: int
+      +initialise(): void
+      +tourSuivant(): void
+      +verifieGagnant(): boolean
+    }
+
+    class Grille {
+      +metAJour(): void
+      +inondeAleatoirement(): void
+    }
+
+    enum Inondation {
+        SECHE
+        INONDEE
+        SUBMERGEE
+    }
+
+    class Case {
+      -x: int
+      -y: int
+      +inonde(): void
+    }
+
+    class Artefact
+
+    class Clef
 }
 
-class Joueur {
-  -aTresor: boolean
-  -aGagne: boolean
-  -seDeplace()
+package Controleur {
+    class Controleur {
+      +demarrer(): void
+      +tourSuivant(): void
+      +seDeplacer(): void
+    }
 }
 
-class Modele {
-  -largeur: int
-  -hauteur: int
-  +initialise(): void
-  +tourSuivant(): void
-  +verifieGagnant(): boolean
+package Vue {
+    class Vue
+    class VueGrille{
+      +afficheGrille(): void
+
+    }
+    class VueCase{
+      +afficheCase(): void
+    }
+    class VueCommande
+    class VueBouton
 }
-
-class Grille {
-  +metAJour(): void
-  +inondeAleatoirement(): void
-}
-
-enum Inondation {
-    SECHE
-    INONDEE
-    SUBMERGEE
-}
-
-class Case {
-  -x: int
-  -y: int
-  +inonde(): void
-}
-
-class Artefact
-
-class Clef
-
-class Controleur {
-  +demarrer(): void
-  +tourSuivant(): void
-  +seDeplacer(): void
-}
-
-class Vue
-class VueGrille{
-  +afficheGrille(): void
-
-}
-class VueCase{
-  +afficheCase(): void
-}
-class VueCommande
-class VueBouton
 
 Observable <-[dashed]- Modele
 Modele "1" *-- "1" Grille
