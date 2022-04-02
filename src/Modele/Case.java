@@ -18,4 +18,8 @@ public class Case {
             this.terrain = Terrain.MER;
         }
     }
+
+    public boolean estTraversable() {
+        return this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE;
+    }
 }
