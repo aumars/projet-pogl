@@ -1,12 +1,12 @@
 package Modele;
 
 public class Case {
-    private final boolean helipad;
-    private Objet objet;
-    private int positionX;
-    private int positionY;
-    private Inondation etat = Inondation.SECHE;
+    private final int positionX;
+    private final int positionY;
     private final Terrain terrain;
+    private final boolean helipad;
+    private Inondation etat = Inondation.SECHE;
+    private Objet objet;
 
     public Case(int i, int j, boolean m, boolean h) {
         this.positionX = i;
