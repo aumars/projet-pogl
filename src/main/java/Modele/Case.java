@@ -9,6 +9,9 @@ public class Case {
     private Objet objet;
 
     public Case(int i, int j, boolean m, boolean h) {
+        if (i < 0 || j < 0) {
+            throw new IllegalArgumentException(String.format("(i, j) = (%d, %d) doit avoir des composantes positives.", i, j));
+        }
         this.positionX = i;
         this.positionY = j;
         if (m) {
