@@ -14,8 +14,8 @@ public class Modele extends Observable {
     private final int largeur, hauteur;
     private final Grille grille;
     private final List<Joueur> ensemble;
+    private Iterator<Joueur> iter;
     private int tour;
-    private int idJoueurActuel;
     private Joueur joueurActuel;
 
     public Modele (String map_path, String game_path) throws ParserConfigurationException, IOException, SAXException {
@@ -28,8 +28,8 @@ public class Modele extends Observable {
         this.grille = new Grille(this.hauteur, this.largeur, map, this.parseGameObjet(game));
         this.ensemble = this.parseGameJoueur(game);
         this.tour = 1;
-        this.idJoueurActuel = 0;
-        this.joueurActuel = this.ensemble.get(this.idJoueurActuel);
+        this.joueurActuel = this.ensemble.get(0);
+        this.iter = this.ensemble.iterator();
     }
 
     private static char[][] parseMap(String map_path) {
@@ -105,13 +105,13 @@ public class Modele extends Observable {
     public Joueur getJoueurActuel() { return this.joueurActuel; }
 
     public void tourSuivant() {
-        this.tour++;
         this.grille.inonde();
-        this.idJoueurActuel++;
-        if (this.idJoueurActuel == this.ensemble.size()) {
-            this.idJoueurActuel = 0;
+        this.ensemble.removeIf(joueur -> joueur.noie());
+        this.tour++;
+        if (!this.iter.hasNext()) {
+            this.iter = this.ensemble.iterator();
         }
-        this.joueurActuel = this.ensemble.get(this.idJoueurActuel);
+        this.joueurActuel = this.iter.next();
         this.joueurActuel.newTurn();
     }
 
