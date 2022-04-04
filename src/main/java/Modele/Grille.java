@@ -27,7 +27,7 @@ public class Grille {
 
     public boolean estTraversable(int x, int y) {
         return x >= 0 && y >= 0
-                && x < this.hauteur && y < this.largeur
-                && this.cases[x][y].estTraversable();
+                && y < this.hauteur && x < this.largeur
+                && this.cases[y][x].estTraversable();
     }
 }
