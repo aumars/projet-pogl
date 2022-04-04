@@ -30,4 +30,16 @@ public class ModeleTest {
         Assertions.assertTrue(this.modeleM1G1.getJoueurActuel().deplace(Direction.BAS));
         Assertions.assertEquals(new Coord(1, 2), this.modeleM1G1.getJoueurActuel().getCoord());
     }
+
+    @Test
+    void modeleTestGame1() {
+        this.modeleM1G1.getJoueurActuel().deplace(Direction.DROITE);
+        this.modeleM1G1.tourSuivant();
+        this.modeleM1G1.getJoueurActuel().deplace(Direction.DROITE);
+        this.modeleM1G1.tourSuivant();
+        this.modeleM1G1.getJoueurActuel().deplace(Direction.DROITE);
+        this.modeleM1G1.tourSuivant();
+        this.modeleM1G1.getJoueurActuel().deplace(Direction.BAS);
+        Assertions.assertTrue(this.modeleM1G1.getJoueurActuel().chercheCle());
+    }
 }
