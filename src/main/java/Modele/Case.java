@@ -3,7 +3,7 @@ package Modele;
 public class Case {
     private final Coord coord;
     private final Terrain terrain;
-    private final boolean helipad;
+    public final boolean helipad;
     private Inondation etat = Inondation.SECHE;
     private Objet objet;
 
@@ -26,5 +26,29 @@ public class Case {
 
     void ajoutObjet(Objet o) {
         this.objet = o;
+    }
+
+    public boolean aObjet() { return this.objet != null; }
+
+    public boolean aObjet(Class c) { return this.objet.getClass() == c; }
+
+    public Objet getObjet() { return this.objet; }
+
+    public Inondation getEtat() { return this.etat; }
+
+    public boolean asseche() {
+        switch (this.getEtat()) {
+            case SECHE: return true;
+            case INONDEE: this.etat = Inondation.SECHE; return true;
+            case SUBMERGEE:
+            default: return false;
+        }
+    }
+
+    public void monteEaux() {
+        switch (this.getEtat()) {
+            case SECHE: this.etat = Inondation.INONDEE; break;
+            case INONDEE: this.etat = Inondation.SUBMERGEE; break;
+        }
     }
 }
