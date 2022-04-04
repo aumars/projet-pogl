@@ -2,7 +2,7 @@ package Modele;
 
 public class Case {
     private final Coord coord;
-    private final Terrain terrain;
+    public final Terrain terrain;
     public final boolean helipad;
     private Inondation etat = Inondation.SECHE;
     private Objet objet;
