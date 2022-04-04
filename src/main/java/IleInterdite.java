@@ -1,14 +1,21 @@
 import Modele.Modele;
 import Vue.Vue;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.EventQueue;
+import java.io.IOException;
 
 public class IleInterdite {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            /** Voici le contenu qui nous intéresse. */
-            Modele modele = new Modele();
+            Modele modele;
+            try {
+                modele = new Modele("map1.txt", "game1.xml");
+            } catch (ParserConfigurationException | IOException | SAXException e) {
+                throw new RuntimeException();
+            }
             Vue vue = new Vue(modele);
         });
     }

@@ -1,26 +1,23 @@
 package Modele;
 
 public class Case {
-    private final int positionX;
-    private final int positionY;
+    private final Coord coord;
     private final Terrain terrain;
     private final boolean helipad;
     private Inondation etat = Inondation.SECHE;
     private Objet objet;
 
-    public Case(int i, int j, boolean m, boolean h) {
+    public Case(int i, int j, char c) {
         if (i < 0 || j < 0) {
             throw new IllegalArgumentException(String.format("(i, j) = (%d, %d) doit avoir des composantes positives.", i, j));
         }
-        this.positionX = i;
-        this.positionY = j;
-        if (m) {
-            this.terrain = Terrain.TERRE;
+        this.coord = new Coord(i, j);
+        switch (c) {
+            case '-': this.terrain = Terrain.MER; this.helipad = false; break;
+            case '*': this.terrain = Terrain.TERRE; this.helipad = false; break;
+            case 'h': this.terrain = Terrain.TERRE; this.helipad = true; break;
+            default: throw new IllegalArgumentException(String.format("Le caractère %s n'est pas reconnu.", c));
         }
-        else {
-            this.terrain = Terrain.MER;
-        }
-        this.helipad = h;
     }
 
     public boolean estTraversable() {
