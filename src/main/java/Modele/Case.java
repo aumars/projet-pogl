@@ -1,17 +1,19 @@
 package Modele;
 
 public class Case {
-    private final Coord coord;
+    public final Coord coord;
     public final Terrain terrain;
     public final boolean helipad;
     private Inondation etat = Inondation.SECHE;
     private Objet objet;
+    private static Grille grille;
 
-    public Case(int i, int j, char c) {
+    public Case(int i, int j, char c, Grille g) {
         if (i < 0 || j < 0) {
             throw new IllegalArgumentException(String.format("(i, j) = (%d, %d) doit avoir des composantes positives.", i, j));
         }
-        this.coord = new Coord(i, j);
+        this.coord = new Coord(j, i);
+        grille = g;
         switch (c) {
             case '-': this.terrain = Terrain.MER; this.helipad = false; break;
             case '*': this.terrain = Terrain.TERRE; this.helipad = false; break;
@@ -49,6 +51,19 @@ public class Case {
         switch (this.getEtat()) {
             case SECHE: this.etat = Inondation.INONDEE; break;
             case INONDEE: this.etat = Inondation.SUBMERGEE; break;
+        }
+    }
+
+    public Case adjacent(Direction dir) {
+        int x = this.coord.x();
+        int y = this.coord.y();
+        switch (dir) {
+            case HAUT: return grille.getCase(x, y - 1);
+            case BAS: return grille.getCase(x, y + 1);
+            case GAUCHE: return grille.getCase(x - 1, y);
+            case DROITE: return grille.getCase(x + 1, y);
+            case NEUTRE:
+            default: return this;
         }
     }
 }

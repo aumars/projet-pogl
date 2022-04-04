@@ -17,17 +17,17 @@ public class ModeleTest {
 
     @Test
     void modeleJoueurPosition() {
-        Assertions.assertEquals(new Coord(1, 1), this.modeleM1G1.getJoueurPosition());
+        Assertions.assertEquals(new Coord(1, 1), this.modeleM1G1.getJoueurActuel().getCoord());
     }
 
     @Test
     void modeleJoueurInvalidDirectionGame1() {
-        Assertions.assertFalse(this.modeleM1G1.deplaceJoueur(Direction.HAUT));
+        Assertions.assertFalse(this.modeleM1G1.getJoueurActuel().deplace(Direction.HAUT));
     }
 
     @Test
     void modeleJoueurValidDirectionGame1() {
-        Assertions.assertTrue(this.modeleM1G1.deplaceJoueur(Direction.BAS));
-        Assertions.assertEquals(new Coord(1, 2), this.modeleM1G1.getJoueurPosition());
+        Assertions.assertTrue(this.modeleM1G1.getJoueurActuel().deplace(Direction.BAS));
+        Assertions.assertEquals(new Coord(1, 2), this.modeleM1G1.getJoueurActuel().getCoord());
     }
 }

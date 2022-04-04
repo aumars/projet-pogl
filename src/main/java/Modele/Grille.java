@@ -9,18 +9,15 @@ import java.util.Random;
 import static java.lang.Math.floor;
 
 public class Grille {
-    private int hauteur, largeur;
-    private Case[][] cases;
-    private List<Case> ile;
+    private final Case[][] cases;
+    private final List<Case> ile;
 
     public Grille(int hauteur, int largeur, char[][] map, List<Pair<Objet, Coord>> objets) {
-        this.hauteur = hauteur;
-        this.largeur = largeur;
-        this.cases = new Case[this.hauteur][this.largeur];
+        this.cases = new Case[hauteur][largeur];
         this.ile = new ArrayList<>();
-        for (int i = 0; i < this.hauteur; i++) {
-            for (int j = 0; j < this.largeur; j++) {
-                Case c = new Case(i, j, map[i][j]);
+        for (int i = 0; i < this.cases.length; i++) {
+            for (int j = 0; j < this.cases[0].length; j++) {
+                Case c = new Case(i, j, map[i][j], this);
                 this.cases[i][j] = c;
                 if (c.terrain == Terrain.TERRE) {
                     this.ile.add(c);
@@ -33,12 +30,6 @@ public class Grille {
             Coord c = p.getValue();
             this.cases[c.y()][c.x()].ajoutObjet(o);
         }
-    }
-
-    public boolean estTraversable(int x, int y) {
-        return x >= 0 && y >= 0
-                && y < this.hauteur && x < this.largeur
-                && this.cases[y][x].estTraversable();
     }
 
     public Case getCase(int x, int y) {

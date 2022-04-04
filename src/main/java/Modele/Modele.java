@@ -12,9 +12,11 @@ import java.util.*;
 
 public class Modele extends Observable {
     private final int largeur, hauteur;
-    private Grille grille;
-    private Set<Personnage> ensemble;
-    private Joueur joueur;
+    private final Grille grille;
+    private final List<Joueur> ensemble;
+    private int tour;
+    private int idJoueurActuel;
+    private Joueur joueurActuel;
 
     public Modele (String map_path, String game_path) throws ParserConfigurationException, IOException, SAXException {
         this(parseMap(map_path), parseGame(game_path));
@@ -24,9 +26,10 @@ public class Modele extends Observable {
         this.hauteur = map.length;
         this.largeur = map[0].length;
         this.grille = new Grille(this.hauteur, this.largeur, map, this.parseGameObjet(game));
-        Pair<Joueur, Set<Personnage>> p = this.parseGamePersonnage(game);
-        this.ensemble = p.getValue();
-        this.joueur = p.getKey();
+        this.ensemble = this.parseGameJoueur(game);
+        this.tour = 1;
+        this.idJoueurActuel = 0;
+        this.joueurActuel = this.ensemble.get(this.idJoueurActuel);
     }
 
     private static char[][] parseMap(String map_path) {
@@ -69,10 +72,8 @@ public class Modele extends Observable {
         return a;
     }
 
-    private Pair<Joueur, Set<Personnage>> parseGamePersonnage(Document game) {
-        Pair<Joueur, Set<Personnage>> pair;
-        Joueur j = null;
-        Set<Personnage> s = new HashSet<>();
+    private List<Joueur> parseGameJoueur(Document game) {
+        List<Joueur> s = new ArrayList<>();
         NodeList list = game.getElementsByTagName("personnage");
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
@@ -80,18 +81,13 @@ public class Modele extends Observable {
                 org.w3c.dom.Element element = (org.w3c.dom.Element) node;
                 String id = element.getAttribute("id");
                 Coord pos = this.parsePosition(element.getElementsByTagName("position"));
-                Personnage p = Personnage.personnageById(id, pos);
+                Joueur p = Joueur.joueurById(id, this.grille.getCase(pos));
                 s.add(p);
-                if (p instanceof Joueur) {
-                    j = (Joueur) p;
-                }
             }
         }
-        if (j == null) {
-            throw new RuntimeException("No joueur !");
-        }
-        return new Pair<>(j, s);
+        return s;
     }
+
 
     private Coord parsePosition(NodeList pos) {
         for (int i = 0; i < pos.getLength(); i++) {
@@ -106,25 +102,22 @@ public class Modele extends Observable {
         throw new RuntimeException();
     }
 
-    public boolean deplaceJoueur(Direction dir) {
-        int x = this.joueur.coord.x();
-        int y = this.joueur.coord.y();
-        switch (dir) {
-            case HAUT: x--; break;
-            case BAS: x++; break;
-            case GAUCHE: y--; break;
-            case DROITE: y++; break;
+    public Joueur getJoueurActuel() { return this.joueurActuel; }
+
+    public void tourSuivant() {
+        this.tour++;
+        this.grille.inonde();
+        this.idJoueurActuel++;
+        if (this.idJoueurActuel == this.ensemble.size()) {
+            this.idJoueurActuel = 0;
         }
-        if (this.grille.estTraversable(x, y)) {
-            this.joueur.coord.translate(dir);
-            return true;
-        }
-        else {
-            return false;
-        }
+        this.joueurActuel = this.ensemble.get(this.idJoueurActuel);
+        this.joueurActuel.newTurn();
     }
 
-    public Coord getJoueurPosition() {
-        return this.joueur.coord;
+    public int getTour() { return this.tour; }
+
+    public boolean verifieGagnants() {
+        return this.ensemble.stream().anyMatch(j -> j.verifieGagnant());
     }
 }
