@@ -104,20 +104,35 @@ public class Modele extends Observable {
 
     public Joueur getJoueurActuel() { return this.joueurActuel; }
 
-    public void tourSuivant() {
-        this.grille.inonde();
-        this.ensemble.removeIf(joueur -> joueur.noie());
+    public boolean tourSuivant() {
         this.tour++;
-        if (!this.iter.hasNext()) {
-            this.iter = this.ensemble.iterator();
+        this.grille.inonde();
+        for (Joueur joueur: this.ensemble) { joueur.noie(); }
+        if (this.ensemble.stream().noneMatch(joueur -> joueur.estVivant())) {
+            return false;
         }
-        this.joueurActuel = this.iter.next();
+        this.joueurActuel = this.prochainJoueurVivant();
         this.joueurActuel.newTurn();
+        return true;
     }
 
     public int getTour() { return this.tour; }
 
     public boolean verifieGagnants() {
         return this.ensemble.stream().anyMatch(j -> j.verifieGagnant());
+    }
+
+    private Joueur prochainJoueurVivant() {
+        if (!this.iter.hasNext()) {
+            this.iter = this.ensemble.iterator();
+        }
+        Joueur joueur = this.iter.next();
+        while (!joueur.estVivant()) {
+            joueur = this.iter.next();
+            if (!this.iter.hasNext()) {
+                this.iter = this.ensemble.iterator();
+            }
+        }
+        return joueur;
     }
 }
