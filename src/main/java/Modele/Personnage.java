@@ -8,6 +8,18 @@ class Personnage {
         this.coord = new Coord(x, y);
     }
 
+    public Personnage(Coord c) {
+        this.coord = c;
+    }
+    public static Personnage personnageById(String name, Coord c) {
+        if (name.equals("joueur")) {
+            return new Joueur(c);
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public void meurt() {
         this.estVivant = false;
     }
