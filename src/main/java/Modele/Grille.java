@@ -4,6 +4,9 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static java.lang.Math.floor;
 
 public class Grille {
     private int hauteur, largeur;
@@ -36,5 +39,26 @@ public class Grille {
         return x >= 0 && y >= 0
                 && y < this.hauteur && x < this.largeur
                 && this.cases[y][x].estTraversable();
+    }
+
+    public Case getCase(int x, int y) {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("");
+        }
+        return this.cases[y][x];
+    }
+
+    public Case getCase(Coord c) {
+        return this.cases[c.y()][c.x()];
+    }
+
+    public void inonde() {
+        Random rng = new Random();
+        int case1 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
+        int case2 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
+        int case3 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
+        this.ile.get(case1).monteEaux();
+        this.ile.get(case2).monteEaux();
+        this.ile.get(case3).monteEaux();
     }
 }
