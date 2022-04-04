@@ -25,8 +25,14 @@ class Joueur {
         }
     }
 
-    public void meurt() {
-        this.estVivant = false;
+    public boolean noie() {
+        if (this.pos.adjacentSubmergee()) {
+            this.estVivant = false;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean getEndTurn() { return this.endTurn; }
