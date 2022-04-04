@@ -11,14 +11,6 @@ public class Coord {
     }
     public int x() { return this.x; }
     public int y() { return this.y; }
-    public void translate(Direction dir) {
-        switch (dir) {
-            case HAUT: this.y--;
-            case BAS: this.y++;
-            case GAUCHE: this.x--;
-            case DROITE: this.x++;
-        }
-    }
     public String toString() { return String.format("(%d, %d)", this.x, this.y); }
     public boolean equals(Object obj) {
         if (this == obj) { return true; }
