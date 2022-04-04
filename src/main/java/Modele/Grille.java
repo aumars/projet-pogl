@@ -2,19 +2,26 @@ package Modele;
 
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Grille {
     private int hauteur, largeur;
     private Case[][] cases;
+    private List<Case> ile;
 
     public Grille(int hauteur, int largeur, char[][] map, List<Pair<Objet, Coord>> objets) {
         this.hauteur = hauteur;
         this.largeur = largeur;
         this.cases = new Case[this.hauteur][this.largeur];
+        this.ile = new ArrayList<>();
         for (int i = 0; i < this.hauteur; i++) {
             for (int j = 0; j < this.largeur; j++) {
-                this.cases[i][j] = new Case(i, j, map[i][j]);
+                Case c = new Case(i, j, map[i][j]);
+                this.cases[i][j] = c;
+                if (c.terrain == Terrain.TERRE) {
+                    this.ile.add(c);
+                }
             }
         }
 
