@@ -10,4 +10,8 @@ class Joueur extends Personnage {
         super(x, y);
         inventaire = new HashSet<>();
     }
+
+    public Joueur(Coord c) {
+        this(c.x(), c.y());
+    }
 }
