@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Set;
 
 class Joueur {
-    private boolean estVivant = true;
+    private boolean vivant = true;
     private Case pos;
     private final Set<Objet> inventaire;
     private boolean endTurn;
@@ -25,15 +25,13 @@ class Joueur {
         }
     }
 
-    public boolean noie() {
+    public void noie() {
         if (this.pos.adjacentSubmergee()) {
-            this.estVivant = false;
-            return true;
-        }
-        else {
-            return false;
+            this.vivant = false;
         }
     }
+
+    public boolean estVivant() { return this.vivant; }
 
     public boolean getEndTurn() { return this.endTurn; }
 
