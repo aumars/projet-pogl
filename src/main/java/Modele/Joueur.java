@@ -8,7 +8,7 @@ public class Joueur {
     private boolean vivant = true;
     private Case pos;
     private final Set<Objet> inventaire;
-    private boolean endTurn;
+    private boolean sonTour;
 
     public Joueur() {
         this(null);
@@ -16,8 +16,8 @@ public class Joueur {
 
     public Joueur(Case c) {
         this.pos = c;
-        inventaire = new HashSet<>();
-        this.endTurn = false;
+        this.inventaire = new HashSet<>();
+        this.sonTour = true;
     }
 
     public static Joueur joueurById(String name, Case c) {
@@ -39,12 +39,12 @@ public class Joueur {
 
     public boolean estSonTour() { return this.sonTour; }
 
-    public void finishTurn() { this.endTurn = true; }
+    public void finishTurn() { this.sonTour = false; }
 
-    public void newTurn() { this.endTurn = false; }
+    public void newTurn() { this.sonTour = true; }
 
     public boolean deplace(Direction dir) {
-        if (!this.getEndTurn() && this.pos.adjacent(dir).estTraversable()) {
+        if (this.estSonTour() && this.pos.adjacent(dir).estTraversable()) {
             this.pos = this.pos.adjacent(dir);
             this.finishTurn();
             return true;
@@ -74,7 +74,7 @@ public class Joueur {
     public Coord getCoord() { return this.pos.coord; }
 
     public boolean asseche(Direction dir) {
-        if (!this.getEndTurn() && this.pos.adjacent(dir).asseche()) {
+        if (this.estSonTour() && this.pos.adjacent(dir).asseche()) {
             this.finishTurn();
             return true;
         }
@@ -84,7 +84,7 @@ public class Joueur {
     }
 
     public boolean recupereArtefact() {
-        if (!this.getEndTurn() && this.pos.aObjet(Artefact.class) && this.possedeClef(this.pos.getObjet().element)) {
+        if (this.estSonTour() && this.pos.aObjet(Artefact.class) && this.possedeClef(this.pos.getObjet().element)) {
             this.prendObjet(this.pos.getObjet());
             this.finishTurn();
             return true;
