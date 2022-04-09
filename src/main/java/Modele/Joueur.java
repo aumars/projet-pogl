@@ -10,6 +10,10 @@ public class Joueur {
     private final Set<Objet> inventaire;
     private boolean endTurn;
 
+    public Joueur() {
+        this(null);
+    }
+
     public Joueur(Case c) {
         this.pos = c;
         inventaire = new HashSet<>();
@@ -33,7 +37,7 @@ public class Joueur {
 
     public boolean estVivant() { return this.vivant; }
 
-    public boolean getEndTurn() { return this.endTurn; }
+    public boolean estSonTour() { return this.sonTour; }
 
     public void finishTurn() { this.endTurn = true; }
 
