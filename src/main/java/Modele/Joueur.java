@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-class Joueur {
+public class Joueur {
     private boolean vivant = true;
     private Case pos;
     private final Set<Objet> inventaire;
