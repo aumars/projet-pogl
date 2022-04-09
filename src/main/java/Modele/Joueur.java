@@ -105,4 +105,6 @@ public class Joueur {
     public boolean verifieGagnant() {
         return this.pos.helipad && this.possedeTousArtefacts();
     }
+
+    public void teleport(Case c) { this.pos = c; }
 }
