@@ -1,6 +1,5 @@
 package Modele;
 
-import javafx.util.Pair;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,7 +17,7 @@ public class Modele extends Observable {
         this.grille = new Grille(carte);
         this.grille.addObjets(jeu.objets);
         this.ensemble = new ArrayList<>();
-        for (Pair<Joueur, Coord> p: jeu.ensemble) {
+        for (AbstractMap.SimpleImmutableEntry<Joueur, Coord> p: jeu.ensemble) {
             Joueur j = p.getKey();
             Coord c = p.getValue();
             j.teleport(this.grille.getCase(c));

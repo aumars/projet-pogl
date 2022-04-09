@@ -1,6 +1,5 @@
 package Modele;
 
-import javafx.util.Pair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,13 +9,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public final class Jeu {
-    public final List<Pair<Objet, Coord>> objets;
-    public final List<Pair<Joueur, Coord>> ensemble;
+    public final List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets;
+    public final List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> ensemble;
 
     public Jeu(String game_path) throws ParserConfigurationException, IOException, SAXException {
         this(game_path, false);
@@ -39,8 +39,8 @@ public final class Jeu {
         return db.parse(Objects.requireNonNull(Modele.class.getClassLoader().getResourceAsStream(game_path)));
     }
 
-    private static List<Pair<Objet, Coord>> parseGameObjet(Document game) {
-        List<Pair<Objet, Coord>> a = new ArrayList<>();
+    private static List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game) {
+        List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> a = new ArrayList<>();
         NodeList list = game.getElementsByTagName("objet");
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
@@ -51,7 +51,7 @@ public final class Jeu {
                 Coord pos = parsePosition(element.getElementsByTagName("position"));
                 Element e = Element.StringToElement(objet_element);
                 Objet o = objetsByID(id, e);
-                a.add(new Pair<>(o, pos));
+                a.add(new AbstractMap.SimpleImmutableEntry<>(o, pos));
             }
         }
         return a;
@@ -75,8 +75,8 @@ public final class Jeu {
         }
     }
 
-    private static List<Pair<Joueur, Coord>> parseGameJoueur(Document game) {
-        List<Pair<Joueur, Coord>> s = new ArrayList<>();
+    private static List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> parseGameJoueur(Document game) {
+        List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> s = new ArrayList<>();
         NodeList list = game.getElementsByTagName("personnage");
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
@@ -85,7 +85,7 @@ public final class Jeu {
                 String id = element.getAttribute("id");
                 Coord pos = parsePosition(element.getElementsByTagName("position"));
                 Joueur j = joueurById(id);
-                s.add(new Pair<>(j, pos));
+                s.add(new AbstractMap.SimpleImmutableEntry<>(j, pos));
             }
         }
         return s;

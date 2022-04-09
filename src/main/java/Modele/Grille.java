@@ -1,6 +1,6 @@
 package Modele;
 
-import javafx.util.Pair;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,19 +29,19 @@ public class Grille {
         }
     }
 
-    public Grille(char[][] map, List<Pair<Objet, Coord>> objets) {
+    public Grille(char[][] map, List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
         this(map);
         this.addObjets(objets);
     }
 
-    public void addObjet(Pair<Objet, Coord> p) {
+    public void addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord> p) {
         Objet o = p.getKey();
         Coord c = p.getValue();
         this.cases[c.y()][c.x()].ajoutObjet(o);
     }
 
-    public void addObjets(List<Pair<Objet, Coord>> objets) {
-        for (Pair<Objet, Coord> p: objets) {
+    public void addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
+        for (AbstractMap.SimpleImmutableEntry<Objet, Coord> p: objets) {
             this.addObjet(p);
         }
     }
