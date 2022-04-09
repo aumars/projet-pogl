@@ -20,15 +20,6 @@ public class Joueur {
         this.sonTour = true;
     }
 
-    public static Joueur joueurById(String name, Case c) {
-        if (name.equals("joueur")) {
-            return new Joueur(c);
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
-    }
-
     public void noie() {
         if (this.pos.adjacentSubmergee()) {
             this.vivant = false;
