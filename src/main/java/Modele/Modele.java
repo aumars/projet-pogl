@@ -118,8 +118,13 @@ public class Modele extends Observable {
 
     public int getTour() { return this.tour; }
 
-    public boolean verifieGagnants() {
-        return this.ensemble.stream().anyMatch(j -> j.verifieGagnant());
+    public Joueur verifieGagnants() {
+        for (Joueur j: this.ensemble) {
+            if (j.verifieGagnant()) {
+                return j;
+            }
+        }
+        return null;
     }
 
     private Joueur prochainJoueurVivant() {
