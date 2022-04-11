@@ -10,12 +10,17 @@ import static java.lang.Math.floor;
 public class Grille {
     private final Case[][] cases;
     private final List<Case> ile;
+    private final int height;
+    private final int width;
 
     public Grille(Carte carte) {
         this(carte.map);
     }
 
     public Grille(char[][] map) {
+        this.width = map[0].length;
+        this.height = map.length;
+
         this.cases = new Case[map.length][map[0].length];
         this.ile = new ArrayList<>();
         for (int i = 0; i < this.cases.length; i++) {
@@ -44,6 +49,14 @@ public class Grille {
         for (AbstractMap.SimpleImmutableEntry<Objet, Coord> p: objets) {
             this.addObjet(p);
         }
+    }
+
+    public int getWidth(){
+        return this.width;
+    }
+
+    public int getHeight(){
+        return this.height;
     }
 
     public Case getCase(int x, int y) {

@@ -48,6 +48,8 @@ public class Modele extends Observable {
 
     public int getTour() { return this.tour; }
 
+    public Grille getGrille(){ return this.grille; }
+
     public Joueur verifieGagnants() {
         for (Joueur j: this.ensemble) {
             if (j.verifieGagnant()) {

@@ -1,6 +1,6 @@
 package Modele;
 
-enum Inondation {
+public enum Inondation {
     SECHE,
     INONDEE,
     SUBMERGEE
