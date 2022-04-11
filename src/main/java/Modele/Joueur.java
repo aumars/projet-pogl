@@ -49,8 +49,19 @@ public class Joueur {
         return this.inventaire.stream().anyMatch(o -> o instanceof Clef && o.element == el);
     }
 
-    public void prendObjet(Objet o) {
-        this.inventaire.add(o);
+    /**
+     * Prend l'objet de la case du Joueur.
+     * @return Vrai si la case a un objet, Faux sinon.
+     */
+    public boolean prendObjet() {
+        if (this.pos.aObjet()) {
+            this.pos.detruitObjet();
+            this.inventaire.add(this.pos.getObjet());
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public boolean possedeTousArtefacts() {

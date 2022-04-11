@@ -36,6 +36,14 @@ public class Case {
 
     public Objet getObjet() { return this.objet; }
 
+    public boolean detruitObjet() {
+        if (this.objet != null) {
+            this.objet = null;
+            return true;
+        }
+        return false;
+    }
+
     public Inondation getEtat() { return this.etat; }
 
     public boolean asseche() {
