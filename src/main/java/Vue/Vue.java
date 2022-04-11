@@ -8,7 +8,7 @@ public class Vue {
     private JFrame frame;
     private Modele modele;
     
-    private VueState state;
+    public VueState state;
     private VueGrille grille;
     public VueCommande commande;
 
