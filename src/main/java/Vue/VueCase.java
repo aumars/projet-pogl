@@ -45,6 +45,9 @@ public class VueCase extends JPanel implements Observer {
         if (this.c.terrain == Terrain.MER)
             g.setColor(this.COLOR_MER);
 
+        else if(this.c.helipad)
+            g.setColor(Color.GRAY);
+
         else {
             switch (this.c.getEtat()) {
                 case SECHE:
