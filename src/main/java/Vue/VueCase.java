@@ -47,7 +47,10 @@ public class VueCase extends JPanel implements Observer {
 
         else if(this.c.helipad)
             g.setColor(Color.GRAY);
-
+        
+        else if(this.c.aObjet(Clef.class))
+            g.setColor(Color.YELLOW);
+        
         else {
             switch (this.c.getEtat()) {
                 case SECHE:
