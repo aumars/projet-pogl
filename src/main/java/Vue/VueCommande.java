@@ -3,92 +3,64 @@ package Vue;
 import Modele.Modele;
 
 import java.awt.*;
+
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import java.lang.String;
 
 
-
-class VueCommande extends JPanel {
+public class VueCommande extends JPanel {
     private Modele modele;
+
+    public JButton btn_move_top = new VueBouton("⮝");
+    public JButton btn_move_bottom = new VueBouton("⮟");
+    public JButton btn_move_left = new VueBouton("⮜");
+    public JButton btn_move_right = new VueBouton("⮞");
+
+    public JButton btn_assecher_top = new VueBouton("⮝");
+    public JButton btn_assecher_bottom = new VueBouton("⮟");
+    public JButton btn_assecher_left = new VueBouton("⮜");
+    public JButton btn_assecher_right = new VueBouton("⮞");
+    public JButton btn_assecher_center = new VueBouton("◉");
+
+    public JButton btn_next = new VueBouton("Tour Suivant");
+
 
     public VueCommande(Modele m){
         this.modele = m;
         
         this.setLayout(new FlowLayout());
-        this.add(controller());
-        this.add(actions());
-    }
-
-    private JPanel controller(){
-        JPanel panel = new JPanel();        
-        panel.setLayout(new GridBagLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
         
-        JButton btn_move_top = buttonMove("⮝", true);
-        JButton btn_move_bottom = buttonMove("⮟", true);
-        JButton btn_move_left = buttonMove("⮜", true);
-        JButton btn_move_right = buttonMove("⮞", true);
-        JButton btn_move_center = buttonMove("◉", false);
+        // Affiche le panel pour deplacer le joueurs.
+        JPanel panel_deplacement = new JPanel();
+        panel_deplacement.setLayout(new GridBagLayout());
+        panel_deplacement.setPreferredSize(new Dimension(3*this.modele.getGrille().getWidth()*60/8, 100));
+        panel_deplacement.add(this.btn_move_top, positionGrid(1, 0, 1, 1));
+        panel_deplacement.add(this.btn_move_bottom, positionGrid(1, 2, 1, 1));
+        panel_deplacement.add(this.btn_move_left, positionGrid(0, 1, 1, 1));
+        panel_deplacement.add(this.btn_move_right, positionGrid(2, 1, 1, 1));
+        this.add(panel_deplacement);
+
+        // Affiche le panel pour assecher une zone.
+        JPanel panel_assecher = new JPanel();
+        panel_assecher.setLayout(new GridBagLayout());
+        panel_assecher.setPreferredSize(new Dimension(3*this.modele.getGrille().getWidth()*60/8, 100));
+        panel_assecher.add(this.btn_assecher_top, positionGrid(1, 0, 1, 1));
+        panel_assecher.add(this.btn_assecher_bottom, positionGrid(1, 2, 1, 1));
+        panel_assecher.add(this.btn_assecher_center, positionGrid(1, 1, 1, 1));
+        panel_assecher.add(this.btn_assecher_left, positionGrid(0, 1, 1, 1));
+        panel_assecher.add(this.btn_assecher_right, positionGrid(2, 1, 1, 1));
+        this.add(panel_assecher);
         
-        panel.add(btn_move_top, positionGrid(1, 0, 1, 1));
-        panel.add(btn_move_bottom, positionGrid(1, 2, 1, 1));
-        panel.add(btn_move_center, positionGrid(1, 1, 1, 1));
-        panel.add(btn_move_left, positionGrid(0, 1, 1, 1));
-        panel.add(btn_move_right, positionGrid(2, 1, 1, 1));
-
-        return panel;
-    }
-
-    JButton buttonMove(String text, boolean is_active){
-        JButton button = new JButton(text);
-        
-        button.setPreferredSize(new Dimension(40, 40));
-
-        button.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        button.setFont(new Font("Times", Font.BOLD, 15));
-        button.setBackground(Color.decode("#f6f6f6"));
-        button.setFocusable(false);
-        button.setEnabled(is_active);
-        
-        return button;
-    }
-
-    JPanel actions(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
-
-        JButton btn_dry = buttonAction("Assecher");
-        JButton btn_get = buttonAction("Prendre");
-        JButton btn_fly = buttonAction("Voler");
-        JButton btn_next = buttonAction("Tour Suivant");
-        
-        panel.add(btn_dry, positionGrid(0, 0, 1, 1));
-        panel.add(btn_get, positionGrid(1, 0, 1, 1));
-        panel.add(btn_fly, positionGrid(2, 0, 1, 1));
-        panel.add(btn_next, positionGrid(0, 1, 3, 2));
-
-        return panel;
-    }
-
-    JButton buttonAction(String text){
-        JButton button = new JButton(text);
-
-        button.setPreferredSize(new Dimension(100, 50));
-        button.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        button.setBackground(Color.decode("#f6f6f6"));
-        button.setForeground(Color.BLACK);
-        button.setFont(new Font("Times", Font.PLAIN, 15));
-        button.setFocusable(false);
-        
-        return button;
+        // Affiche le panel des actions.
+        JPanel panel_actions = new JPanel();
+        panel_actions.setLayout(new GridBagLayout());
+        panel_actions.add(this.btn_next, positionGrid(0, 0, 1, 1));
+        this.add(panel_actions);
     }
 
     GridBagConstraints positionGrid(int pos_x, int pos_y, int grid_width, int grid_height){
         GridBagConstraints gc = new GridBagConstraints();
         
-        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.fill = GridBagConstraints.BOTH;
         gc.gridx = pos_x;
         gc.gridy = pos_y;
         gc.gridwidth = grid_width;

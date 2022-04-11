@@ -10,7 +10,7 @@ public class Vue {
     
     private VueState state;
     private VueGrille grille;
-    private VueCommande commande;
+    public VueCommande commande;
 
     public Vue(Modele m) {
         this.modele = m;

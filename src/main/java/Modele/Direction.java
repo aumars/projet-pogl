@@ -1,6 +1,6 @@
 package Modele;
 
-enum Direction {
+public enum Direction {
     HAUT,
     BAS,
     GAUCHE,

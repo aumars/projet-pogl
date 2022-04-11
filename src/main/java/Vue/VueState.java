@@ -11,7 +11,7 @@ public class VueState extends JPanel {
     public VueState(Modele m) {
         this.modele = m;
         
-        String title = "Tour n°" + this.modele.getTour() + " - Action Restantes : 3";
+        String title = "Tour n°" + this.modele.getTour();
         JLabel label = new JLabel(title);
         label.setFont(new Font("Calibri", Font.BOLD, 25));
         

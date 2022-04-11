@@ -3,10 +3,8 @@ package Vue;
 import Modele.*;
 
 import java.awt.*;
-import java.util.*;
 import javax.swing.*;
 
-@SuppressWarnings("deprecation")
 public class VueCase extends JPanel implements Observer {
     private final int BOX_SIZE = 60;
     
@@ -26,16 +24,24 @@ public class VueCase extends JPanel implements Observer {
         this.setPreferredSize(new Dimension(this.BOX_SIZE, this.BOX_SIZE));
     }
 
-    public void update(Observable obs, Object obj) {
+    public void update() {
         this.repaint();
     }
 
     public void paintComponent(Graphics g) {
         super.repaint();
-        paint(g);
+        paintSol(g);
+        paintJoueurs(g);
     }
 
-    public void paint(Graphics g) {
+    private void paintJoueurs(Graphics g){
+        if (this.modele.getJoueurActuel().getCoord() == this.c.coord) {
+            g.setColor(Color.ORANGE);
+            fillCircle(g, this.BOX_SIZE/2, this.BOX_SIZE/2, this.BOX_SIZE/3);
+        }
+    }
+
+    private void paintSol(Graphics g) {
         if (this.c.terrain == Terrain.MER)
             g.setColor(this.COLOR_MER);
 
@@ -60,5 +66,9 @@ public class VueCase extends JPanel implements Observer {
         }
 
         g.fillRect(0, 0, this.BOX_SIZE, this.BOX_SIZE);
+    }
+
+    private void fillCircle(Graphics g, int center_x, int center_y, int radius){
+        g.fillOval(center_x-radius, center_y-radius, 2*radius, 2*radius);
     }
 }
