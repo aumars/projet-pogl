@@ -32,7 +32,7 @@ public class Case {
 
     public boolean aObjet() { return this.objet != null; }
 
-    public boolean aObjet(Class c) { return this.objet.getClass() == c; }
+    public boolean aObjet(Class c) { return this.objet != null && this.objet.getClass().equals(c); }
 
     public Objet getObjet() { return this.objet; }
 
