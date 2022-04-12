@@ -47,6 +47,7 @@ public class Grille {
 
     public void addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
         for (AbstractMap.SimpleImmutableEntry<Objet, Coord> p: objets) {
+            this.ile.removeIf(c -> c.coord.equals(p.getValue()));
             this.addObjet(p);
         }
     }
