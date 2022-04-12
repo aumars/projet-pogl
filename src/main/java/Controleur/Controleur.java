@@ -66,6 +66,10 @@ public class Controleur implements ActionListener{
             this.joueur.asseche(Direction.DROITE);
         }
 
+        if(this.commande.btn_assecher_center.getModel().isArmed()){
+            this.joueur.asseche(Direction.NEUTRE);
+        }
+
         // Gere les actions de la partie.
         if(this.commande.btn_next.getModel().isArmed()){
             this.modele.tourSuivant();
@@ -73,7 +77,8 @@ public class Controleur implements ActionListener{
         }
 
         if(this.commande.btn_clef.getModel().isArmed()){
-            this.joueur.chercheCle();
+            if (this.joueur.chercheCle())
+                this.vue.inventory.updateAffichageObj();
         }
 
         this.joueur = this.modele.getJoueurActuel();
