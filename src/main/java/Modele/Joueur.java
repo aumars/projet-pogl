@@ -53,6 +53,10 @@ public class Joueur {
         this.inventaire.add(o);
     }
 
+    public Set<Objet> getInventaire(){
+        return this.inventaire;
+    }
+
     public boolean possedeTousArtefacts() {
         for (Element el: Element.values()) {
             if (this.inventaire.stream().noneMatch(o -> o instanceof Artefact && o.element == el)) {

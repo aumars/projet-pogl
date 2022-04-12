@@ -34,6 +34,10 @@ public class Modele extends Observable {
 
     public Joueur getJoueurActuel() { return this.joueurActuel; }
 
+    public int getNbJoueurs(){
+        return this.ensemble.size();
+    }
+
     public boolean tourSuivant() {
         this.tour++;
         this.grille.inonde();

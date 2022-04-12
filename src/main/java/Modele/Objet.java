@@ -3,7 +3,7 @@ package Modele;
 /**
  * Objet associé à un élément, récupérable par un joueur et visible dans la grille.
  */
-abstract class Objet {
+public abstract class Objet {
     /**
      * Element auquel l'objet est associé.
      */
