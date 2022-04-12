@@ -1,5 +1,6 @@
 package Modele;
 
+import Modele.Exception.InvalidGameException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -18,11 +19,11 @@ public final class Jeu {
     public final List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets;
     public final List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> ensemble;
 
-    public Jeu(String game_path) throws ParserConfigurationException, IOException, SAXException {
+    public Jeu(String game_path) throws ParserConfigurationException, IOException, SAXException, InvalidGameException {
         this(game_path, false);
     }
 
-    public Jeu(String game_path, boolean vide) throws ParserConfigurationException, IOException, SAXException {
+    public Jeu(String game_path, boolean vide) throws ParserConfigurationException, IOException, SAXException, InvalidGameException {
         Document game = parseGame(game_path);
         this.objets = parseGameObjet(game);
         if (vide) {
@@ -39,7 +40,7 @@ public final class Jeu {
         return db.parse(Objects.requireNonNull(Modele.class.getClassLoader().getResourceAsStream(game_path)));
     }
 
-    private static List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game) {
+    private static List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game) throws InvalidGameException {
         List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> a = new ArrayList<>();
         NodeList list = game.getElementsByTagName("objet");
         for (int i = 0; i < list.getLength(); i++) {
@@ -49,6 +50,11 @@ public final class Jeu {
                 String id = element.getAttribute("id");
                 String objet_element = element.getElementsByTagName("element").item(0).getTextContent();
                 Coord pos = parsePosition(element.getElementsByTagName("position"));
+                for (AbstractMap.SimpleImmutableEntry<Objet, Coord> ex: a) {
+                    if (ex.getValue().equals(pos)) {
+                        throw new InvalidGameException();
+                    }
+                }
                 Element e = Element.StringToElement(objet_element);
                 Objet o = objetsByID(id, e);
                 a.add(new AbstractMap.SimpleImmutableEntry<>(o, pos));

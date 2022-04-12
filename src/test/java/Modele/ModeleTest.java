@@ -1,5 +1,6 @@
 package Modele;
 
+import Modele.Exception.InvalidGameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ import java.io.IOException;
 public class ModeleTest {
     Modele modeleM1G1;
     @BeforeEach
-    void modeleInit() throws ParserConfigurationException, IOException, SAXException {
+    void modeleInit() throws ParserConfigurationException, IOException, SAXException, InvalidGameException {
         this.modeleM1G1 = new Modele("map1.txt", "game1.xml");
     }
 
