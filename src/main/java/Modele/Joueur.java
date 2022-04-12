@@ -141,6 +141,7 @@ public class Joueur {
      */
     public boolean chercheCle() {
         if (this.pos.aObjet(Clef.class)) {
+            this.pos.setObjetVisibilite(true);
             this.prendObjet();
             return true;
         }
