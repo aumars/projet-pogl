@@ -1,5 +1,6 @@
 package Modele;
 
+import Modele.Exception.InvalidGameException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -28,7 +29,7 @@ public class Modele extends Observable {
         this.iter = this.ensemble.iterator();
     }
 
-    public Modele (String map_path, String game_path) throws ParserConfigurationException, IOException, SAXException {
+    public Modele (String map_path, String game_path) throws ParserConfigurationException, IOException, SAXException, InvalidGameException {
         this(new Carte(map_path), new Jeu(game_path));
     }
 

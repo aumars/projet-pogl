@@ -1,3 +1,4 @@
+import Modele.Exception.InvalidGameException;
 import Modele.Modele;
 import Vue.Vue;
 import org.xml.sax.SAXException;
@@ -15,7 +16,7 @@ public class IleInterdite {
             Modele modele;
             try {
                 modele = new Modele("map1.txt", "game1.xml");
-            } catch (ParserConfigurationException | IOException | SAXException e) {
+            } catch (ParserConfigurationException | IOException | SAXException | InvalidGameException e) {
                 throw new RuntimeException();
             }
 

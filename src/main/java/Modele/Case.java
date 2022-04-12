@@ -6,6 +6,7 @@ public class Case {
     public final boolean helipad;
     private Inondation etat = Inondation.SECHE;
     private Objet objet;
+    private boolean objetVisibilite = false;
     private static Grille grille;
 
     public Case(int i, int j, char c, Grille g) {
@@ -28,6 +29,7 @@ public class Case {
 
     void ajoutObjet(Objet o) {
         this.objet = o;
+        this.objetVisibilite =  !this.objet.getClass().equals(Clef.class);
     }
 
     public boolean aObjet() { return this.objet != null; }
@@ -35,6 +37,18 @@ public class Case {
     public boolean aObjet(Class c) { return this.objet != null && this.objet.getClass().equals(c); }
 
     public Objet getObjet() { return this.objet; }
+
+    public boolean getObjetVisibilite() { return this.objetVisibilite; }
+
+    public void setObjetVisibilite(boolean b) { this.objetVisibilite = b; }
+
+    public boolean detruitObjet() {
+        if (this.objet != null) {
+            this.objet = null;
+            return true;
+        }
+        return false;
+    }
 
     public Inondation getEtat() { return this.etat; }
 
