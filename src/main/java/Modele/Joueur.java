@@ -87,7 +87,7 @@ public class Joueur {
 
     public boolean recupereArtefact() {
         if (this.estSonTour() && this.pos.aObjet(Artefact.class) && this.possedeClef(this.pos.getObjet().element)) {
-            this.prendObjet(this.pos.getObjet());
+            this.prendObjet();
             this.finishTurn();
             return true;
         }
@@ -96,7 +96,7 @@ public class Joueur {
 
     public boolean chercheCle() {
         if (this.pos.aObjet(Clef.class)) {
-            this.prendObjet(this.pos.getObjet());
+            this.prendObjet();
             return true;
         }
         else {
