@@ -29,6 +29,7 @@ public class Case {
 
     void ajoutObjet(Objet o) {
         this.objet = o;
+        this.objetVisibilite =  !this.objet.getClass().equals(Clef.class);
     }
 
     public boolean aObjet() { return this.objet != null; }
