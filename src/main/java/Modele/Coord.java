@@ -1,7 +1,7 @@
 package Modele;
 
 public class Coord {
-    private int x, y;
+    private final int x, y;
     public Coord(int x, int y) {
         if (x < 0 || y < 0) {
             throw new IllegalArgumentException("");
