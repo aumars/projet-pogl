@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class VueCase extends JPanel implements Observer {
-    private final int BOX_SIZE = 60;
+    private final int BOX_SIZE = Constants.BOX_SIZE;
 
     private final Color COLOR_MER = new Color(47, 128, 124);
     private final Color COLOR_SEC = new Color(48, 97, 14);

@@ -77,4 +77,14 @@ public class Modele extends Observable {
         }
         return joueur;
     }
+
+    public boolean tousJoueursMorts(){
+        for (Joueur j: this.ensemble) {
+            if (j.estVivant()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
