@@ -92,8 +92,11 @@ public class Controleur implements ActionListener {
         if (this.commande.btn_next.getModel().isArmed()) {
             this.modele.tourSuivant();
             this.vue.state.update();
+            this.vue.inventory.updateEtatJoueur();
         }
 
+        // System.out.println(this.modele.getJoueurActuel().estVivant())/;
+        this.vue.grille.updateCase(this.joueur.getCoord());
         this.joueur = this.modele.getJoueurActuel();
         this.vue.commande.disableUnusedButton();
     }

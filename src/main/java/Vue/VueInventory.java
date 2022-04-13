@@ -9,9 +9,12 @@ public class VueInventory extends JPanel {
     private Modele modele;
     private JLabel label_player = new JLabel();
     private JPanel panel_items = new JPanel();
+    private String name;
 
     public VueInventory(Modele m, String name) {
         this.modele = m;
+        this.name = name;
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         
@@ -31,6 +34,13 @@ public class VueInventory extends JPanel {
         if (this.panel_items.getComponentCount() < 7) {
             this.panel_items.add(new VueObjet(o));
             this.updateUI();
+        }
+    }
+
+    public void updateEtatJoueur(){
+        if (!this.modele.getJoueurActuel().estVivant()) {
+            this.label_player.setText("<html><strike>"+this.name+"</strike></html>");
+            this.label_player.setForeground(Color.RED);
         }
     }
 }

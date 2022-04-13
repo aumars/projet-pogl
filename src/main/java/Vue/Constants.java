@@ -13,4 +13,5 @@ public final class Constants {
     public static ImageIcon ICON_EAU = new ImageIcon("src/main/resources/img/water.png");
     public static ImageIcon ICON_TERRE = new ImageIcon("src/main/resources/img/ground.png");
     public static ImageIcon ICON_AIR = new ImageIcon("src/main/resources/img/oxygen.png");
+    public static ImageIcon ICON_TOMB = new ImageIcon("src/main/resources/img/tombstone.png");
 }

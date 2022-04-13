@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class VueCase extends JPanel implements Observer {
     private final int BOX_SIZE = 60;
-    // private final int BOX_CENTER = this.BOX_SIZE / 2;
 
     private final Color COLOR_MER = new Color(47, 128, 124);
     private final Color COLOR_SEC = new Color(48, 97, 14);
@@ -26,6 +25,7 @@ public class VueCase extends JPanel implements Observer {
         this.modele = m;
         this.modele.addObserver(this);
 
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(this.BOX_SIZE, this.BOX_SIZE));
         this.paintJoueurs();
 
@@ -47,34 +47,38 @@ public class VueCase extends JPanel implements Observer {
 
     private void paintJoueurs() {
         this.panel.remove(this.icon_joueur);
-        
-        if (this.modele.getJoueurActuel().getCoord() == this.c.coord) {
+
+        if (!this.modele.getJoueurActuel().estVivant()) {
+            this.icon_joueur.setIcon(Utils.scaleImage(Constants.ICON_TOMB, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
             this.panel.add(this.icon_joueur);
-            // this.icon_artefact.setVisible(false);
         }
-        else{
-            // this.icon_artefact.setVisible(true);
+        else if (this.modele.getJoueurActuel().getCoord() == this.c.coord) {
+            this.panel.add(this.icon_joueur);
         }
     }
-    
+
     private void paintArtefact() {
         this.panel.remove(this.icon_artefact);
 
         if (this.c.aObjet(Artefact.class)) {
             switch (this.c.getObjet().element) {
                 case EAU:
-                    this.icon_artefact.setIcon(Utils.scaleImage(Constants.ICON_EAU, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
+                    this.icon_artefact
+                            .setIcon(Utils.scaleImage(Constants.ICON_EAU, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
                     break;
                 case AIR:
-                    this.icon_artefact.setIcon(Utils.scaleImage(Constants.ICON_AIR, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
+                    this.icon_artefact
+                            .setIcon(Utils.scaleImage(Constants.ICON_AIR, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
                     break;
                 case TERRE:
-                    this.icon_artefact.setIcon(Utils.scaleImage(Constants.ICON_TERRE, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
+                    this.icon_artefact
+                            .setIcon(Utils.scaleImage(Constants.ICON_TERRE, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
                     break;
                 case FEU:
-                    this.icon_artefact.setIcon(Utils.scaleImage(Constants.ICON_FEU, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
+                    this.icon_artefact
+                            .setIcon(Utils.scaleImage(Constants.ICON_FEU, this.BOX_SIZE / 2, this.BOX_SIZE / 2));
                     break;
-                
+
                 default:
                     break;
             }
