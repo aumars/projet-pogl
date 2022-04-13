@@ -27,9 +27,9 @@ public class VueInventory extends JPanel {
         this.add(panel_items);
     }
 
-    public void updateAffichageObj() {
+    public void updateAffichageObj(Objet o) {
         if (this.panel_items.getComponentCount() < 7) {
-            this.panel_items.add(new VueObjet());
+            this.panel_items.add(new VueObjet(o));
             this.updateUI();
         }
     }

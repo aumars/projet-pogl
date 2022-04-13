@@ -41,6 +41,6 @@ public class ModeleTest {
         this.modeleM1G1.getJoueurActuel().deplace(Direction.DROITE);
         this.modeleM1G1.tourSuivant();
         this.modeleM1G1.getJoueurActuel().deplace(Direction.BAS);
-        Assertions.assertTrue(this.modeleM1G1.getJoueurActuel().chercheCle());
+        Assertions.assertTrue(this.modeleM1G1.getJoueurActuel().chercheCle() != null);
     }
 }

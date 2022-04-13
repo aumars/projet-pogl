@@ -73,14 +73,20 @@ public class Controleur implements ActionListener {
 
         // Gere les actions de la partie.
         if (this.commande.btn_prendre.getModel().isArmed()) {
-            this.joueur.recupereArtefact();
-            this.vue.grille.updateCase(this.joueur.getCoord());
-            this.vue.state.update();
+            Objet artefact = this.joueur.recupereArtefact();
+
+            if (artefact != null) {
+                this.vue.inventory.updateAffichageObj(artefact);
+                this.vue.grille.updateCase(this.joueur.getCoord());
+                this.vue.state.update();
+            }
         }
 
         if (this.commande.btn_clef.getModel().isArmed()) {
-            if (this.joueur.chercheCle())
-                this.vue.inventory.updateAffichageObj();
+            Objet clef = this.joueur.chercheCle();
+            
+            if (clef != null)
+                this.vue.inventory.updateAffichageObj(clef);
         }
 
         if (this.commande.btn_next.getModel().isArmed()) {

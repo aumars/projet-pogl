@@ -89,11 +89,15 @@ public class Joueur {
     /**
      * Prend l'objet de la case du Joueur.
      */
-    public void prendObjet() {
+    public Objet prendObjet() {
         if (this.pos.aObjet()) {
+            Objet objet = this.pos.getObjet();
             this.pos.detruitObjet();
             this.inventaire.add(this.pos.getObjet());
+            return objet;
         }
+
+        return null;
     }
 
     public Set<Objet> getInventaire(){
@@ -132,29 +136,30 @@ public class Joueur {
     /**
      * Récupère l'Artefact sur la case du Joueur, s'il a la clef correspondante.
      */
-    public void recupereArtefact() {
+    public Objet recupereArtefact() {
         if (this.estSonTour() && this.pos.aObjet(Artefact.class) && this.possedeClef(this.pos.getObjet().element)) {
-            this.prendObjet();
+            Objet artefact = this.prendObjet();
             this.finishTurn();
+            return artefact;
         }
+        return null;
     }
 
     /**
      * Cherche une Clef dans la case du Joueur.
-     * @return Vrai s'il a réussi, Faux sinon.
+     * @return la clef si le joueur la récupére sinon null. 
      */
-    public boolean chercheCle() {
+    public Objet chercheCle() {
         if (this.pos.aObjet(Clef.class)) {
             this.pos.setObjetVisibilite(true);
-            this.prendObjet();
-            return true;
+            return this.prendObjet();
         }
         else {
             double dice = new Random().nextDouble();
             if (dice < 0.2) {
                 this.pos.monteEaux();
             }
-            return false;
+            return null;
         }
     }
 

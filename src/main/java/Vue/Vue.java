@@ -23,7 +23,7 @@ public class Vue {
         this.frame.setResizable(false);
 
         this.state = new VueState(this.modele);
-        this.inventory = new VueInventory(this.modele, "Player 1");
+        this.inventory = new VueInventory(this.modele, "<HTML><U>Player 1</U></HTML>");
         this.grille = new VueGrille(this.modele);
         this.commande = new VueCommande(this.modele);
 
