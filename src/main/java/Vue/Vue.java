@@ -11,7 +11,7 @@ public class Vue {
 
     public VueState state;
     public VueInventory inventory;
-    private VueGrille grille;
+    public VueGrille grille;
     public VueCommande commande;
 
     public Vue(Modele m) {
@@ -27,10 +27,10 @@ public class Vue {
         this.grille = new VueGrille(this.modele);
         this.commande = new VueCommande(this.modele);
 
-        this.frame.add(this.state, Utils.positionGrid(0, 0, 2, 1));
-        this.frame.add(this.inventory, Utils.positionGrid(0, 1, 1, 1));
-        this.frame.add(this.grille, Utils.positionGrid(1, 1, 1, 1));
-        this.frame.add(this.commande, Utils.positionGrid(0, 2, 2, 1));
+        this.frame.add(this.state, Utils.positionGrid(0, 0, 2, 1, 1));
+        this.frame.add(this.inventory, Utils.positionGrid(0, 1));
+        this.frame.add(this.grille, Utils.positionGrid(1, 1));
+        this.frame.add(this.commande, Utils.positionGrid(0, 2, 2, 1, 1));
 
         this.frame.pack();
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,11 +1,11 @@
 package Vue;
 
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
 
 public class VueObjet extends JLabel{
     public VueObjet(){
-        this.setText("Objet");
-        this.setPreferredSize(new Dimension(40, 40));
+        this.setIcon(Utils.scaleImage(Constants.ICON_CLEF, 30, 30));
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 }

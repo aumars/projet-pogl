@@ -14,6 +14,8 @@ public class VueCase extends JPanel implements Observer {
 
     private Modele modele;
     private Case c;
+    private JPanel panel = new JPanel();
+    private JLabel icon_joueur = new JLabel(Utils.scaleImage(Constants.ICON_JOUEUR, this.BOX_SIZE/2, this.BOX_SIZE/2));
 
     public VueCase(Modele m, Case c) {
         this.c = c;
@@ -22,6 +24,11 @@ public class VueCase extends JPanel implements Observer {
         this.modele.addObserver(this);
         
         this.setPreferredSize(new Dimension(this.BOX_SIZE, this.BOX_SIZE));
+        this.paintJoueurs();
+        
+        this.panel.setOpaque(false);
+        this.panel.setPreferredSize(new Dimension(this.BOX_SIZE, this.BOX_SIZE));
+        this.add(this.panel);
     }
 
     public void update() {
@@ -31,13 +38,14 @@ public class VueCase extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
         super.repaint();
         paintSol(g);
-        paintJoueurs(g);
+        paintJoueurs();
     }
 
-    private void paintJoueurs(Graphics g){
+    private void paintJoueurs(){
+        this.panel.remove(this.icon_joueur);
+
         if (this.modele.getJoueurActuel().getCoord() == this.c.coord) {
-            g.setColor(Color.ORANGE);
-            fillCircle(g, this.BOX_SIZE/2, this.BOX_SIZE/2, this.BOX_SIZE/3);
+            this.panel.add(this.icon_joueur);
         }
     }
 
@@ -51,7 +59,7 @@ public class VueCase extends JPanel implements Observer {
         else if(this.c.aObjet(Artefact.class))
             g.setColor(Color.YELLOW);
         
-            else if(this.c.aObjet(Clef.class))
+        else if(this.c.aObjet(Clef.class))
             g.setColor(Color.PINK);
 
         else {
