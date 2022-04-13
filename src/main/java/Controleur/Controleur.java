@@ -28,6 +28,7 @@ public class Controleur implements ActionListener {
         this.commande.btn_assecher_center.addActionListener(this);
 
         this.commande.btn_next.addActionListener(this);
+        this.commande.btn_prendre.addActionListener(this);
         this.commande.btn_clef.addActionListener(this);
     }
 
@@ -71,14 +72,20 @@ public class Controleur implements ActionListener {
         }
 
         // Gere les actions de la partie.
-        if (this.commande.btn_next.getModel().isArmed()) {
-            this.modele.tourSuivant();
+        if (this.commande.btn_prendre.getModel().isArmed()) {
+            this.joueur.recupereArtefact();
+            this.vue.grille.updateCase(this.joueur.getCoord());
             this.vue.state.update();
         }
 
         if (this.commande.btn_clef.getModel().isArmed()) {
             if (this.joueur.chercheCle())
                 this.vue.inventory.updateAffichageObj();
+        }
+
+        if (this.commande.btn_next.getModel().isArmed()) {
+            this.modele.tourSuivant();
+            this.vue.state.update();
         }
 
         this.joueur = this.modele.getJoueurActuel();
@@ -89,7 +96,7 @@ public class Controleur implements ActionListener {
         Coord prev = this.joueur.getCoord();
         Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).coord;
         boolean est_fini = this.joueur.deplace(dir);
-        this.vue.grille.update(prev, next);
+        this.vue.grille.updatePlayerMove(prev, next);
         return est_fini;
     }
 }

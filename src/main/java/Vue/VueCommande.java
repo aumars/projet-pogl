@@ -4,7 +4,7 @@ import Modele.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class VueCommande extends JPanel{
+public class VueCommande extends JPanel {
     private Modele modele;
 
     public JButton btn_move_top = new VueBouton(Utils.scaleImage(Constants.ICON_ARROW_TOP, 20, 20));
@@ -18,8 +18,9 @@ public class VueCommande extends JPanel{
     public JButton btn_assecher_right = new VueBouton("◉");
     public JButton btn_assecher_center = new VueBouton("◉");
 
-    public JButton btn_clef = new VueBouton("Chercher Clef");
-    public JButton btn_next = new VueBouton("Tour Suivant");
+    public JButton btn_clef = new VueBouton("chercher clef");
+    public JButton btn_prendre = new VueBouton("prendre objet");
+    public JButton btn_next = new VueBouton("tour suivant");
 
     public VueCommande(Modele m) {
         this.modele = m;
@@ -40,7 +41,8 @@ public class VueCommande extends JPanel{
         JPanel panel_actions = new JPanel();
         panel_actions.setLayout(new GridBagLayout());
         panel_actions.add(this.btn_clef, Utils.positionGrid(0, 0));
-        panel_actions.add(this.btn_next, Utils.positionGrid(0, 1));
+        panel_actions.add(this.btn_prendre, Utils.positionGrid(1, 0));
+        panel_actions.add(this.btn_next, Utils.positionGrid(0, 1, 2, 1, 0));
         this.add(panel_actions);
 
         // Affiche le panel pour assecher une zone.
@@ -71,6 +73,11 @@ public class VueCommande extends JPanel{
         this.btn_assecher_right.setEnabled(peut_jouer && checkCaseInonder(Direction.DROITE));
 
         this.btn_clef.setEnabled(peut_jouer);
+        this.btn_prendre.setEnabled(peut_jouer && checkCaseArtefact());
+    }
+
+    public boolean checkCaseArtefact() {
+        return this.modele.getGrille().getCase(this.modele.getJoueurActuel().getCoord()).aObjet(Artefact.class);
     }
 
     public boolean checkCaseTraversable(Direction dir) {

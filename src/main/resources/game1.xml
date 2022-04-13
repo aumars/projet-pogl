@@ -6,7 +6,7 @@
         </position>
     </personnage>
     <objet id="artefact">
-        <element>AIRE</element>
+        <element>AIR</element>
         <position>
             <x>2</x>
             <y>3</y>
@@ -34,7 +34,7 @@
         </position>
     </objet>
     <objet id="clef">
-        <element>AIRE</element>
+        <element>AIR</element>
         <position>
             <x>4</x>
             <y>2</y>

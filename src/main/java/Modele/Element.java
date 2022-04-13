@@ -1,6 +1,6 @@
 package Modele;
 
-enum Element {
+public enum Element {
     AIR,
     EAU,
     TERRE,

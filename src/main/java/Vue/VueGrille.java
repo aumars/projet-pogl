@@ -3,10 +3,8 @@ package Vue;
 import Modele.*;
 
 import javax.swing.*;
-import javax.swing.text.ComponentView;
 
 import java.awt.*;
-import java.awt.Component;
 
 public class VueGrille extends JPanel {
     private final int WIDTH;
@@ -40,7 +38,18 @@ public class VueGrille extends JPanel {
         }
     }
 
-    public void update(Coord prev, Coord next) {
+    public void updateCase(Coord coord){
+        Case c = this.modele.getGrille().getCase(coord);
+
+        this.remove(this.grille[coord.y()][coord.x()]);
+        this.grille[coord.y()][coord.x()] = new VueCase(this.modele, c);
+        this.add(this.grille[coord.y()][coord.x()], Utils.positionGrid(coord.x(), coord.y(), this.GAP));
+
+        this.revalidate();
+        this.repaint();
+    }
+
+    public void updatePlayerMove(Coord prev, Coord next) {
         Case c_prev = this.modele.getGrille().getCase(prev);
         Case c_next = this.modele.getGrille().getCase(next);
 
