@@ -6,9 +6,24 @@ import java.util.*;
  * Joueur, entité dirigé par un être humain.
  */
 public class Joueur {
+    /**
+     * Si le Joueur vive ou pas.
+     */
     private boolean vivant = true;
+
+    /**
+     * La case actuelle du Joueur.
+     */
     private Case pos;
+
+    /**
+     * L'inventaire d'objets en possession du Joueur.
+     */
     private final List<Objet> inventaire;
+
+    /**
+     * Si le Joueur peut actuellement jouer son tour.
+     */
     private boolean sonTour;
     public String nom = "Player";
 
@@ -99,6 +114,10 @@ public class Joueur {
         return null;
     }
 
+    /**
+     * Renvoie la liste d'{@link Objet}s en possession du Joueur.
+     * @return La liste d'{@link Objet}s en possession du Joueur.
+     */
     public List<Objet> getInventaire(){
         return this.inventaire;
     }
