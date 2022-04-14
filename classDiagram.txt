@@ -2,13 +2,15 @@
 title L'Île Interdite - Diagramme de classe
 
 interface Observable
+Observable <-[dashed]- Modele
 Observable <-[dashed]- Controleur
 interface Observer
 Observer <-[dashed]- Vue
 
-package Modele {
-    abstract class Objet
+Modele "1" -- "1" Vue
+Modele "1" -- "1" Controleur
 
+package Modele {
     enum Inondation {
         SECHE
         INONDEE
@@ -32,62 +34,109 @@ package Modele {
     enum Terrain {
         TERRE
         MER
+        HELIPAD
     }
 
-    class Personnage {
-      -estVivant: boolean
-      -positionX: int
-      -positionY: int
-      +meurt(): void
-      +posX(): int
-      +posY(): int
-      ~deplace(Direction): void
+    abstract class Objet {
+        +element: Element
+        +objetByID(String, Element): Objet
+    }
+
+    Objet <-- Artefact
+    Objet <-- Clef
+
+    class Coord {
+        -x: int
+        -y: int
+        +x(): int
+        +y(): int
+        +toString(): String
+        +equals(Object): boolean
+        +hashCode(): int
+    }
+
+    class Case {
+        +terrain: Terrain /' CONSTANTE '/
+        -etat: Inondation
+        -objetVisibilite: boolean
+        +estTraversable(): boolean
+        +estHelipad(): boolean
+        +ajoutObjet(Objet): void
+        +aObjet(): boolean
+        +aObjet(Class): boolean
+        +getObjet(): Objet
+        +getObjetVisibilite(): boolean
+        +setObjetVisibilite(boolean): void
+        +detruitObjet(): void
+        +getEtat(): Inondation
+        +asseche(): boolean
+        +monteEaux(): void
+        +adjacent(Direction): Case
+        +adjacentSubmergee(): boolean
+    }
+    Case "0..n" o-- "1" Coord /' Case est associé à un Coord '/
+    Case "0..n" o-- "0..1" Objet /' Case est associé à un Objet '/
+    Case "0..n" *--o "0..1" Grille /' Case appartient à une Grille '/
+
+    class Grille {
+        -HEIGHT: int
+        -WIDTH: int
+        +addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord>): void
+        +addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets): void
+        +getWidth(): int
+        +getHauteur(): int
+        +getCase(int, int): Case
+        +getCase(Coord): Case
+        +inonde(): void
     }
 
     class Joueur {
+      -vivant: boolean
+      -endTurn: boolean
+      +joueurByID(String, Case): Joueur
+      +noie()
+      +estVivant(): boolean
+      +getEndTurn(): boolean
+      +deplace(Direction): void
+      +possedeClef(Element): boolean
+      +prendObjet(Objet): void
+      +getInventaire(): List<Objet>
+      +possedeTousArtefacts(): boolean
+      +getCoord(): Coord
+      +asseche(Direction): boolean
     }
-    Objet "0..n" *-- "1" Joueur
-    Personnage <-- Joueur
+    Objet "0..n" o-- "0..1" Joueur
+    Case "0..1" o-- "0..4" Joueur
+
+    class Carte {
+        -terrainByID(char): Terrain /' Méthode statique '/
+    }
+
+    class Jeu {
+        -parseGame(String): org.w3c.dom.Document
+        -parseGameObjet(org.w3c.dom.Document): List<AbstractMap.SimpleImmutableEntry<Objet, Coord>
+        -parseGameJoueur(org.w3c.dom.Document): List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>
+        -parsePosition(org.w3c.dom.NodeList): Coord
+        -elementById(String): Element
+        -objetsByID(String, Element): Objet
+        -joueurById(String): Joueur
+    }
+    Jeu "0..1" *-- "0..n" Objet
+    Jeu "0..1" *-- "0..n" Coord
+    Jeu "0..1" *-- "0..n" Joueur
 
     class Modele {
-      -largeur: int
-      -hauteur: int
-      +initialise(): void
-      +tourSuivant(): void
-      +verifieGagnant(): boolean
-      +deplaceJoueur(): boolean
+        +getJoueurActuel(): Joueur
+        +getNbJoueurs(): int
+        +tourSuivant(): void
+        +getTour(): int
+        +getGrille(): Grille
+        +verifieGagnants(): Joueur
+        +prochainJoueurVivant(): Joueur
+        +tousJoueursMorts(): boolean
     }
-    Observable <-[dashed]- Modele
-    Modele "1" *-- "1" Grille
-    Modele "1" *-- "1..n" Personnage
-    Modele "1" *-- "1" Joueur
-    Modele "1" -- "1" Vue
-    Modele "1" -- "1" Controleur
-
-    class Grille {
-      +metAJour(): void
-      +inondeAleatoirement(): void
-    }
-    Grille "1" *-- "n*n" Case
-
-    class Case {
-      -x: int
-      -y: int
-      -etat: Inondation
-      -terrain: Terrain
-      +inonde(): void
-      +estTraversable(): boolean
-    }
-    Case "1" -- "1" Joueur
-    Case "0..1" -- "0..1" Artefact
-
-    class Artefact {
-      -element: Element
-    }
-    Objet <-- Artefact
-
-    class Clef
-    Objet <-- Clef
+    Modele "0..1" *-- "1" Grille
+    Modele "0..1" o-- "0..n" Joueur
 }
 
 package Controleur {
