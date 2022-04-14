@@ -151,22 +151,7 @@ public class Case {
      */
     public Case adjacent(Direction dir) {
         if (this.grille != null) {
-            int x = this.coord.x();
-            int y = this.coord.y();
-            switch (dir) {
-                case HAUT:
-                    return this.grille.getCase(x, y - 1);
-                case BAS:
-                    return this.grille.getCase(x, y + 1);
-                case GAUCHE:
-                    return this.grille.getCase(x - 1, y);
-                case DROITE:
-                    return this.grille.getCase(x + 1, y);
-                case NEUTRE:
-                    return this;
-                default:
-                    throw new IllegalArgumentException("La direction n'est pas reconnu.");
-            }
+            return this.grille.getCase(this.coord.adjacent(dir));
         }
         else {
             throw new RuntimeException("La case n'est pas associée à une grille.");
