@@ -6,17 +6,12 @@ import org.junit.jupiter.api.Assertions;
 class CaseTest {
     @Test
     void caseInitOrigine() {
-        new Case(0, 0, '*', null);
-    }
-
-    @Test
-    void caseInitInvalid() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Case(-1, -1, '*', null));
+        new Case(new Coord(0, 0), Terrain.TERRE, null);
     }
 
     @Test
     void casePossedeClef() {
-        Case c = new Case(0, 0, '*', null);
+        Case c = new Case(new Coord(0, 0), Terrain.TERRE, null);
         Assertions.assertFalse(c.aObjet(Clef.class));
     }
 }

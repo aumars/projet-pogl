@@ -72,7 +72,7 @@ public class VueCase extends JPanel implements Observer {
             POS_ICN_Y = this.POS_ICN_Y / 2;   
         }
 
-        if (this.c.helipad) {
+        if (this.c.terrain == Terrain.HELIPAD) {
             this.icn_objet.setIcon(Utils.scaleImg(Constants.ICN_HELICOPTER, POS_ICN_X, POS_ICN_Y));
             this.panel.add(this.icn_objet);
         }
@@ -115,7 +115,7 @@ public class VueCase extends JPanel implements Observer {
         if (this.c.terrain == Terrain.MER)
             g.setColor(this.COLOR_MER);
 
-        else if (this.c.getObjetVisibilite() && this.c.helipad)
+        else if (this.c.getObjetVisibilite() && this.c.estHelipad())
             g.setColor(Color.GRAY);
 
         else {

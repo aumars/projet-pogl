@@ -1,16 +1,29 @@
 package Modele;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Joueur, entité dirigé par un être humain.
  */
 public class Joueur {
+    /**
+     * Si le Joueur vive ou pas.
+     */
     private boolean vivant = true;
+
+    /**
+     * La case actuelle du Joueur.
+     */
     private Case pos;
-    private final Set<Objet> inventaire;
+
+    /**
+     * L'inventaire d'objets en possession du Joueur.
+     */
+    private final List<Objet> inventaire;
+
+    /**
+     * Si le Joueur peut actuellement jouer son tour.
+     */
     private boolean sonTour;
     public String nom = "Player";
 
@@ -27,7 +40,7 @@ public class Joueur {
      */
     public Joueur(Case c) {
         this.pos = c;
-        this.inventaire = new HashSet<>();
+        this.inventaire = new ArrayList<>();
         this.sonTour = true;
     }
 
@@ -101,7 +114,11 @@ public class Joueur {
         return null;
     }
 
-    public Set<Objet> getInventaire(){
+    /**
+     * Renvoie la liste d'{@link Objet}s en possession du Joueur.
+     * @return La liste d'{@link Objet}s en possession du Joueur.
+     */
+    public List<Objet> getInventaire(){
         return this.inventaire;
     }
 
@@ -171,7 +188,7 @@ public class Joueur {
      * @return Vrai si la Joueur a gagné, Faux sinon.
      */
     public boolean verifieGagnant() {
-        return this.pos.helipad && this.possedeTousArtefacts();
+        return this.pos.estHelipad() && this.possedeTousArtefacts();
     }
 
     /**
