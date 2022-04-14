@@ -85,7 +85,6 @@ public class Case {
         return !adjacent(Direction.HAUT).estTraversable()
                 && !adjacent(Direction.BAS).estTraversable()
                 && !adjacent(Direction.GAUCHE).estTraversable()
-                && !adjacent(Direction.DROITE).estTraversable()
-                && !adjacent(Direction.NEUTRE).estTraversable();
+                && !adjacent(Direction.DROITE).estTraversable();
     }
 }

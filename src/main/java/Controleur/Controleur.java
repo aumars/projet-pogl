@@ -55,12 +55,32 @@ public class Controleur implements ActionListener, KeyListener {
                 this.tourSuivant();
                 break;
 
-            case KeyEvent.VK_SPACE:
+            case KeyEvent.VK_A:
                 this.chercheClef();
                 break;
-            
+
             case KeyEvent.VK_F:
                 this.prendArtefact();
+                break;
+
+            case KeyEvent.VK_O:
+                this.joueur.asseche(Direction.HAUT);
+                break;
+
+            case KeyEvent.VK_K:
+                this.joueur.asseche(Direction.GAUCHE);
+                break;
+
+            case KeyEvent.VK_L:
+                this.joueur.asseche(Direction.BAS);
+                break;
+
+            case KeyEvent.VK_M:
+                this.joueur.asseche(Direction.DROITE);
+                break;
+
+            case KeyEvent.VK_SPACE:
+                this.joueur.asseche(Direction.NEUTRE);
                 break;
 
             case KeyEvent.VK_ESCAPE:
@@ -140,19 +160,19 @@ public class Controleur implements ActionListener, KeyListener {
         this.vue.bottom.updateEndGame();
     }
 
-    private void chercheClef(){
+    private void chercheClef() {
         Objet clef = this.joueur.chercheCle();
 
-        if (clef != null){
+        if (clef != null) {
             this.vue.inventory.updateAffichageObj(clef);
             this.vue.grille.updateCase(this.joueur.getCoord());
             this.vue.state.update();
         }
     }
 
-    private void prendArtefact(){
+    private void prendArtefact() {
         Objet artefact = this.joueur.recupereArtefact();
-    
+
         if (artefact != null) {
             this.vue.inventory.updateAffichageObj(artefact);
             this.vue.grille.updateCase(this.joueur.getCoord());

@@ -6,12 +6,12 @@ import javax.swing.*;
 
 public class VueCommande extends JPanel {
     private Modele modele;
-
-    public JButton btn_assecher_top = new VueBouton("Séche case du haut", "◉");
-    public JButton btn_assecher_bottom = new VueBouton("Séche case du bas", "◉");
-    public JButton btn_assecher_left = new VueBouton("Séche case de gauche", "◉");
-    public JButton btn_assecher_right = new VueBouton("Séche case de droite", "◉");
-    public JButton btn_assecher_center = new VueBouton("Séche case du centre", "◉");
+    private final ImageIcon ICN_BUCKET = Utils.scaleImg(Constants.ICN_BUCKET, 20, 20);
+    public JButton btn_assecher_top = new VueBouton("Séche case du haut [O]", this.ICN_BUCKET);
+    public JButton btn_assecher_bottom = new VueBouton("Séche case du bas [L]", this.ICN_BUCKET);
+    public JButton btn_assecher_left = new VueBouton("Séche case de gauche [K]", this.ICN_BUCKET);
+    public JButton btn_assecher_right = new VueBouton("Séche case de droite [M]", this.ICN_BUCKET);
+    public JButton btn_assecher_center = new VueBouton("Séche case du centre [SPACE]", this.ICN_BUCKET);
 
     public JButton btn_clef = new VueBouton("recherche une clef [SPACE]", "Clef");
     public JButton btn_prendre = new VueBouton("récupére un artefact [F]", "Artefact");
@@ -26,7 +26,7 @@ public class VueCommande extends JPanel {
         // Affiche le panel pour assecher une zone.
         JPanel panel_assecher = new JPanel();
         panel_assecher.setLayout(new GridBagLayout());
-        panel_assecher.setPreferredSize(new Dimension(Constants.BOX_SIZE * this.modele.getGrille().getWidth() * 3/7, 100));
+        panel_assecher.setPreferredSize(new Dimension(Constants.BOX_SIZE * this.modele.getGrille().getWidth() * 3 / 7, 100));
         panel_assecher.add(this.btn_assecher_top, Utils.positionGrid(1, 0));
         panel_assecher.add(this.btn_assecher_bottom, Utils.positionGrid(1, 2));
         panel_assecher.add(this.btn_assecher_center, Utils.positionGrid(1, 1));
@@ -74,9 +74,4 @@ public class VueCommande extends JPanel {
         Coord coord_joueurs = this.modele.getJoueurActuel().getCoord();
         return this.modele.getGrille().getCase(coord_joueurs).adjacent(dir);
     }
-
-    // public int computeSize(int n_case) {
-    //     // int w = this.modele.getGrille().getWidth();
-    //     // return (int) w * Constants.BOX_SIZE * (w-1) * Constants.GAP_CASE;
-    // }
 }

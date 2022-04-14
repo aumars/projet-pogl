@@ -19,4 +19,7 @@ public final class Constants {
     public static ImageIcon ICN_TERRE = new ImageIcon("src/main/resources/img/ground.png");
     public static ImageIcon ICN_AIR = new ImageIcon("src/main/resources/img/oxygen.png");
     public static ImageIcon ICN_TOMB = new ImageIcon("src/main/resources/img/tombstone.png");
+    public static ImageIcon ICN_BUCKET = new ImageIcon("src/main/resources/img/bucket.png");
+    public static ImageIcon ICN_END_ROUND = new ImageIcon("src/main/resources/img/end-round.png");
+    public static ImageIcon ICN_SEARCH = new ImageIcon("src/main/resources/img/search.png");
 }

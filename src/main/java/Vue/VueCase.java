@@ -62,7 +62,7 @@ public class VueCase extends JPanel implements Observer {
 
     private void paintObjet() {
         this.panel.remove(this.icn_objet);
-        // this.icn_objet.setVisible(this.c.getObjetVisibilite());
+        this.icn_objet.setVisible(this.c.getObjetVisibilite());
         
         int POS_ICN_X = this.POS_ICN_X;
         int POS_ICN_Y = this.POS_ICN_Y;
@@ -115,7 +115,7 @@ public class VueCase extends JPanel implements Observer {
         if (this.c.terrain == Terrain.MER)
             g.setColor(this.COLOR_MER);
 
-        else if (this.c.helipad)
+        else if (this.c.getObjetVisibilite() && this.c.helipad)
             g.setColor(Color.GRAY);
 
         else {
