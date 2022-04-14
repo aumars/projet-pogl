@@ -27,7 +27,7 @@ public class Case {
     /**
      * Drapeau pour marquer la visibilité de l'objet de la case sur la grille.
      */
-    private boolean objetVisibilite = false;
+    private boolean objetVisibilite = true;
 
     /**
      * La grille dans se trouve la case.
