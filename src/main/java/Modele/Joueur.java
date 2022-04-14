@@ -1,8 +1,6 @@
 package Modele;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Joueur, entité dirigé par un être humain.
@@ -10,7 +8,7 @@ import java.util.Set;
 public class Joueur {
     private boolean vivant = true;
     private Case pos;
-    private final Set<Objet> inventaire;
+    private final List<Objet> inventaire;
     private boolean sonTour;
     public String nom = "Player";
 
@@ -27,7 +25,7 @@ public class Joueur {
      */
     public Joueur(Case c) {
         this.pos = c;
-        this.inventaire = new HashSet<>();
+        this.inventaire = new ArrayList<>();
         this.sonTour = true;
     }
 
@@ -101,7 +99,7 @@ public class Joueur {
         return null;
     }
 
-    public Set<Objet> getInventaire(){
+    public List<Objet> getInventaire(){
         return this.inventaire;
     }
 
