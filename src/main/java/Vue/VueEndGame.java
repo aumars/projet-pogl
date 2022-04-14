@@ -21,7 +21,8 @@ public class VueEndGame extends JPanel {
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-        this.setPreferredSize(new Dimension(this.WIDTH*this.BOX_SIZE, this.HEIGHT*this.BOX_SIZE));
+        // this.setPreferredSize(new Dimension(this.WIDTH*this.BOX_SIZE, this.HEIGHT*this.BOX_SIZE));
         this.add(new JLabel("GAME OVER...", SwingConstants.CENTER), BorderLayout.CENTER);
+        this.setBackground(Color.RED);
     }
 }

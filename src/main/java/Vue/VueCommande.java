@@ -7,48 +7,26 @@ import javax.swing.*;
 public class VueCommande extends JPanel {
     private Modele modele;
 
-    public JButton btn_move_top = new VueBouton(Utils.scaleImage(Constants.ICON_ARROW_TOP, 20, 20));
-    public JButton btn_move_bottom = new VueBouton(Utils.scaleImage(Constants.ICON_ARROW_BOTTOM, 20, 20));
-    public JButton btn_move_left = new VueBouton(Utils.scaleImage(Constants.ICON_ARROW_LEFT, 20, 20));
-    public JButton btn_move_right = new VueBouton(Utils.scaleImage(Constants.ICON_ARROW_RIGHT, 20, 20));
+    public JButton btn_assecher_top = new VueBouton("Séche case du haut", "◉");
+    public JButton btn_assecher_bottom = new VueBouton("Séche case du bas", "◉");
+    public JButton btn_assecher_left = new VueBouton("Séche case de gauche", "◉");
+    public JButton btn_assecher_right = new VueBouton("Séche case de droite", "◉");
+    public JButton btn_assecher_center = new VueBouton("Séche case du centre", "◉");
 
-    public JButton btn_assecher_top = new VueBouton("◉");
-    public JButton btn_assecher_bottom = new VueBouton("◉");
-    public JButton btn_assecher_left = new VueBouton("◉");
-    public JButton btn_assecher_right = new VueBouton("◉");
-    public JButton btn_assecher_center = new VueBouton("◉");
-
-    public JButton btn_clef = new VueBouton("chercher clef");
-    public JButton btn_prendre = new VueBouton("prendre objet");
-    public JButton btn_next = new VueBouton("tour suivant");
+    public JButton btn_clef = new VueBouton("recherche une clef [SPACE]", "Clef");
+    public JButton btn_prendre = new VueBouton("récupére un artefact [F]", "Artefact");
+    public JButton btn_next = new VueBouton("fin du tour [ENTER]", "Fin");
 
     public VueCommande(Modele m) {
         this.modele = m;
 
-        this.setLayout(new FlowLayout());
-
-        // Affiche le panel pour deplacer le joueurs.
-        JPanel panel_deplacement = new JPanel();
-        panel_deplacement.setLayout(new GridBagLayout());
-        panel_deplacement.setPreferredSize(new Dimension(3 * this.modele.getGrille().getWidth() * 60 / 8, 100));
-        panel_deplacement.add(this.btn_move_top, Utils.positionGrid(1, 0));
-        panel_deplacement.add(this.btn_move_bottom, Utils.positionGrid(1, 2));
-        panel_deplacement.add(this.btn_move_left, Utils.positionGrid(0, 1));
-        panel_deplacement.add(this.btn_move_right, Utils.positionGrid(2, 1));
-        this.add(panel_deplacement);
-
-        // Affiche le panel des actions.
-        JPanel panel_actions = new JPanel();
-        panel_actions.setLayout(new GridBagLayout());
-        panel_actions.add(this.btn_clef, Utils.positionGrid(0, 0));
-        panel_actions.add(this.btn_prendre, Utils.positionGrid(1, 0));
-        panel_actions.add(this.btn_next, Utils.positionGrid(0, 1, 2, 1, 0));
-        this.add(panel_actions);
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+        // this.setBackground(Color.GRAY);
 
         // Affiche le panel pour assecher une zone.
         JPanel panel_assecher = new JPanel();
         panel_assecher.setLayout(new GridBagLayout());
-        panel_assecher.setPreferredSize(new Dimension(3 * this.modele.getGrille().getWidth() * 60 / 8, 100));
+        panel_assecher.setPreferredSize(new Dimension(Constants.BOX_SIZE * this.modele.getGrille().getWidth() * 3/7, 100));
         panel_assecher.add(this.btn_assecher_top, Utils.positionGrid(1, 0));
         panel_assecher.add(this.btn_assecher_bottom, Utils.positionGrid(1, 2));
         panel_assecher.add(this.btn_assecher_center, Utils.positionGrid(1, 1));
@@ -56,15 +34,19 @@ public class VueCommande extends JPanel {
         panel_assecher.add(this.btn_assecher_right, Utils.positionGrid(2, 1));
         this.add(panel_assecher);
 
+        // Affiche le panel des actions.
+        JPanel panel_actions = new JPanel();
+        panel_actions.setLayout(new GridBagLayout());
+        panel_actions.add(this.btn_clef, Utils.positionGrid(0, 0, 5));
+        panel_actions.add(this.btn_prendre, Utils.positionGrid(1, 0, 5));
+        panel_actions.add(this.btn_next, Utils.positionGrid(2, 0, 5));
+        this.add(panel_actions);
+
         disableUnusedButton();
     }
 
     public void disableUnusedButton() {
         boolean peut_jouer = this.modele.getJoueurActuel().estSonTour();
-        this.btn_move_top.setEnabled(peut_jouer && checkCaseTraversable(Direction.HAUT));
-        this.btn_move_bottom.setEnabled(peut_jouer && checkCaseTraversable(Direction.BAS));
-        this.btn_move_left.setEnabled(peut_jouer && checkCaseTraversable(Direction.GAUCHE));
-        this.btn_move_right.setEnabled(peut_jouer && checkCaseTraversable(Direction.DROITE));
 
         this.btn_assecher_top.setEnabled(peut_jouer && checkCaseInonder(Direction.HAUT));
         this.btn_assecher_bottom.setEnabled(peut_jouer && checkCaseInonder(Direction.BAS));
@@ -92,4 +74,9 @@ public class VueCommande extends JPanel {
         Coord coord_joueurs = this.modele.getJoueurActuel().getCoord();
         return this.modele.getGrille().getCase(coord_joueurs).adjacent(dir);
     }
+
+    // public int computeSize(int n_case) {
+    //     // int w = this.modele.getGrille().getWidth();
+    //     // return (int) w * Constants.BOX_SIZE * (w-1) * Constants.GAP_CASE;
+    // }
 }

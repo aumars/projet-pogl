@@ -30,9 +30,10 @@ public class Vue {
         this.end_game = new VueEndGame(this.modele);
         
         this.frame.add(this.state, Utils.positionGrid(0, 0, 2, 1, 1));
-        this.frame.add(this.inventory, Utils.positionGrid(0, 1));
+        this.frame.add(this.inventory, Utils.positionGrid(0, 1, 1, 3, 0));
         this.frame.add(this.grille, Utils.positionGrid(1, 1));
-        this.frame.add(this.commande, Utils.positionGrid(0, 2, 2, 1, 1));
+        this.frame.add(this.commande, Utils.positionGrid(1, 2));
+        // this.frame.add(this.end_game, Utils.positionGrid(0, 2, 2, 1, 1));
         
         this.frame.pack();
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,6 +41,10 @@ public class Vue {
         this.frame.setVisible(true);
     }
     
+    public JFrame getFrame(){
+        return this.frame;
+    }
+
     public void updateEndGame(){
         if (this.modele.tousJoueursMorts()) {
             this.frame.remove(this.grille);

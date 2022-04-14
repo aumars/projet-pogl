@@ -150,6 +150,8 @@ public class Joueur {
      * @return la clef si le joueur la récupére sinon null. 
      */
     public Objet chercheCle() {
+        this.finishTurn();
+        
         if (this.pos.aObjet(Clef.class)) {
             this.pos.setObjetVisibilite(true);
             return this.prendObjet();

@@ -9,7 +9,7 @@ import java.awt.*;
 public class VueGrille extends JPanel {
     private final int WIDTH;
     private final int HEIGHT;
-    private final int GAP = 2;
+    private final int GAP = Constants.GAP_CASE;
     private final int GAP_BORDER = 10;
     private VueCase[][] grille;
 

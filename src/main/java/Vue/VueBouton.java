@@ -5,19 +5,20 @@ import java.awt.*;
 import java.lang.String;
 
 public class VueBouton extends JButton{
-    public VueBouton(){
-        this.setFont(new Font("Calibri", Font.BOLD, 15));
+    public VueBouton(String tooltip){
+        this.setFont(new Font("", Font.BOLD, 15));
         this.setBackground(Color.decode("#f6f6f6"));
         this.setFocusable(false);
+        this.setToolTipText(tooltip);
     }
-
-    public VueBouton(String text){
-        this();
+    
+    public VueBouton(String tooltip, String text){
+        this(tooltip);
         this.setText(text);
     }
     
-    public VueBouton(Icon icon){
-        this();
+    public VueBouton(String tooltip, Icon icon){
+        this(tooltip);
         this.setIcon(icon);
     }
 }

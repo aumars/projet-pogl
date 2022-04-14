@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 public final class Constants {
     public static int BOX_SIZE = 60;
     public static int GAP_BORDER = 60;
+    public static int GAP_CASE = 2;
     
     public static ImageIcon ICON_CLEF = new ImageIcon("src/main/resources/img/key.png");
     public static ImageIcon ICON_ARROW_RIGHT = new ImageIcon("src/main/resources/img/arrow-right.png");
