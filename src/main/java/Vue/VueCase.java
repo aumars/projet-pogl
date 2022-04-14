@@ -58,7 +58,7 @@ public class VueCase extends JPanel implements Observer {
 
     private void paintObjet() {
         this.panel.remove(this.icon_objet);
-        this.icon_objet.setVisible(this.c.getObjetVisibilite());
+        // this.icon_objet.setVisible(this.c.getObjetVisibilite());
 
         if (this.c.aObjet(Clef.class)) {
             this.icon_objet
