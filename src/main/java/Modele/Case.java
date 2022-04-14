@@ -9,18 +9,10 @@ public class Case {
     private boolean objetVisibilite = false;
     private static Grille grille;
 
-    public Case(int i, int j, char c, Grille g) {
-        if (i < 0 || j < 0) {
-            throw new IllegalArgumentException(String.format("(i, j) = (%d, %d) doit avoir des composantes positives.", i, j));
-        }
+    public Case(int i, int j, Terrain terrain, Grille g) {
         this.coord = new Coord(j, i);
+        this.terrain = terrain;
         grille = g;
-        switch (c) {
-            case '-': this.terrain = Terrain.MER; break;
-            case '*': this.terrain = Terrain.TERRE; break;
-            case 'h': this.terrain = Terrain.HELIPAD; break;
-            default: throw new IllegalArgumentException(String.format("Le caractère %s n'est pas reconnu.", c));
-        }
     }
 
     public boolean estTraversable() {

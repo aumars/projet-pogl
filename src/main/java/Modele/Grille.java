@@ -17,7 +17,7 @@ public class Grille {
         this(carte.map);
     }
 
-    public Grille(char[][] map) {
+    public Grille(Terrain[][] map) {
         this.width = map[0].length;
         this.height = map.length;
 
@@ -34,7 +34,7 @@ public class Grille {
         }
     }
 
-    public Grille(char[][] map, List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
+    public Grille(Terrain[][] map, List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
         this(map);
         this.addObjets(objets);
     }
