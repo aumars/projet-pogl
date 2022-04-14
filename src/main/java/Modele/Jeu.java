@@ -55,12 +55,32 @@ public final class Jeu {
                         throw new InvalidGameException();
                     }
                 }
-                Element e = Element.StringToElement(objet_element);
+                Element e = elementById(objet_element);
                 Objet o = objetsByID(id, e);
                 a.add(new AbstractMap.SimpleImmutableEntry<>(o, pos));
             }
         }
         return a;
+    }
+
+    /**
+     * Associe l'élément à une chaine de caractères donnée.
+     * @param s Chaine de caractères associée à un élément.
+     * @return L'élément associé.
+     */
+    private static Element elementById(String s) {
+        switch (s) {
+            case "AIR":
+                return Element.AIR;
+            case "EAU":
+                return Element.EAU;
+            case "TERRE":
+                return Element.TERRE;
+            case "FEU":
+                return Element.FEU;
+            default:
+                throw new IllegalArgumentException(String.format("s = %s n'est pas reconnu comme un élément", s));
+        }
     }
 
     /**
