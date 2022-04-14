@@ -12,7 +12,8 @@ public class VueState extends JPanel {
     public VueState(Modele m) {
         this.modele = m;
         
-        label_round = new JLabel("Tour n°" + this.modele.getTour());
+        String title = "Tour n°" + this.modele.getTour() + " - " + this.modele.getJoueurActuel().nom;
+        label_round = new JLabel(title);
         label_round.setFont(new Font("Calibri", Font.BOLD, 25));
 
         this.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
@@ -21,6 +22,7 @@ public class VueState extends JPanel {
 
     public void update(){
         super.repaint();
-        this.label_round.setText("Tour n°" + this.modele.getTour());
+        String title = "Tour n°" + this.modele.getTour() + " - " + this.modele.getJoueurActuel().nom;
+        this.label_round.setText(title);
     }
 }

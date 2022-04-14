@@ -20,7 +20,7 @@ public class VueCommande extends JPanel {
     public VueCommande(Modele m) {
         this.modele = m;
 
-        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
         // this.setBackground(Color.GRAY);
 
         // Affiche le panel pour assecher une zone.

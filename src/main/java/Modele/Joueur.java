@@ -12,6 +12,7 @@ public class Joueur {
     private Case pos;
     private final Set<Objet> inventaire;
     private boolean sonTour;
+    public String nom = "Player";
 
     /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().

@@ -14,7 +14,7 @@ public class Controleur implements ActionListener, KeyListener {
         this.modele = m;
         this.vue = v;
         this.joueur = this.modele.getJoueurActuel();
-        this.commande = this.vue.commande;
+        this.commande = this.vue.bottom.commande;
 
         this.vue.getFrame().addKeyListener(this);
 
@@ -130,14 +130,14 @@ public class Controleur implements ActionListener, KeyListener {
     private void update() {
         this.vue.grille.updateCase(this.joueur.getCoord());
         this.joueur = this.modele.getJoueurActuel();
-        this.vue.commande.disableUnusedButton();
+        this.vue.bottom.commande.disableUnusedButton();
     }
 
     private void tourSuivant() {
         this.modele.tourSuivant();
         this.vue.state.update();
         this.vue.inventory.updateEtatJoueur();
-        this.vue.updateEndGame();
+        this.vue.bottom.updateEndGame();
     }
 
     private void chercheClef(){
