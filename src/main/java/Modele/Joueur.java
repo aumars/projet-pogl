@@ -171,7 +171,7 @@ public class Joueur {
      * @return Vrai si la Joueur a gagné, Faux sinon.
      */
     public boolean verifieGagnant() {
-        return this.pos.helipad && this.possedeTousArtefacts();
+        return this.pos.estHelipad() && this.possedeTousArtefacts();
     }
 
     /**

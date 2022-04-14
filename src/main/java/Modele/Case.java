@@ -3,7 +3,7 @@ package Modele;
 public class Case {
     public final Coord coord;
     public final Terrain terrain;
-    public final boolean helipad;
+
     private Inondation etat = Inondation.SECHE;
     private Objet objet;
     private boolean objetVisibilite = false;
@@ -16,9 +16,9 @@ public class Case {
         this.coord = new Coord(j, i);
         grille = g;
         switch (c) {
-            case '-': this.terrain = Terrain.MER; this.helipad = false; break;
-            case '*': this.terrain = Terrain.TERRE; this.helipad = false; break;
-            case 'h': this.terrain = Terrain.TERRE; this.helipad = true; break;
+            case '-': this.terrain = Terrain.MER; break;
+            case '*': this.terrain = Terrain.TERRE; break;
+            case 'h': this.terrain = Terrain.HELIPAD; break;
             default: throw new IllegalArgumentException(String.format("Le caractère %s n'est pas reconnu.", c));
         }
     }
@@ -26,6 +26,8 @@ public class Case {
     public boolean estTraversable() {
         return this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE;
     }
+
+    public boolean estHelipad() { return this.terrain == Terrain.HELIPAD; }
 
     void ajoutObjet(Objet o) {
         this.objet = o;

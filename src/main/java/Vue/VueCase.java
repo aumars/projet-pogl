@@ -115,7 +115,7 @@ public class VueCase extends JPanel implements Observer {
         if (this.c.terrain == Terrain.MER)
             g.setColor(this.COLOR_MER);
 
-        else if (this.c.helipad)
+        else if (this.c.terrain == Terrain.HELIPAD)
             g.setColor(Color.GRAY);
 
         else {
