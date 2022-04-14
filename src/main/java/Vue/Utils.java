@@ -26,7 +26,7 @@ public final class Utils {
 		return positionGrid(pos_x, pos_y, 1, 1, 0);
 	}
 
-	public static ImageIcon scaleImage(ImageIcon icon, int w, int h) {
+	public static ImageIcon scaleImg(ImageIcon icon, int w, int h) {
 		int width = icon.getIconWidth();
 		int height = icon.getIconHeight();
 
