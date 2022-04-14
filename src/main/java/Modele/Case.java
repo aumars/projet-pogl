@@ -9,8 +9,8 @@ public class Case {
     private boolean objetVisibilite = false;
     private static Grille grille;
 
-    public Case(int i, int j, Terrain terrain, Grille g) {
-        this.coord = new Coord(j, i);
+    public Case(Coord coord, Terrain terrain, Grille g) {
+        this.coord = coord;
         this.terrain = terrain;
         grille = g;
     }

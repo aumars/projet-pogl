@@ -25,7 +25,7 @@ public class Grille {
         this.ile = new ArrayList<>();
         for (int i = 0; i < this.cases.length; i++) {
             for (int j = 0; j < this.cases[0].length; j++) {
-                Case c = new Case(i, j, map[i][j], this);
+                Case c = new Case(new Coord(j, i), map[i][j], this);
                 this.cases[i][j] = c;
                 if (c.terrain == Terrain.TERRE) {
                     this.ile.add(c);
