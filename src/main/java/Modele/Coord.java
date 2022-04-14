@@ -1,7 +1,8 @@
 package Modele;
 
 /**
- * Un point de composantes positives dans un plan orthonormé.
+ * Un point de composantes positives dans un plan orthonormé. Dans ce plan, l'origine est au plus haut-gauche,
+ * la direction d'abscisses est vers la droite et la direction d'ordonnées est vers le bas.
  */
 public class Coord {
     /**
@@ -71,5 +72,27 @@ public class Coord {
         result = prime * result + this.x;
         result = prime * result + this.y;
         return result;
+    }
+
+    /**
+     * Renvoie le point adjacent au point actuel.
+     * @param dir {@link Direction} du point.
+     * @return Le point adjacent.
+     */
+    public Coord adjacent(Direction dir) {
+        switch (dir) {
+            case HAUT:
+                return new Coord(this.x(), this.y() - 1);
+            case BAS:
+                return new Coord(this.x(), this.y() + 1);
+            case GAUCHE:
+                return new Coord(this.x() - 1, this.y());
+            case DROITE:
+                return new Coord(this.x() + 1, this.y());
+            case NEUTRE:
+                return this;
+            default:
+                throw new IllegalArgumentException("La direction n'est pas reconnu.");
+        }
     }
 }
