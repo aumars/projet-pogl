@@ -196,5 +196,13 @@ public class Joueur {
      * @param c Une case de la grille.
      */
     public void teleport(Case c) { this.pos = c; }
+
+    /**
+     * Vérifie si le Joueur est sur une case traversable.
+     * @return Vrai si le Joueur est sur une case traversable, Faux sinon.
+     */
+    public boolean surCaseTraversable() {
+        return this.pos.estTraversable();
+    }
 }
 
