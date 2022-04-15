@@ -143,8 +143,8 @@ public class Grille {
      * Inonde aléatoirement trois cases traversables de la grille.
      */
     public void inonde() {
-        Random rng = new Random();
         if (this.ile.size() > 0) {
+            Random rng = new Random();
             int case1 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
             int case2 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
             int case3 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
