@@ -25,7 +25,11 @@ public class Joueur {
      * Si le Joueur peut actuellement jouer son tour.
      */
     private boolean sonTour;
-    public String nom = "Player";
+
+    /**
+     * Le nom du joueur.
+     */
+    public static final String nom = "Player";
 
     /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
