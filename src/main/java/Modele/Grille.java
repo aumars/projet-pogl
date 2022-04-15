@@ -79,16 +79,25 @@ public class Grille {
     public void addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord> p) {
         Objet o = p.getKey();
         Coord c = p.getValue();
+        this.addObjet(o, c);
+    }
+
+    /**
+     * Ajout un {@link Objet} dans une case spécifiée de la grille.
+     * @param o Un objet
+     * @param c Un coord
+     * @throws IllegalArgumentException Si le point ne peut pas exister dans la grille.
+     */
+    public void addObjet(Objet o, Coord c) {
         if (c.y() >= this.getHeight() || c.x() >= this.getWidth()) {
             throw new IllegalArgumentException(String.format("Le point %s n'existe pas dans une grille %d * %d.",
                     c, this.getWidth(), this.getHeight()));
         }
         else {
             this.cases[c.y()][c.x()].ajoutObjet(o);
-            this.ile.removeIf(k -> k.coord.equals(p.getValue()));
+            this.ile.removeIf(k -> k.coord.equals(c));
         }
     }
-
 
     /**
      * Ajout un {@link Objet} dans une case spécifiée de la grille.
@@ -134,8 +143,8 @@ public class Grille {
      * Inonde aléatoirement trois cases traversables de la grille.
      */
     public void inonde() {
-        Random rng = new Random();
         if (this.ile.size() > 0) {
+            Random rng = new Random();
             int case1 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
             int case2 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
             int case3 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));

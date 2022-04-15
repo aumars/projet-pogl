@@ -93,6 +93,7 @@ package Modele {
     class Joueur {
       -vivant: boolean
       -endTurn: boolean
+      +name: String
       +joueurByID(String, Case): Joueur
       +noie()
       +estVivant(): boolean
@@ -104,6 +105,7 @@ package Modele {
       +possedeTousArtefacts(): boolean
       +getCoord(): Coord
       +asseche(Direction): boolean
+      +surCaseTraversable(): boolean
     }
     Objet "0..n" o-- "0..1" Joueur
     Case "0..1" o-- "0..4" Joueur
@@ -134,6 +136,7 @@ package Modele {
         +verifieGagnants(): Joueur
         +prochainJoueurVivant(): Joueur
         +tousJoueursMorts(): boolean
+        +tourPeutfinir(): boolean
     }
     Modele "0..1" *-- "1" Grille
     Modele "0..1" o-- "0..n" Joueur

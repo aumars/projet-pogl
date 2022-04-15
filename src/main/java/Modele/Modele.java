@@ -112,6 +112,14 @@ public class Modele extends Observable {
     }
 
     /**
+     * Vérifie si le tour actuel peut se terminer.
+     * @return Vrai si oui, Faux sinon.
+     */
+    public boolean tourPeutFinir() {
+        return this.joueurActuel.surCaseTraversable();
+    }
+
+    /**
      * Calcule le joueur prochain vivant.
      * @return le joueur prochain vivant.
      */

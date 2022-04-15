@@ -25,7 +25,11 @@ public class Joueur {
      * Si le Joueur peut actuellement jouer son tour.
      */
     private boolean sonTour;
-    public String nom = "Player";
+
+    /**
+     * Le nom du joueur.
+     */
+    public static final String nom = "Player";
 
     /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
@@ -196,5 +200,13 @@ public class Joueur {
      * @param c Une case de la grille.
      */
     public void teleport(Case c) { this.pos = c; }
+
+    /**
+     * Vérifie si le Joueur est sur une case traversable.
+     * @return Vrai si le Joueur est sur une case traversable, Faux sinon.
+     */
+    public boolean surCaseTraversable() {
+        return this.pos.estTraversable();
+    }
 }
 

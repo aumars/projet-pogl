@@ -4,15 +4,11 @@ import Modele.Exception.InvalidGameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 
 public class ModeleTest {
     Modele modeleM1G1;
     @BeforeEach
-    void modeleInit() throws ParserConfigurationException, IOException, SAXException, InvalidGameException {
+    void modeleInit() throws InvalidGameException {
         this.modeleM1G1 = new Modele("map1.txt", "game1.xml");
     }
 
@@ -41,6 +37,6 @@ public class ModeleTest {
         this.modeleM1G1.getJoueurActuel().deplace(Direction.DROITE);
         this.modeleM1G1.tourSuivant();
         this.modeleM1G1.getJoueurActuel().deplace(Direction.BAS);
-        Assertions.assertTrue(this.modeleM1G1.getJoueurActuel().chercheCle() != null);
+        Assertions.assertNotNull(this.modeleM1G1.getJoueurActuel().chercheCle());
     }
 }

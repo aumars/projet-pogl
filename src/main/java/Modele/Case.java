@@ -27,7 +27,7 @@ public class Case {
     /**
      * Drapeau pour marquer la visibilité de l'objet de la case sur la grille.
      */
-    private boolean objetVisibilite = false;
+    private boolean objetVisibilite = true;
 
     /**
      * La grille dans se trouve la case.
@@ -51,7 +51,7 @@ public class Case {
      * @return Vrai la case est traversable par un Joueur, Faux sinon.
      */
     public boolean estTraversable() {
-        return this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE;
+        return this.terrain == Terrain.HELIPAD || (this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE);
     }
 
     /**
@@ -64,10 +64,14 @@ public class Case {
      * Ajouter un objet sur la case. Si l'objet est une Clef, la visibilité de l'objet est initialisée à Faux.
      * @param o Un objet.
      * @throws RuntimeException Si la case n'est pas vide.
+     * @throws RuntimeException Si la case n'a pas un terrain de type TERRE.
      */
     public void ajoutObjet(Objet o) {
         if (this.objet != null) {
             throw new RuntimeException(String.format("Il existe déjà un objet dans la case %s", this.coord.toString()));
+        }
+        else if (this.terrain != Terrain.TERRE) {
+            throw new RuntimeException(String.format("La case %s n'a pas un terrain de type TERRE.", this.coord.toString()));
         }
         else {
             this.objet = o;
@@ -111,6 +115,7 @@ public class Case {
      */
     public void detruitObjet() {
         this.objet = null;
+        this.setObjetVisibilite(true);
     }
 
     /**
@@ -150,7 +155,10 @@ public class Case {
      * @throws IllegalArgumentException Si {@code dir} n'est pas reconnu.
      */
     public Case adjacent(Direction dir) {
-        if (this.grille != null) {
+        if (dir == Direction.NEUTRE) {
+            return this;
+        }
+        else if (this.grille != null) {
             return this.grille.getCase(this.coord.adjacent(dir));
         }
         else {
