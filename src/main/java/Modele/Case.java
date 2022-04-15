@@ -51,7 +51,7 @@ public class Case {
      * @return Vrai la case est traversable par un Joueur, Faux sinon.
      */
     public boolean estTraversable() {
-        return this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE;
+        return this.terrain == Terrain.HELIPAD || (this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE);
     }
 
     /**
