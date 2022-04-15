@@ -1,25 +1,17 @@
 package Vue;
 
 import Modele.*;
-
 import java.awt.*;
 import javax.swing.*;
 
 public class VueCase extends JPanel implements Observer {
-    private final int BOX_SIZE = Constants.BOX_SIZE;
-
-    private final Color COLOR_MER = new Color(47, 128, 124);
-    private final Color COLOR_SEC = new Color(48, 97, 14);
-    private final Color COLOR_INONDE = new Color(101, 147, 99);
-
-    private final int POS_ICN_X = this.BOX_SIZE / 2;
-    private final int POS_ICN_Y = this.BOX_SIZE / 2 + 10;
+    private int ICN_SIZEX = ConstsValue.BOX_SIZE / 2;
+    private int ICN_SIZEY = ConstsValue.BOX_SIZE / 2 + 10;
 
     private Modele modele;
     private Case c;
-    private JPanel panel = new JPanel();
-    private JLabel icn_joueur = new JLabel(
-            Utils.scaleImg(Constants.ICN_JOUEUR, this.POS_ICN_X, this.POS_ICN_Y));
+    private JPanel tuile_case = new JPanel();
+    private JLabel icn_avatar = new JLabel(Utils.tailleImg(ConstsIcon.AVATAR, this.ICN_SIZEX, this.ICN_SIZEY));
     private JLabel icn_objet = new JLabel();
 
     public VueCase(Modele m, Case c) {
@@ -28,92 +20,87 @@ public class VueCase extends JPanel implements Observer {
         this.modele = m;
         this.modele.addObserver(this);
 
-        this.setLayout(new FlowLayout());    
-        this.setPreferredSize(new Dimension(this.BOX_SIZE, this.BOX_SIZE));
-        this.paintJoueurs();
-        this.paintObjet();
+        if (this.estCaseJoueur()) {
+            this.ICN_SIZEX = this.ICN_SIZEX / 2;
+            this.ICN_SIZEY = this.ICN_SIZEY / 2;
+        }
 
-        this.panel.setOpaque(false);
-        this.panel.setPreferredSize(new Dimension(this.BOX_SIZE, this.BOX_SIZE));
-        this.add(this.panel);
+        this.setLayout(new FlowLayout());
+        this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
+        this.afficheJoueur();
+        this.afficheObjet();
+
+        this.tuile_case.setOpaque(false);
+        this.tuile_case.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
+        this.add(this.tuile_case);
     }
 
-    public void update() {
+    public void metAJourApresAction() {
         this.repaint();
     }
 
     public void paintComponent(Graphics g) {
         super.repaint();
-        paintSol(g);
+        colorieSol(g);
     }
 
-    private void paintJoueurs() {
-        this.panel.remove(this.icn_joueur);
+    private void afficheJoueur() {
+        this.tuile_case.remove(this.icn_avatar);
 
         if (!this.modele.getJoueurActuel().estVivant()) {
-            this.icn_joueur.setIcon(Utils.scaleImg(Constants.ICN_TOMB, this.POS_ICN_X, this.POS_ICN_Y));
-            this.panel.add(this.icn_joueur);
+            this.icn_avatar.setIcon(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY));
+            this.tuile_case.add(this.icn_avatar);
         }
 
-        else if (this.caseJoueur()) {
-            this.panel.add(this.icn_joueur);
+        else if (this.estCaseJoueur()) {
+            this.tuile_case.add(this.icn_avatar);
         }
     }
 
-    private void paintObjet() {
-        this.panel.remove(this.icn_objet);
+    private void afficheObjet() {
+        this.tuile_case.remove(this.icn_objet);
         this.icn_objet.setVisible(this.c.getObjetVisibilite());
-        
-        int POS_ICN_X = this.POS_ICN_X;
-        int POS_ICN_Y = this.POS_ICN_Y;
 
-        if (this.caseJoueur()) {
-            POS_ICN_X = this.POS_ICN_X / 2;
-            POS_ICN_Y = this.POS_ICN_Y / 2;   
+        if (this.c.estHelipad()) {
+            this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.HELICOPTERE, ICN_SIZEX, ICN_SIZEY));
+            this.tuile_case.add(this.icn_objet);
         }
 
-        if (this.c.terrain == Terrain.HELIPAD) {
-            this.icn_objet.setIcon(Utils.scaleImg(Constants.ICN_HELICOPTER, POS_ICN_X, POS_ICN_Y));
-            this.panel.add(this.icn_objet);
-        }
+        else if (this.c.aObjet(Clef.class)) {
+            this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.CLEF, ICN_SIZEX, ICN_SIZEY));
 
-        if (this.c.aObjet(Clef.class)) {
-            this.icn_objet
-                    .setIcon(Utils.scaleImg(Constants.ICN_CLEF, POS_ICN_X, POS_ICN_Y));
-
-            this.panel.add(this.icn_objet);
+            this.tuile_case.add(this.icn_objet);
         }
 
         else if (this.c.aObjet(Artefact.class)) {
             switch (this.c.getObjet().element) {
                 case EAU:
-                    this.icn_objet
-                            .setIcon(Utils.scaleImg(Constants.ICN_EAU, POS_ICN_X, POS_ICN_Y));
+                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.EAU, ICN_SIZEX, ICN_SIZEY));
                     break;
+
                 case AIR:
-                    this.icn_objet
-                            .setIcon(Utils.scaleImg(Constants.ICN_AIR, POS_ICN_X, POS_ICN_Y));
+                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.AIR, ICN_SIZEX, ICN_SIZEY));
                     break;
+
                 case TERRE:
-                    this.icn_objet
-                            .setIcon(Utils.scaleImg(Constants.ICN_TERRE, POS_ICN_X, POS_ICN_Y));
+                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.TERRE, ICN_SIZEX, ICN_SIZEY));
                     break;
+
                 case FEU:
-                    this.icn_objet
-                            .setIcon(Utils.scaleImg(Constants.ICN_FEU, POS_ICN_X, POS_ICN_Y));
+                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.FEU, ICN_SIZEX, ICN_SIZEY));
                     break;
 
                 default:
                     break;
             }
 
-            this.panel.add(this.icn_objet);
+            this.tuile_case.add(this.icn_objet);
         }
     }
 
-    private void paintSol(Graphics g) {
+    private void colorieSol(Graphics g) {
         if (this.c.terrain == Terrain.MER)
-            g.setColor(this.COLOR_MER);
+            g.setColor(ConstsValue.COLOR_MER);
 
         else if (this.c.getObjetVisibilite() && this.c.estHelipad())
             g.setColor(Color.GRAY);
@@ -121,27 +108,27 @@ public class VueCase extends JPanel implements Observer {
         else {
             switch (this.c.getEtat()) {
                 case SECHE:
-                    g.setColor(this.COLOR_SEC);
+                    g.setColor(ConstsValue.COLOR_SEC);
                     break;
 
                 case INONDEE:
-                    g.setColor(this.COLOR_INONDE);
+                    g.setColor(ConstsValue.COLOR_INONDE);
                     break;
 
                 case SUBMERGEE:
-                    g.setColor(this.COLOR_MER);
+                    g.setColor(ConstsValue.COLOR_MER);
                     break;
 
                 default:
-                    g.setColor(Color.WHITE);
+                    g.setColor(ConstsValue.COLOR_DEFAULT);
                     break;
             }
         }
 
-        g.fillRect(0, 0, this.BOX_SIZE, this.BOX_SIZE);
+        g.fillRect(0, 0, ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE);
     }
 
-    private boolean caseJoueur(){
+    private boolean estCaseJoueur() {
         return this.modele.getJoueurActuel().getCoord() == this.c.coord;
     }
 }

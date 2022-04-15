@@ -29,7 +29,7 @@ public class Joueur {
     /**
      * Le nom du joueur.
      */
-    public static final String nom = "Player";
+    public final String nom = "Player";
 
     /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().

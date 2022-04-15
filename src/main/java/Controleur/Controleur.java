@@ -7,28 +7,28 @@ import java.awt.event.*;
 public class Controleur implements ActionListener, KeyListener {
     private Modele modele;
     private Vue vue;
-    private VueCommande commande;
+    private VueCommande vue_commande;
     private Joueur joueur;
 
     public Controleur(Modele m, Vue v) {
         this.modele = m;
         this.vue = v;
         this.joueur = this.modele.getJoueurActuel();
-        this.commande = this.vue.bottom.commande;
+        this.vue_commande = this.vue.vue_info_bas.vue_commande;
 
-        this.vue.getFrame().addKeyListener(this);
+        this.vue.getFenetre().addKeyListener(this);
 
-        this.commande.btn_assecher_top.addActionListener(this);
-        this.commande.btn_assecher_bottom.addActionListener(this);
-        this.commande.btn_assecher_left.addActionListener(this);
-        this.commande.btn_assecher_right.addActionListener(this);
-        this.commande.btn_assecher_center.addActionListener(this);
+        this.vue_commande.btn_secher_haut.addActionListener(this);
+        this.vue_commande.btn_secher_bas.addActionListener(this);
+        this.vue_commande.btn_secher_gauche.addActionListener(this);
+        this.vue_commande.btn_secher_droite.addActionListener(this);
+        this.vue_commande.btn_secher_centre.addActionListener(this);
 
-        this.commande.btn_next.addActionListener(this);
-        this.commande.btn_prendre.addActionListener(this);
-        this.commande.btn_clef.addActionListener(this);
+        this.vue_commande.btn_fin_tour.addActionListener(this);
+        this.vue_commande.btn_prendre.addActionListener(this);
+        this.vue_commande.btn_clef.addActionListener(this);
 
-        this.vue.game_info.btn_help.addActionListener(this);
+        this.vue.vue_info_haut.btn_aide.addActionListener(this);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -86,19 +86,19 @@ public class Controleur implements ActionListener, KeyListener {
                 break;
 
             case KeyEvent.VK_ESCAPE:
-                this.vue.getFrame().setVisible(false);
-                this.vue.getFrame().dispose();
+                this.vue.getFenetre().setVisible(false);
+                this.vue.getFenetre().dispose();
                 break;
 
             case KeyEvent.VK_H:
-                this.vue.bottom.affichePanneauAide();
+                this.vue.vue_info_bas.affichePanneauAide();
                 break;
 
             default:
                 break;
         }
 
-        this.update();
+        this.metAJourApresAction();
     }
 
     public void keyTyped(KeyEvent e) {
@@ -109,91 +109,91 @@ public class Controleur implements ActionListener, KeyListener {
 
     public void actionPerformed(ActionEvent e) {
         // Gere l'assechement du sol.
-        if (this.commande.btn_assecher_top.getModel().isArmed()) {
+        if (this.vue_commande.btn_secher_haut.getModel().isArmed()) {
             this.joueur.asseche(Direction.HAUT);
         }
 
-        if (this.commande.btn_assecher_bottom.getModel().isArmed()) {
+        if (this.vue_commande.btn_secher_bas.getModel().isArmed()) {
             this.joueur.asseche(Direction.BAS);
         }
 
-        if (this.commande.btn_assecher_left.getModel().isArmed()) {
+        if (this.vue_commande.btn_secher_gauche.getModel().isArmed()) {
             this.joueur.asseche(Direction.GAUCHE);
         }
 
-        if (this.commande.btn_assecher_right.getModel().isArmed()) {
+        if (this.vue_commande.btn_secher_droite.getModel().isArmed()) {
             this.joueur.asseche(Direction.DROITE);
         }
 
-        if (this.commande.btn_assecher_center.getModel().isArmed()) {
+        if (this.vue_commande.btn_secher_centre.getModel().isArmed()) {
             this.joueur.asseche(Direction.NEUTRE);
         }
 
         // Gere les actions de la partie.
-        if (this.commande.btn_prendre.getModel().isArmed()) {
+        if (this.vue_commande.btn_prendre.getModel().isArmed()) {
             this.prendArtefact();
         }
 
-        if (this.commande.btn_clef.getModel().isArmed()) {
+        if (this.vue_commande.btn_clef.getModel().isArmed()) {
             this.chercheClef();
         }
 
-        if (this.commande.btn_next.getModel().isArmed()) {
+        if (this.vue_commande.btn_fin_tour.getModel().isArmed()) {
             this.tourSuivant();
         }
 
-        if (this.vue.game_info.btn_help.getModel().isArmed()) {
-            this.vue.bottom.affichePanneauAide();
+        if (this.vue.vue_info_haut.btn_aide.getModel().isArmed()) {
+            this.vue.vue_info_bas.affichePanneauAide();
         }
 
-        this.update();
+        this.metAJourApresAction();
     }
 
     private boolean deplaceJoueur(Direction dir) {
         Coord prev = this.joueur.getCoord();
         Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).coord;
         boolean est_fini = this.joueur.deplace(dir);
-        this.vue.grille.updatePlayerMove(prev, next);
-        this.checkEndGame();
+        this.vue.vue_grille.metAJourDeplacementJoueur(prev, next);
+        this.verifieFinJeu();
         return est_fini;
     }
 
-    private void checkEndGame() {
-        this.vue.bottom.updateEndGame();
-        this.vue.game_info.update();
-        this.vue.inventory.updateEtatJoueur();
+    private void verifieFinJeu() {
+        this.vue.vue_info_bas.verifieFinJeu();
+        this.vue.vue_info_haut.metAJourApresAction();
+        this.vue.vue_inventaires.metAJourEtatJoueur();
     }
 
-    private void update() {
-        this.vue.grille.updateCase(this.joueur.getCoord());
+    private void metAJourApresAction() {
+        this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         this.joueur = this.modele.getJoueurActuel();
-        this.vue.bottom.commande.disableUnusedButton();
+        this.vue.vue_info_bas.vue_commande.gereVisibiliteBoutons();
     }
 
     private void tourSuivant() {
         this.modele.tourSuivant();
-        this.vue.game_info.update();
+        this.vue.vue_info_haut.metAJourApresAction();
     }
 
     private void chercheClef() {
         Objet clef = this.joueur.chercheCle();
 
         if (clef != null) {
-            this.vue.inventory.updateAffichageObj(clef);
+            this.vue.vue_inventaires.metAJourAffichageObjet(clef);
         }
 
-        this.vue.grille.updateCase(this.joueur.getCoord());
-        this.checkEndGame();
+        this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
+        this.verifieFinJeu();
     }
 
     private void prendArtefact() {
         Objet artefact = this.joueur.recupereArtefact();
 
         if (artefact != null) {
-            this.vue.inventory.updateAffichageObj(artefact);
-            this.vue.grille.updateCase(this.joueur.getCoord());
+            this.vue.vue_inventaires.metAJourAffichageObjet(artefact);
+            this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         }
 
-        this.checkEndGame();
+        this.verifieFinJeu();
     }
 }

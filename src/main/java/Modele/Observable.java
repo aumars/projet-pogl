@@ -16,7 +16,7 @@ abstract class Observable {
 
     public void notifyObservers(){
         for (Observer observer : this.observers) {
-            observer.update();
+            observer.metAJourApresAction();
         }
     }
 }
