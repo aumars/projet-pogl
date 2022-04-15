@@ -115,6 +115,7 @@ public class Case {
      */
     public void detruitObjet() {
         this.objet = null;
+        this.setObjetVisibilite(true);
     }
 
     /**
