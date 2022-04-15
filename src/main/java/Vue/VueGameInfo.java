@@ -5,11 +5,11 @@ import Modele.Modele;
 import javax.swing.*;
 import java.awt.*;
 
-public class VueState extends JPanel {
+public class VueGameInfo extends JPanel {
     private Modele modele;
     private JLabel label_round;
 
-    public VueState(Modele m) {
+    public VueGameInfo(Modele m) {
         this.modele = m;
         
         String title = "Tour n°" + this.modele.getTour() + " - " + this.modele.getJoueurActuel().nom;

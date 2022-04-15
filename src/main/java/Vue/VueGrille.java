@@ -38,6 +38,17 @@ public class VueGrille extends JPanel {
         }
     }
 
+    public void updateAllCase(){
+        for (int i = 0; i < this.HEIGHT; i++) {
+            for (int j = 0; j < this.WIDTH; j++) {
+                this.remove(this.grille[i][j]);
+                Case c = this.modele.getGrille().getCase(j, i);
+                this.grille[i][j] = new VueCase(this.modele, c);
+                this.add(this.grille[i][j], Utils.positionGrid(j, i, this.GAP));
+            }
+        }
+    }
+
     public void updateCase(Coord coord){
         Case c = this.modele.getGrille().getCase(coord);
 

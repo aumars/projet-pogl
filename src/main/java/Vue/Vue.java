@@ -9,7 +9,7 @@ public class Vue {
     private JFrame frame;
     private Modele modele;
 
-    public VueState state;
+    public VueGameInfo game_info;
     public VueInventory inventory;
     public VueGrille grille;
     public VueCommande commande;
@@ -24,12 +24,12 @@ public class Vue {
         this.frame.setLayout(new GridBagLayout());
         this.frame.setResizable(false);
 
-        this.state = new VueState(this.modele);
+        this.game_info = new VueGameInfo(this.modele);
         this.inventory = new VueInventory(this.modele, "<HTML><U>"+this.modele.getJoueurActuel().nom+"</U></HTML>");
         this.grille = new VueGrille(this.modele);
         this.bottom = new VueBottom(this.modele);
         
-        this.frame.add(this.state, Utils.positionGrid(0, 0, 2, 1, 1));
+        this.frame.add(this.game_info, Utils.positionGrid(0, 0, 2, 1, 1));
         this.frame.add(this.inventory, Utils.positionGrid(0, 1, 1, 3, 0));
         this.frame.add(this.grille, Utils.positionGrid(1, 1));
         this.frame.add(this.bottom, Utils.positionGrid(1, 2));

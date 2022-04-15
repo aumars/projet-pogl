@@ -144,20 +144,25 @@ public class Controleur implements ActionListener, KeyListener {
         Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).coord;
         boolean est_fini = this.joueur.deplace(dir);
         this.vue.grille.updatePlayerMove(prev, next);
+        this.checkEndGame();
         return est_fini;
     }
-
+    
+    private void checkEndGame(){
+        this.vue.bottom.updateEndGame();
+        this.vue.game_info.update();
+        this.vue.inventory.updateEtatJoueur();
+    }
+    
     private void update() {
         this.vue.grille.updateCase(this.joueur.getCoord());
         this.joueur = this.modele.getJoueurActuel();
         this.vue.bottom.commande.disableUnusedButton();
     }
-
+    
     private void tourSuivant() {
         this.modele.tourSuivant();
-        this.vue.state.update();
-        this.vue.inventory.updateEtatJoueur();
-        this.vue.bottom.updateEndGame();
+        this.vue.game_info.update();
     }
 
     private void chercheClef() {
@@ -165,9 +170,10 @@ public class Controleur implements ActionListener, KeyListener {
 
         if (clef != null) {
             this.vue.inventory.updateAffichageObj(clef);
-            this.vue.grille.updateCase(this.joueur.getCoord());
-            this.vue.state.update();
         }
+        
+        this.vue.grille.updateCase(this.joueur.getCoord());
+        this.checkEndGame();
     }
 
     private void prendArtefact() {
@@ -176,7 +182,8 @@ public class Controleur implements ActionListener, KeyListener {
         if (artefact != null) {
             this.vue.inventory.updateAffichageObj(artefact);
             this.vue.grille.updateCase(this.joueur.getCoord());
-            this.vue.state.update();
         }
+
+        this.checkEndGame();
     }
 }

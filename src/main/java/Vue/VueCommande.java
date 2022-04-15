@@ -13,7 +13,7 @@ public class VueCommande extends JPanel {
     public JButton btn_assecher_right = new VueBouton("Séche case de droite [M]", this.ICN_BUCKET);
     public JButton btn_assecher_center = new VueBouton("Séche case du centre [SPACE]", this.ICN_BUCKET);
 
-    public JButton btn_clef = new VueBouton("recherche une clef [SPACE]", "Clef");
+    public JButton btn_clef = new VueBouton("recherche une clef [A]", "Clef");
     public JButton btn_prendre = new VueBouton("récupére un artefact [F]", "Artefact");
     public JButton btn_next = new VueBouton("fin du tour [ENTER]", "Fin");
 
@@ -21,7 +21,6 @@ public class VueCommande extends JPanel {
         this.modele = m;
 
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
-        // this.setBackground(Color.GRAY);
 
         // Affiche le panel pour assecher une zone.
         JPanel panel_assecher = new JPanel();
