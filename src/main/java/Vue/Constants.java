@@ -22,4 +22,5 @@ public final class Constants {
     public static ImageIcon ICN_BUCKET = new ImageIcon("src/main/resources/img/bucket.png");
     public static ImageIcon ICN_END_ROUND = new ImageIcon("src/main/resources/img/end-round.png");
     public static ImageIcon ICN_SEARCH = new ImageIcon("src/main/resources/img/search.png");
+    public static ImageIcon ICN_EMPTY = new ImageIcon("src/main/resources/img/empty.png");
 }
