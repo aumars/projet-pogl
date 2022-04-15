@@ -155,7 +155,10 @@ public class Case {
      * @throws IllegalArgumentException Si {@code dir} n'est pas reconnu.
      */
     public Case adjacent(Direction dir) {
-        if (this.grille != null) {
+        if (dir == Direction.NEUTRE) {
+            return this;
+        }
+        else if (this.grille != null) {
             return this.grille.getCase(this.coord.adjacent(dir));
         }
         else {
