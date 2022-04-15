@@ -64,10 +64,14 @@ public class Case {
      * Ajouter un objet sur la case. Si l'objet est une Clef, la visibilité de l'objet est initialisée à Faux.
      * @param o Un objet.
      * @throws RuntimeException Si la case n'est pas vide.
+     * @throws RuntimeException Si la case n'a pas un terrain de type TERRE.
      */
     public void ajoutObjet(Objet o) {
         if (this.objet != null) {
             throw new RuntimeException(String.format("Il existe déjà un objet dans la case %s", this.coord.toString()));
+        }
+        else if (this.terrain != Terrain.TERRE) {
+            throw new RuntimeException(String.format("La case %s n'a pas un terrain de type TERRE.", this.coord.toString()));
         }
         else {
             this.objet = o;
