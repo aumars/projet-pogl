@@ -15,7 +15,6 @@ public class VueInventory extends JPanel {
         this.modele = m;
         this.name = name;
 
-        // this.setBackground(Color.CYAN    );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         

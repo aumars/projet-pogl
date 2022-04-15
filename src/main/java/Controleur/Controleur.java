@@ -27,6 +27,8 @@ public class Controleur implements ActionListener, KeyListener {
         this.commande.btn_next.addActionListener(this);
         this.commande.btn_prendre.addActionListener(this);
         this.commande.btn_clef.addActionListener(this);
+
+        this.vue.game_info.btn_help.addActionListener(this);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -88,6 +90,10 @@ public class Controleur implements ActionListener, KeyListener {
                 this.vue.getFrame().dispose();
                 break;
 
+            case KeyEvent.VK_H:
+                this.vue.bottom.affichePanneauAide();
+                break;
+
             default:
                 break;
         }
@@ -136,6 +142,10 @@ public class Controleur implements ActionListener, KeyListener {
             this.tourSuivant();
         }
 
+        if (this.vue.game_info.btn_help.getModel().isArmed()) {
+            this.vue.bottom.affichePanneauAide();
+        }
+
         this.update();
     }
 
@@ -147,19 +157,19 @@ public class Controleur implements ActionListener, KeyListener {
         this.checkEndGame();
         return est_fini;
     }
-    
-    private void checkEndGame(){
+
+    private void checkEndGame() {
         this.vue.bottom.updateEndGame();
         this.vue.game_info.update();
         this.vue.inventory.updateEtatJoueur();
     }
-    
+
     private void update() {
         this.vue.grille.updateCase(this.joueur.getCoord());
         this.joueur = this.modele.getJoueurActuel();
         this.vue.bottom.commande.disableUnusedButton();
     }
-    
+
     private void tourSuivant() {
         this.modele.tourSuivant();
         this.vue.game_info.update();
@@ -171,7 +181,7 @@ public class Controleur implements ActionListener, KeyListener {
         if (clef != null) {
             this.vue.inventory.updateAffichageObj(clef);
         }
-        
+
         this.vue.grille.updateCase(this.joueur.getCoord());
         this.checkEndGame();
     }
