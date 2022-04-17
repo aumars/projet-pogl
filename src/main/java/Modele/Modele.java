@@ -33,6 +33,11 @@ public class Modele extends Observable {
     private Joueur joueurActuel;
 
     /**
+     * Marqueur pour la fin du jeu.
+     */
+    private boolean finJeu;
+
+    /**
      * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
      * @param carte Une carte
      * @param jeu L'ensemble d'objets et de joueurs.
@@ -50,6 +55,7 @@ public class Modele extends Observable {
         this.tour = 1;
         this.iter = this.ensemble.iterator();
         this.joueurActuel = this.iter.next();
+        this.finJeu = false;
     }
 
     public List<Joueur> getJoueurs(){
@@ -111,6 +117,7 @@ public class Modele extends Observable {
     public Joueur verifieGagnants() {
         for (Joueur j: this.ensemble) {
             if (j.verifieGagnant()) {
+                this.finJeu = true;
                 return j;
             }
         }
@@ -148,6 +155,18 @@ public class Modele extends Observable {
      * @return Vrai si tous les joueurs sont morts, Faux sinon.
      */
     public boolean tousJoueursMorts(){
-        return this.ensemble.stream().noneMatch(j -> j.estVivant());
+        if (this.ensemble.stream().noneMatch(j -> j.estVivant())) {
+            this.finJeu = true;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
+
+    /**
+     * Vérifie si le jeu est terminé.
+     * @return Vrai si le jeu est terminé, Faux sinon.
+     */
+    public boolean getFinJeu() { return this.finJeu; }
 }
