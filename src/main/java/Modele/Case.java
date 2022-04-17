@@ -46,6 +46,9 @@ public class Case {
         this.grille = g;
     }
 
+    @Override
+    public String toString() { return "Case " + this.coord.toString(); }
+
     /**
      * Vérifie si la case est traversable par un Joueur.
      * @return Vrai la case est traversable par un Joueur, Faux sinon.
