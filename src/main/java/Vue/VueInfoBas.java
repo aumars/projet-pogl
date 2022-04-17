@@ -33,6 +33,7 @@ public class VueInfoBas extends JPanel {
             this.vue_commande.setVisible(false);
             this.vue_fin_jeu = new VueFinJeu(this.modele, gagnant == null);
             this.est_fin_jeu = true;
+            this.add(this.vue_fin_jeu);
         }
     }
     
