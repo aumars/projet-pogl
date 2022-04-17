@@ -81,7 +81,7 @@ public class Modele extends Observable {
     public void tourSuivant() {
         this.tour++;
         this.grille.inonde();
-        for (Joueur joueur: this.ensemble) { joueur.noie(); }
+        this.ensemble.forEach(j -> j.noie());
         this.joueurActuel = this.prochainJoueurVivant();
         this.joueurActuel.newTurn();
     }
