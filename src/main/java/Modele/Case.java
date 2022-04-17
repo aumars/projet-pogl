@@ -108,7 +108,10 @@ public class Case {
      * Modifie la visibilité de l'objet sur la grille.
      * @param b La visibilité de l'objet.
      */
-    public void setObjetVisibilite(boolean b) { this.objetVisibilite = b; }
+    public void setObjetVisibilite(boolean b) {
+        this.objetVisibilite = b;
+        System.out.printf("Case %s: Visibilité est %b%n", this.coord, b);
+    }
 
     /**
      * Détruit l'objet sur la grille, même s'il n'existe pas.
