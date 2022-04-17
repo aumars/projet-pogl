@@ -111,6 +111,19 @@ public class ModeleTest {
     }
 
     @Test
+    void modeleCasesAdjacentesInondeesGame1() {
+        Modele m = this.modeleM1G1;
+        Case c1 = m.getGrille().getCase(new Coord(2, 1));
+        Case c2 = m.getGrille().getCase(new Coord(1, 2));
+        c1.monteEaux();
+        c1.monteEaux();
+        c2.monteEaux();
+        c2.monteEaux();
+        m.tourSuivant();
+        Assertions.assertTrue(m.tousJoueursMorts());
+    }
+
+    @Test
     void modeleCasesAdjacentesInondeesGame2() {
         Modele m = this.modeleM1G2;
         Case c1 = m.getGrille().getCase(new Coord(2, 1));
