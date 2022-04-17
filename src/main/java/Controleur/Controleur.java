@@ -161,7 +161,7 @@ public class Controleur implements ActionListener, KeyListener {
     private void verifieFinJeu() {
         this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
-        this.vue.vue_inventaires.inventaires[0].metAJourEtatJoueur();
+        this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourEtatJoueur();
     }
 
     private void metAJourApresAction() {
@@ -178,7 +178,7 @@ public class Controleur implements ActionListener, KeyListener {
 
     private void chercheClef() {
         if (this.joueur.chercheCle() != null) {
-            this.vue.vue_inventaires.inventaires[0].metAJourAffichageObjet();
+            this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
         }
 
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
@@ -187,7 +187,7 @@ public class Controleur implements ActionListener, KeyListener {
 
     private void prendArtefact() {
         if (this.joueur.recupereArtefact() != null) {
-            this.vue.vue_inventaires.inventaires[0].metAJourAffichageObjet();
+            this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
             this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         }
         

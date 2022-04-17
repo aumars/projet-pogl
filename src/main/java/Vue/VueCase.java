@@ -12,12 +12,14 @@ public class VueCase extends JPanel implements Observer {
     private Modele modele;
     private Case c;
     private JLabel icn_objet = new JLabel();
+    private java.util.List<Joueur> joueurs_case;
 
     public VueCase(Modele m, Case c) {
         this.c = c;
         this.modele = m;
         this.modele.addObserver(this);
-        this.nb_joueurs = this.countNbJoueursCase();
+        this.joueurs_case = this.joueursCase();
+        this.nb_joueurs = this.joueurs_case.size();
 
         this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
 
@@ -43,12 +45,11 @@ public class VueCase extends JPanel implements Observer {
             else
                 this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(i), this.ICN_SIZEX, this.ICN_SIZEY)));
         }
-
     }
 
     private void afficheTousJoueurs() {
-        for (int i = 0; i < this.nb_joueurs; i++)
-            this.afficheUnJoueur(i);
+        for (Joueur j : this.joueurs_case)
+            this.afficheUnJoueur(j.id);
     }
 
     private void afficheObjet() {
@@ -121,29 +122,21 @@ public class VueCase extends JPanel implements Observer {
         g.fillRect(0, 0, ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE);
     }
 
-    private boolean estCaseJoueur() {
+    private java.util.List<Joueur> joueursCase() {
         java.util.List<Joueur> joueurs = this.modele.getJoueurs();
+        java.util.List<Joueur> joueurs_case = new java.util.ArrayList<>();
 
         for (int i = 0; i < joueurs.size(); i++) {
             if (joueurs.get(i).getCoord() == this.c.coord) {
-                return true;
+                joueurs_case.add(joueurs.get(i));
             }
         }
 
-        return false;
+        return joueurs_case;
     }
 
-    private int countNbJoueursCase() {
-        int nb_joueurs = 0;
-        java.util.List<Joueur> joueurs = this.modele.getJoueurs();
-
-        for (int i = 0; i < joueurs.size(); i++) {
-            if (joueurs.get(i).getCoord() == this.c.coord) {
-                nb_joueurs++;
-            }
-        }
-
-        return nb_joueurs;
+    private boolean estCaseJoueur() {
+        return this.joueurs_case.size() != 0;
     }
 
     private void metAJourTailleIcon() {
