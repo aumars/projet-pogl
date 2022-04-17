@@ -71,10 +71,10 @@ public class Case {
      */
     public void ajoutObjet(Objet o) {
         if (this.objet != null) {
-            throw new RuntimeException(String.format("Il existe déjà un objet dans la case %s", this.coord.toString()));
+            throw new RuntimeException(String.format("Il existe déjà un objet dans %s", this));
         }
         else if (this.terrain != Terrain.TERRE) {
-            throw new RuntimeException(String.format("La case %s n'a pas un terrain de type TERRE.", this.coord.toString()));
+            throw new RuntimeException(String.format("%s n'a pas un terrain de type TERRE.", this));
         }
         else {
             this.objet = o;
