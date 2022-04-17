@@ -15,8 +15,10 @@ public class VueObjet extends JPanel {
         JLabel description = new JLabel("", SwingConstants.CENTER);
         description.setFont(new Font(ConstsValue.FONT_FAMILY, Font.ITALIC, 11));
 
-        if (o == null)
+        if (o == null){
             icon.setIcon(Utils.tailleImg(ConstsIcon.PLH_VIDE, this.SIZE, this.SIZE));
+            icon.setBorder(BorderFactory.createEmptyBorder(0, 0, 13, 0));
+        }
 
         else if (o.getClass().equals(Clef.class)) {
             icon.setIcon(Utils.tailleImg(ConstsIcon.CLEF, this.SIZE, this.SIZE));

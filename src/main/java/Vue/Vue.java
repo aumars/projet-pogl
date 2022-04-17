@@ -10,7 +10,8 @@ public class Vue {
     private Modele modele;
 
     public VueInfoHaut vue_info_haut;
-    public VueInventaires vue_inventaires;
+    // public VueInventaire vue_inventaires;
+    public VueContainerInventaires vue_inventaires;
     public VueGrille vue_grille;
     public VueInfoBas vue_info_bas;
 
@@ -23,7 +24,8 @@ public class Vue {
         this.fenetre.setResizable(false);
 
         this.vue_info_haut = new VueInfoHaut(this.modele);
-        this.vue_inventaires = new VueInventaires(this.modele, Utils.souligneLabel(this.modele.getJoueurActuel().nom));
+        // this.vue_inventaires = new VueInventaire(this.modele, Utils.souligneLabel(this.modele.getJoueurActuel().nom));
+        this.vue_inventaires = new VueContainerInventaires(this.modele);
         this.vue_grille = new VueGrille(this.modele);
         this.vue_info_bas = new VueInfoBas(this.modele);
 

@@ -29,6 +29,6 @@ public class VueInfoHaut extends JPanel {
     }
 
     private String getTextTitre(){
-        return "Tour n°" + this.modele.getTour() + " - " + this.modele.getJoueurActuel().nom;
+        return "Tour n°" + this.modele.getTour() + " - Player" + (this.modele.getTour()-1)%4;
     }
 }

@@ -43,7 +43,7 @@ public class VueCommande extends JPanel {
         panel_actions.add(this.btn_prendre, Utils.positionneGrille(1, 0, 5));
         panel_actions.add(this.btn_fin_tour, Utils.positionneGrille(2, 0, 5));
         this.add(panel_actions);
-
+        
         gereVisibiliteBoutons();
     }
 
@@ -55,9 +55,10 @@ public class VueCommande extends JPanel {
         this.btn_secher_centre.setEnabled(peut_jouer && estCaseInonder(Direction.NEUTRE));
         this.btn_secher_gauche.setEnabled(peut_jouer && estCaseInonder(Direction.GAUCHE));
         this.btn_secher_droite.setEnabled(peut_jouer && estCaseInonder(Direction.DROITE));
-
+        
         this.btn_clef.setEnabled(peut_jouer);
         this.btn_prendre.setEnabled(peut_jouer && estCaseArtefact());
+        this.btn_fin_tour.setEnabled(this.modele.tourPeutFinir());
     }
 
     private boolean estCaseArtefact() {

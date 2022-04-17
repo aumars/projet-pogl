@@ -1,0 +1,82 @@
+<game>
+    <personnage id="joueur">
+        <position>
+            <x>1</x>
+            <y>1</y>
+        </position>
+    </personnage>
+    <personnage id="joueur">
+        <position>
+            <x>1</x>
+            <y>1</y>
+        </position>
+    </personnage>
+    <personnage id="joueur">
+        <position>
+            <x>1</x>
+            <y>1</y>
+        </position>
+    </personnage>
+    <personnage id="joueur">
+        <position>
+            <x>1</x>
+            <y>1</y>
+        </position>
+    </personnage>
+    <objet id="artefact">
+        <element>AIR</element>
+        <position>
+            <x>2</x>
+            <y>3</y>
+        </position>
+    </objet>
+    <objet id="artefact">
+        <element>EAU</element>
+        <position>
+            <x>3</x>
+            <y>4</y>
+        </position>
+    </objet>
+    <objet id="artefact">
+        <element>TERRE</element>
+        <position>
+            <x>6</x>
+            <y>4</y>
+        </position>
+    </objet>
+    <objet id="artefact">
+        <element>FEU</element>
+        <position>
+            <x>1</x>
+            <y>3</y>
+        </position>
+    </objet>
+    <objet id="clef">
+        <element>AIR</element>
+        <position>
+            <x>4</x>
+            <y>2</y>
+        </position>
+    </objet>
+    <objet id="clef">
+        <element>EAU</element>
+        <position>
+            <x>5</x>
+            <y>6</y>
+        </position>
+    </objet>
+    <objet id="clef">
+        <element>TERRE</element>
+        <position>
+            <x>5</x>
+            <y>3</y>
+        </position>
+    </objet>
+    <objet id="clef">
+        <element>FEU</element>
+        <position>
+            <x>1</x>
+            <y>2</y>
+        </position>
+    </objet>
+</game>

@@ -4,14 +4,14 @@ import Modele.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class VueInventaires extends JPanel {
+public class VueInventaire extends JPanel {
     private final int max_items = 9;
     private Modele modele;
     private JLabel label_nom_joueur = new JLabel();
     private JPanel panel_objets = new JPanel();
     private String nom;
 
-    public VueInventaires(Modele m, String nom) {
+    public VueInventaire(Modele m, String nom) {
         this.modele = m;
         this.nom = nom;
 
@@ -31,7 +31,7 @@ public class VueInventaires extends JPanel {
         this.add(panel_objets);
     }
 
-    public void metAJourAffichageObjet(Objet object_to_add) {
+    public void metAJourAffichageObjet() {
         this.panel_objets.removeAll();
 
         for (Objet o : this.modele.getJoueurActuel().getInventaire()) {

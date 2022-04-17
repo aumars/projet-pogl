@@ -101,11 +101,9 @@ public class Controleur implements ActionListener, KeyListener {
         this.metAJourApresAction();
     }
 
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
     public void actionPerformed(ActionEvent e) {
         // Gere l'assechement du sol.
@@ -161,7 +159,7 @@ public class Controleur implements ActionListener, KeyListener {
     private void verifieFinJeu() {
         this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
-        this.vue.vue_inventaires.metAJourEtatJoueur();
+        this.vue.vue_inventaires.inventaires[0].metAJourEtatJoueur();
     }
 
     private void metAJourApresAction() {
@@ -176,10 +174,8 @@ public class Controleur implements ActionListener, KeyListener {
     }
 
     private void chercheClef() {
-        Objet clef = this.joueur.chercheCle();
-
-        if (clef != null) {
-            this.vue.vue_inventaires.metAJourAffichageObjet(clef);
+        if (this.joueur.chercheCle() != null) {
+            this.vue.vue_inventaires.inventaires[0].metAJourAffichageObjet();
         }
 
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
@@ -187,13 +183,11 @@ public class Controleur implements ActionListener, KeyListener {
     }
 
     private void prendArtefact() {
-        Objet artefact = this.joueur.recupereArtefact();
-
-        if (artefact != null) {
-            this.vue.vue_inventaires.metAJourAffichageObjet(artefact);
+        if (this.joueur.recupereArtefact() != null) {
+            this.vue.vue_inventaires.inventaires[0].metAJourAffichageObjet();
             this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         }
-
+        
         this.verifieFinJeu();
     }
 }
