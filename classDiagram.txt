@@ -138,7 +138,9 @@ package Modele {
         +tourSuivant(): void
         +getTour(): int
         +getGrille(): Grille
-        +verifieGagnants(): Joueur
+        +verifieGagnants(): boolean
+        -tousJoueursSurHelipad(): boolean
+        -tousArtefactsRecuperes(): boolean
         +prochainJoueurVivant(): Joueur
         +tousJoueursMorts(): boolean
         +tourPeutfinir(): boolean
