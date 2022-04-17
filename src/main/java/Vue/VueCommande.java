@@ -58,6 +58,7 @@ public class VueCommande extends JPanel {
 
         this.btn_clef.setEnabled(peut_jouer);
         this.btn_prendre.setEnabled(peut_jouer && estCaseArtefact());
+        this.btn_fin_tour.setEnabled(this.modele.tourPeutFinir());
     }
 
     private boolean estCaseArtefact() {
