@@ -4,7 +4,6 @@ import Modele.Exception.InvalidGameException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.*;
 public class JeuTest {
     Jeu jeu1;
     @BeforeEach
-    void jeuInit() throws ParserConfigurationException, IOException, SAXException, InvalidGameException {
+    void jeuInit() throws InvalidGameException {
         this.jeu1 = new Jeu("game1.xml");
     }
 
@@ -28,7 +27,7 @@ public class JeuTest {
     }
 
     @Test
-    void jeuUneCaseDeuxObjets() throws ParserConfigurationException, IOException, SAXException {
+    void jeuUneCaseDeuxObjets() {
         Assertions.assertThrows(InvalidGameException.class, () -> new Jeu("gameBad1.xml"));
     }
 }
