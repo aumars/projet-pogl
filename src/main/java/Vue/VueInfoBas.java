@@ -26,7 +26,7 @@ public class VueInfoBas extends JPanel {
         this.add(this.vue_commande);
     }
 
-    public void verifieFinJeu(){
+    public boolean verifieFinJeu(){
         boolean jeuGagne = this.modele.verifieGagnants();
 
         if (jeuGagne || this.modele.tousJoueursMorts()) {
@@ -34,7 +34,10 @@ public class VueInfoBas extends JPanel {
             this.vue_fin_jeu = new VueFinJeu(this.modele, !jeuGagne);
             this.est_fin_jeu = true;
             this.add(this.vue_fin_jeu);
+            return true;
         }
+
+        return false;
     }
     
     public void affichePanneauAide(){
@@ -49,19 +52,5 @@ public class VueInfoBas extends JPanel {
         }
         
         this.affiche_aide = !this.affiche_aide;
-    }
-
-    public void redemarre(){
-        affiche_aide = false;
-        est_fin_jeu = false;
-
-        this.removeAll();
-        // this.add(this.vue_commande);
-        
-        // this.updateUI();
-        this.revalidate();
-        this.repaint();
-        // super.validate();
-        // super.repaint();
     }
 }

@@ -32,8 +32,4 @@ public class VueInfoHaut extends JPanel {
     private String getTextTitre(){
         return "Tour n°" + this.modele.getTour() + " - Player" + this.modele.getJoueurActuel().id;
     }
-
-    public void redemarre(){
-        super.repaint();
-    }
 }

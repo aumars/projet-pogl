@@ -22,15 +22,7 @@ public class Vue {
         this.fenetre.setLayout(new GridBagLayout());
         this.fenetre.setResizable(false);
 
-        this.vue_info_haut = new VueInfoHaut(this.modele);
-        this.vue_inventaires = new VueContainerInventaires(this.modele);
-        this.vue_grille = new VueGrille(this.modele);
-        this.vue_info_bas = new VueInfoBas(this.modele);
-
-        this.fenetre.add(this.vue_info_haut, Utils.positionneGrille(0, 0, 2, 1, 1));
-        this.fenetre.add(this.vue_inventaires, Utils.positionneGrille(0, 1, 1, 3, 0));
-        this.fenetre.add(this.vue_grille, Utils.positionneGrille(1, 1));
-        this.fenetre.add(this.vue_info_bas, Utils.positionneGrille(1, 2));
+        this.commencer();
 
         this.fenetre.pack();
         this.fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +42,7 @@ public class Vue {
         this.fenetre.add(this.vue_inventaires, Utils.positionneGrille(0, 1, 1, 3, 0));
         this.fenetre.add(this.vue_grille, Utils.positionneGrille(1, 1));
         this.fenetre.add(this.vue_info_bas, Utils.positionneGrille(1, 2));
-        
+
         this.fenetre.repaint();
         this.fenetre.revalidate();
     }
