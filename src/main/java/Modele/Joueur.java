@@ -32,6 +32,16 @@ public class Joueur {
     public final String nom = "Player";
 
     /**
+     * Le nombre de Joueurs instanciés.
+     */
+    private static int numJoueurs = 0;
+
+    /**
+     * Le numéro d'identification du Joueur.
+     */
+    public final int id;
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
@@ -46,6 +56,8 @@ public class Joueur {
         this.pos = c;
         this.inventaire = new ArrayList<>();
         this.sonTour = true;
+        this.id = numJoueurs;
+        numJoueurs++;
     }
 
     /**
