@@ -113,7 +113,8 @@ package Modele {
       +prendObjet(Objet): void
       +getInventaire(): List<Objet>
       +getCoord(): Coord
-      +asseche(Direction): boolean
+      +asseche(Direction): void
+      +asseche(Case): void
       +teleport(Case): void
       +setPosInitiale(Case): void
       +surCaseTraversable(): boolean

@@ -231,6 +231,18 @@ public class Joueur {
     }
 
     /**
+     * Action spéciale. Assèche n'importe quelle case assèchable.
+     * @param c Une case.
+     */
+    public void asseche(Case c) {
+        if (this.estSonTour() && c.asseche() && this.aActionSpeciale()) {
+            this.log(String.format("assèche %s (action spéciale)", c));
+            this.actionSpeciale = false;
+            this.finishTurn();
+        }
+    }
+
+    /**
      * Récupère l'Artefact sur la case du Joueur, s'il a la clef correspondante.
      */
     public Objet recupereArtefact() {
