@@ -207,14 +207,6 @@ public class Joueur {
     }
 
     /**
-     * Vérifie si le Joueur a gagné.
-     * @return Vrai si la Joueur a gagné, Faux sinon.
-     */
-    public boolean verifieGagnant() {
-        return this.pos.estHelipad() && this.possedeTousArtefacts();
-    }
-
-    /**
      * Met à jour la position du Joueur dans une case de la grille.
      * @param c Une case de la grille.
      */
