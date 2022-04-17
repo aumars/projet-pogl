@@ -232,5 +232,12 @@ public class Joueur {
     public boolean surCaseTraversable() {
         return this.pos.estTraversable();
     }
+
+    /**
+     * Vérifie si le Joueur est sur un helipad.
+     */
+    public boolean surHelipad() {
+        return this.pos.estHelipad();
+    }
 }
 

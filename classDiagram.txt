@@ -109,6 +109,7 @@ package Modele {
       +getCoord(): Coord
       +asseche(Direction): boolean
       +surCaseTraversable(): boolean
+      +surHelipad(): boolean
     }
     Objet "0..n" o-- "0..1" Joueur
     Case "0..1" o-- "0..4" Joueur
