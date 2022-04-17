@@ -79,11 +79,13 @@ public class Modele extends Observable {
      * Incrémente au prochain tour.
      */
     public void tourSuivant() {
-        this.tour++;
-        this.grille.inonde();
-        this.ensemble.forEach(j -> j.noie());
-        this.joueurActuel = this.prochainJoueurVivant();
-        this.joueurActuel.newTurn();
+        if (this.tourPeutFinir()) {
+            this.tour++;
+            this.grille.inonde();
+            this.joueurActuel = this.prochainJoueurVivant();
+            this.joueurActuel.newTurn();
+            this.ensemble.forEach(j -> j.noie());
+        }
     }
 
     /**
