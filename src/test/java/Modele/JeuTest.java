@@ -28,4 +28,11 @@ public class JeuTest {
     void jeuUneCaseDeuxObjets() {
         Assertions.assertThrows(InvalidGameException.class, () -> new Jeu("gameBad1.xml"));
     }
+
+    @Test
+    void jeuPlusieursJoueurs() {
+        List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> joueurs = this.jeu1.ensemble;
+        Assertions.assertNotSame(joueurs.get(0).getKey(), joueurs.get(1).getKey());
+        Assertions.assertNotSame(joueurs.get(0).getKey(), joueurs.get(2).getKey());
+    }
 }
