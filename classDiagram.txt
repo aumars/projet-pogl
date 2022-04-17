@@ -93,6 +93,8 @@ package Modele {
     class Joueur {
       -vivant: boolean
       -endTurn: boolean
+      -numJoueur: int
+      +id: int
       +name: String
       +joueurByID(String, Case): Joueur
       +noie()
@@ -128,6 +130,7 @@ package Modele {
     Jeu "0..1" *-- "0..n" Joueur
 
     class Modele {
+        -finJeu: boolean
         +getJoueurActuel(): Joueur
         +getNbJoueurs(): int
         +tourSuivant(): void
@@ -137,6 +140,7 @@ package Modele {
         +prochainJoueurVivant(): Joueur
         +tousJoueursMorts(): boolean
         +tourPeutfinir(): boolean
+        +getFinJeu(): boolean
     }
     Modele "0..1" *-- "1" Grille
     Modele "0..1" o-- "0..n" Joueur
