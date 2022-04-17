@@ -75,7 +75,7 @@ public class Case {
         }
         else {
             this.objet = o;
-            this.objetVisibilite = !this.objet.getClass().equals(Clef.class);
+            this.setObjetVisibilite(!this.objet.getClass().equals(Clef.class));
         }
     }
 
