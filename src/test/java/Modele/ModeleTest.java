@@ -109,4 +109,33 @@ public class ModeleTest {
         m.getJoueurActuel().deplace(Direction.BAS);
         Assertions.assertNotNull(m.getJoueurActuel().chercheCle());
     }
+
+    @Test
+    void modeleCasesAdjacentesInondeesGame2() {
+        Modele m = this.modeleM1G2;
+        Case c1 = m.getGrille().getCase(new Coord(2, 1));
+        Case c2 = m.getGrille().getCase(new Coord(1, 2));
+        c1.monteEaux();
+        c1.monteEaux();
+        c2.monteEaux();
+        c2.monteEaux();
+        m.tourSuivant();
+        Assertions.assertTrue(m.tousJoueursMorts());
+    }
+
+    @Test
+    void modeleCaseActuelleInondeeGame2() {
+        Modele m = this.modeleM1G2;
+        Case c1 = m.getGrille().getCase(m.getJoueurActuel().getCoord());
+        int tour = m.getTour();
+        c1.monteEaux();
+        c1.monteEaux();
+        Assertions.assertFalse(m.tourPeutFinir());
+        m.tourSuivant();
+        Assertions.assertEquals(tour, m.getTour());
+        m.getJoueurActuel().deplace(Direction.DROITE);
+        Assertions.assertTrue(m.tourPeutFinir());
+        m.tourSuivant();
+        Assertions.assertEquals(tour + 1, m.getTour());
+    }
 }
