@@ -49,7 +49,7 @@ public class Modele extends Observable {
         for (AbstractMap.SimpleImmutableEntry<Joueur, Coord> p: jeu.ensemble) {
             Joueur j = p.getKey();
             Coord c = p.getValue();
-            j.teleport(this.grille.getCase(c));
+            j.setPosInitiale(this.grille.getCase(c));
             this.ensemble.add(j);
         }
         this.restart();
@@ -120,17 +120,33 @@ public class Modele extends Observable {
     public Grille getGrille(){ return this.grille; }
 
     /**
-     * Vérifie qui est le joueur gagnant.
-     * @return le joueur gagnant, null s'il n'y a pas.
+     * Vérifie si est le jeu est gagné.
      */
-    public Joueur verifieGagnants() {
+    public boolean verifieGagnants() {
+        return this.tousJoueursSurHelipad() && this.tousArtefactsRecuperes();
+    }
+
+    /**
+     * Vérifie si tous les joueurs sont sur le helipad.
+     */
+    private boolean tousJoueursSurHelipad() {
+        return this.ensemble.stream().allMatch(j -> j.surHelipad());
+    }
+
+    /**
+     * Vérifie si tous les artefacts sont récupérés.
+     */
+    private boolean tousArtefactsRecuperes() {
+        Set<Artefact> a = new HashSet<>();
         for (Joueur j: this.ensemble) {
-            if (j.verifieGagnant()) {
-                this.finJeu = true;
-                return j;
+            List<Objet> objets = j.getInventaire();
+            for (Objet o: objets) {
+                if (o instanceof Artefact) {
+                    a.add((Artefact) o);
+                }
             }
         }
-        return null;
+        return a.size() == 4;
     }
 
     /**

@@ -74,12 +74,30 @@ public class Joueur {
         this.newTurn();
     }
 
+    @Override
+    public String toString() {
+        return String.format("Joueur %d", this.id);
+    }
+
+    /**
+     * Afficher un message qui décrit l'action du Joueur.
+     * @param msg Une action du Joueur (ex : "se déplace").
+     */
+    private void log(String msg) {
+        if (this.pos != null) {
+            System.out.printf("%s: %s %s%n", this.pos, this, msg);
+        }
+        else {
+            System.out.printf("%s %s%n", this, msg);
+        }
+    }
+
     /**
      * Noie le Joueur si sa case et ses adjacentes sont submergées.
      */
     public void noie() {
-        if (this.pos.adjacentSubmergee()) {
-            System.out.printf("Case %s: Joueur est mort !%n", this.pos.coord);
+        if (this.pos.adjacentSubmergee() && this.estVivant()) {
+            this.log("est mort !");
             this.vivant = false;
         }
     }
@@ -113,6 +131,8 @@ public class Joueur {
      */
     public boolean deplace(Direction dir) {
         if (this.estSonTour() && this.pos.adjacent(dir).estTraversable()) {
+            Case adjacent = this.pos.adjacent(dir);
+            this.log(String.format("se déplace vers %s à %s", dir, adjacent));
             this.pos = this.pos.adjacent(dir);
             this.finishTurn();
             return true;
@@ -138,11 +158,11 @@ public class Joueur {
         if (this.pos.aObjet()) {
             Objet objet = this.pos.getObjet();
             this.inventaire.add(objet);
-            System.out.printf("Case %s: Joueur prend %s%n", this.pos.coord, objet);
+            this.log(String.format("prend %s", objet));
             return objet;
         }
         else {
-            System.out.printf("Case %s: Joueur ne prend pas d'objet%n", this.pos.coord);
+            this.log("ne prend pas d'objet");
             return null;
         }
     }
@@ -156,19 +176,6 @@ public class Joueur {
     }
 
     /**
-     * Verifie que le Joueur possède tous les artefacts.
-     * @return Vrai si le Joueur possède tous les artefacts, Faux sinon.
-     */
-    public boolean possedeTousArtefacts() {
-        for (Element el: Element.values()) {
-            if (this.inventaire.stream().noneMatch(o -> o instanceof Artefact && o.element == el)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Renvoie les coordonnées du Joueur.
      * @return Les coordonnées du Joueur.
      */
@@ -179,7 +186,9 @@ public class Joueur {
      * @param dir Direction que le Joueur souhaite assécher.
      */
     public void asseche(Direction dir) {
-        if (this.estSonTour() && this.pos.adjacent(dir).asseche()) {
+        Case adjacent = this.pos.adjacent(dir);
+        if (this.estSonTour() && adjacent.asseche()) {
+            this.log(String.format("assèche %s", adjacent));
             this.finishTurn();
         }
     }
@@ -194,7 +203,7 @@ public class Joueur {
             return artefact;
         }
         else {
-            System.out.printf("Case %s: Joueur ne récupère pas d'artefact%n", this.pos.coord);
+            this.log("ne prend pas d'artefact");
             return null;
         }
     }
@@ -205,7 +214,7 @@ public class Joueur {
      */
     public Objet chercheCle() {
         this.finishTurn();
-        
+
         if (this.pos.aObjet(Clef.class)) {
             this.pos.setObjetVisibilite(true);
             return this.prendObjet();
@@ -214,17 +223,13 @@ public class Joueur {
             double dice = new Random().nextDouble();
             if (dice < 0.2) {
                 this.pos.monteEaux();
+                this.log("n'a pas réussi de chercher une clef et sa case inonde !");
+            }
+            else {
+                this.log("n'a pas réussi de chercher une clef");
             }
             return null;
         }
-    }
-
-    /**
-     * Vérifie si le Joueur a gagné.
-     * @return Vrai si la Joueur a gagné, Faux sinon.
-     */
-    public boolean verifieGagnant() {
-        return this.pos.estHelipad() && this.possedeTousArtefacts();
     }
 
     /**
@@ -232,10 +237,19 @@ public class Joueur {
      * @param c Une case de la grille.
      */
     public void teleport(Case c) {
-        if (this.posInitiale == null ) {
-            this.posInitiale = c;
-        }
+        this.log(String.format("téléporte vers %s", c));
         this.pos = c;
+    }
+
+    /**
+     * Initialise la position initiale.
+     * @param c Une Case.
+     */
+    public void setPosInitiale(Case c) {
+        if (this.posInitiale == null && c != null) {
+            this.posInitiale = c;
+            this.log(String.format("a sa position initiale à %s", c));
+        }
     }
 
     /**
@@ -244,6 +258,13 @@ public class Joueur {
      */
     public boolean surCaseTraversable() {
         return this.pos.estTraversable();
+    }
+
+    /**
+     * Vérifie si le Joueur est sur un helipad.
+     */
+    public boolean surHelipad() {
+        return this.pos.estHelipad();
     }
 }
 

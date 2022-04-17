@@ -46,6 +46,9 @@ public class Case {
         this.grille = g;
     }
 
+    @Override
+    public String toString() { return "Case " + this.coord.toString(); }
+
     /**
      * Vérifie si la case est traversable par un Joueur.
      * @return Vrai la case est traversable par un Joueur, Faux sinon.
@@ -68,10 +71,10 @@ public class Case {
      */
     public void ajoutObjet(Objet o) {
         if (this.objet != null) {
-            throw new RuntimeException(String.format("Il existe déjà un objet dans la case %s", this.coord.toString()));
+            throw new RuntimeException(String.format("Il existe déjà un objet dans %s", this));
         }
         else if (this.terrain != Terrain.TERRE) {
-            throw new RuntimeException(String.format("La case %s n'a pas un terrain de type TERRE.", this.coord.toString()));
+            throw new RuntimeException(String.format("%s n'a pas un terrain de type TERRE.", this));
         }
         else {
             this.objet = o;

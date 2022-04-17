@@ -98,6 +98,7 @@ package Modele {
       +id: int
       +name: String
       +restart(): void
+      -log(String): void
       +noie()
       +estVivant(): boolean
       +getEndTurn(): boolean
@@ -105,10 +106,12 @@ package Modele {
       +possedeClef(Element): boolean
       +prendObjet(Objet): void
       +getInventaire(): List<Objet>
-      +possedeTousArtefacts(): boolean
       +getCoord(): Coord
       +asseche(Direction): boolean
+      +teleport(Case): void
+      +setPosInitiale(Case): void
       +surCaseTraversable(): boolean
+      +surHelipad(): boolean
     }
     Objet "0..n" o-- "0..1" Joueur
     Case "0..1" o-- "0..4" Joueur
@@ -138,7 +141,9 @@ package Modele {
         +tourSuivant(): void
         +getTour(): int
         +getGrille(): Grille
-        +verifieGagnants(): Joueur
+        +verifieGagnants(): boolean
+        -tousJoueursSurHelipad(): boolean
+        -tousArtefactsRecuperes(): boolean
         +prochainJoueurVivant(): Joueur
         +tousJoueursMorts(): boolean
         +tourPeutfinir(): boolean

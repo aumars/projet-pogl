@@ -11,5 +11,16 @@ public enum Direction {
     /**
      * La case actuelle du Joueur.
      */
-    NEUTRE
+    NEUTRE;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case HAUT: return "le haut";
+            case BAS: return "le bas";
+            case GAUCHE: return "la gauche";
+            case DROITE: return "la droite";
+            default: throw new RuntimeException();
+        }
+    }
 }

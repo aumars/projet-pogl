@@ -26,18 +26,15 @@ public class VueInfoBas extends JPanel {
         this.add(this.vue_commande);
     }
 
-    public boolean verifieFinJeu(){
-        Joueur gagnant = this.modele.verifieGagnants();
-        
-        if(gagnant != null || this.modele.tousJoueursMorts()){
+    public void verifieFinJeu(){
+        boolean jeuGagne = this.modele.verifieGagnants();
+
+        if (jeuGagne || this.modele.tousJoueursMorts()) {
             this.vue_commande.setVisible(false);
-            this.vue_fin_jeu = new VueFinJeu(this.modele, gagnant == null);
+            this.vue_fin_jeu = new VueFinJeu(this.modele, !jeuGagne);
             this.est_fin_jeu = true;
             this.add(this.vue_fin_jeu);
-            return true;
         }
-
-        return false;
     }
     
     public void affichePanneauAide(){
