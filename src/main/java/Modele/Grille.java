@@ -58,7 +58,7 @@ public class Grille {
     }
 
     /**
-     * Rétablit les attributs initiaux du Joueur.
+     * Rétablit les attributs initiaux de la Grille.
      */
     public void restart() {
         this.ile.clear();
