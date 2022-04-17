@@ -52,10 +52,7 @@ public class Modele extends Observable {
             j.teleport(this.grille.getCase(c));
             this.ensemble.add(j);
         }
-        this.tour = 1;
-        this.iter = this.ensemble.iterator();
-        this.joueurActuel = this.iter.next();
-        this.finJeu = false;
+        this.restart();
     }
 
     public List<Joueur> getJoueurs(){
@@ -69,6 +66,18 @@ public class Modele extends Observable {
      */
     public Modele (String map_path, String game_path) throws InvalidGameException {
         this(new Carte(map_path), new Jeu(game_path));
+    }
+
+    /**
+     * Rétablit les attributs initiaux du modèle.
+     */
+    public void restart() {
+        this.grille.restart();
+        this.ensemble.forEach(j -> j.restart());
+        this.tour = 1;
+        this.iter = this.ensemble.iterator();
+        this.joueurActuel = this.iter.next();
+        this.finJeu = false;
     }
 
     /**
