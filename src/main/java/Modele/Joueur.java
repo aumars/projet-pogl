@@ -47,6 +47,16 @@ public class Joueur {
     public final int id;
 
     /**
+     * Si le Joueur peut faire une action spéciale.
+     */
+    private boolean actionSpeciale = false;
+
+    /**
+     * Le nombre de cases survecues consécutives.
+     */
+    private int casesSurvecuesConsecutives = 0;
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
@@ -123,6 +133,23 @@ public class Joueur {
      * Renouvelle le tour du Joueur.
      */
     public void newTurn() { this.sonTour = true; }
+
+    /**
+     * On gagne une action spéciale si :
+     * - on trouve une clef pour la première fois
+     * - on survit 10 cases
+     */
+    public void gagneActionSpeciale() {
+        this.actionSpeciale = true;
+        this.log("gagne une action spéciale !");
+    }
+
+    /**
+     * Vérifie si le Joueur peut faire une action spéciale.
+     */
+    public boolean aActionSpeciale() {
+        return this.actionSpeciale;
+    }
 
     /**
      * Déplace le Joueur à une case adjacente.
