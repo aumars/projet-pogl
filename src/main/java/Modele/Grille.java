@@ -65,7 +65,7 @@ public class Grille {
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {
                 Case c = this.getCase(j, i);
-                if (c.terrain == Terrain.TERRE) {
+                if (c.terrain == Terrain.TERRE && !c.aObjet()) {
                     this.ile.add(c);
                 }
             }
