@@ -60,7 +60,7 @@ public class Joueur {
     public Joueur(Case c) {
         this.posInitiale = c;
         this.inventaire = new ArrayList<>();
-        this.id = numJoueurs;
+        this.id = numJoueurs + 1;
         numJoueurs++;
         this.restart();
     }
