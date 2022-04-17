@@ -49,7 +49,7 @@ public class Modele extends Observable {
         for (AbstractMap.SimpleImmutableEntry<Joueur, Coord> p: jeu.ensemble) {
             Joueur j = p.getKey();
             Coord c = p.getValue();
-            j.teleport(this.grille.getCase(c));
+            j.setPosInitiale(this.grille.getCase(c));
             this.ensemble.add(j);
         }
         this.restart();
