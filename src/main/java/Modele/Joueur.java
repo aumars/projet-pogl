@@ -156,19 +156,6 @@ public class Joueur {
     }
 
     /**
-     * Verifie que le Joueur possède tous les artefacts.
-     * @return Vrai si le Joueur possède tous les artefacts, Faux sinon.
-     */
-    public boolean possedeTousArtefacts() {
-        for (Element el: Element.values()) {
-            if (this.inventaire.stream().noneMatch(o -> o instanceof Artefact && o.element == el)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Renvoie les coordonnées du Joueur.
      * @return Les coordonnées du Joueur.
      */
