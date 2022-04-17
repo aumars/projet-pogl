@@ -79,6 +79,7 @@ public class Joueur {
      */
     public void noie() {
         if (this.pos.adjacentSubmergee()) {
+            System.out.printf("Case %s: Joueur est mort !%n", this.pos.coord);
             this.vivant = false;
         }
     }
@@ -136,11 +137,14 @@ public class Joueur {
     public Objet prendObjet() {
         if (this.pos.aObjet()) {
             Objet objet = this.pos.getObjet();
-            this.inventaire.add(this.pos.getObjet());
+            this.inventaire.add(objet);
+            System.out.printf("Case %s: Joueur prend %s%n", this.pos.coord, objet);
             return objet;
         }
-
-        return null;
+        else {
+            System.out.printf("Case %s: Joueur ne prend pas d'objet%n", this.pos.coord);
+            return null;
+        }
     }
 
     /**
@@ -189,7 +193,10 @@ public class Joueur {
             this.finishTurn();
             return artefact;
         }
-        return null;
+        else {
+            System.out.printf("Case %s: Joueur ne récupère pas d'artefact%n", this.pos.coord);
+            return null;
+        }
     }
 
     /**
