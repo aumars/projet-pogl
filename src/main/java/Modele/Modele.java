@@ -48,8 +48,8 @@ public class Modele extends Observable {
             this.ensemble.add(j);
         }
         this.tour = 1;
-        this.joueurActuel = this.ensemble.get(0);
         this.iter = this.ensemble.iterator();
+        this.joueurActuel = this.iter.next();
     }
 
     /**
