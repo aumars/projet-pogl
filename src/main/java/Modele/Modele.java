@@ -99,7 +99,6 @@ public class Modele extends Observable {
      */
     public void tourSuivant() {
         if (this.tourPeutFinir()) {
-            this.tour++;
             this.grille.inonde();
             this.joueurActuel = this.prochainJoueurVivant();
             this.joueurActuel.newTurn();
@@ -163,12 +162,14 @@ public class Modele extends Observable {
      */
     private Joueur prochainJoueurVivant() {
         if (!this.iter.hasNext()) {
+            this.tour++;
             this.iter = this.ensemble.iterator();
         }
         Joueur joueur = this.iter.next();
         while (!joueur.estVivant()) {
             joueur = this.iter.next();
             if (!this.iter.hasNext()) {
+                this.tour++;
                 this.iter = this.ensemble.iterator();
             }
         }
