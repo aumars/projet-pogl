@@ -28,12 +28,6 @@ public class JoueurTest {
     }
 
     @Test
-    void joueurDeplace() {
-        Assertions.assertThrows(RuntimeException.class, () -> this.j0.verifieGagnant());
-        Assertions.assertFalse(this.j1.verifieGagnant());
-    }
-
-    @Test
     void joueurPrendObjet() {
         Assertions.assertThrows(RuntimeException.class, () -> this.j0.prendObjet());
         Assertions.assertNull(this.j1.prendObjet());
