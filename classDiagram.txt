@@ -105,7 +105,6 @@ package Modele {
       +possedeClef(Element): boolean
       +prendObjet(Objet): void
       +getInventaire(): List<Objet>
-      +possedeTousArtefacts(): boolean
       +getCoord(): Coord
       +asseche(Direction): boolean
       +surCaseTraversable(): boolean
