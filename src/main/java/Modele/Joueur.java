@@ -17,6 +17,11 @@ public class Joueur {
     private Case pos;
 
     /**
+     * La case initiale du Joueur.
+     */
+    private Case posInitiale;
+
+    /**
      * L'inventaire d'objets en possession du Joueur.
      */
     private final List<Objet> inventaire;
@@ -32,6 +37,16 @@ public class Joueur {
     public final String nom = "Player";
 
     /**
+     * Le nombre de Joueurs instanciés.
+     */
+    private static int numJoueurs = 0;
+
+    /**
+     * Le numéro d'identification du Joueur.
+     */
+    public final int id;
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
@@ -43,9 +58,20 @@ public class Joueur {
      * @param c Position du Joueur.
      */
     public Joueur(Case c) {
-        this.pos = c;
+        this.posInitiale = c;
         this.inventaire = new ArrayList<>();
-        this.sonTour = true;
+        this.id = numJoueurs;
+        numJoueurs++;
+        this.restart();
+    }
+
+    /**
+     * Rétablit les attributs initiaux du Joueur.
+     */
+    public void restart() {
+        this.teleport(this.posInitiale);
+        this.inventaire.clear();
+        this.newTurn();
     }
 
     /**
@@ -53,6 +79,7 @@ public class Joueur {
      */
     public void noie() {
         if (this.pos.adjacentSubmergee()) {
+            System.out.printf("Case %s: Joueur est mort !%n", this.pos.coord);
             this.vivant = false;
         }
     }
@@ -110,12 +137,14 @@ public class Joueur {
     public Objet prendObjet() {
         if (this.pos.aObjet()) {
             Objet objet = this.pos.getObjet();
-            this.inventaire.add(this.pos.getObjet());
-            this.pos.detruitObjet();
+            this.inventaire.add(objet);
+            System.out.printf("Case %s: Joueur prend %s%n", this.pos.coord, objet);
             return objet;
         }
-
-        return null;
+        else {
+            System.out.printf("Case %s: Joueur ne prend pas d'objet%n", this.pos.coord);
+            return null;
+        }
     }
 
     /**
@@ -164,7 +193,10 @@ public class Joueur {
             this.finishTurn();
             return artefact;
         }
-        return null;
+        else {
+            System.out.printf("Case %s: Joueur ne récupère pas d'artefact%n", this.pos.coord);
+            return null;
+        }
     }
 
     /**
@@ -199,7 +231,12 @@ public class Joueur {
      * Met à jour la position du Joueur dans une case de la grille.
      * @param c Une case de la grille.
      */
-    public void teleport(Case c) { this.pos = c; }
+    public void teleport(Case c) {
+        if (this.posInitiale == null ) {
+            this.posInitiale = c;
+        }
+        this.pos = c;
+    }
 
     /**
      * Vérifie si le Joueur est sur une case traversable.

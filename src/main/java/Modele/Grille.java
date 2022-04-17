@@ -47,12 +47,24 @@ public class Grille {
         this.WIDTH = map[0].length;
         this.HEIGHT = map.length;
 
-        this.cases = new Case[map.length][map[0].length];
+        this.cases = new Case[this.HEIGHT][this.WIDTH];
         this.ile = new ArrayList<>();
-        for (int i = 0; i < this.cases.length; i++) {
-            for (int j = 0; j < this.cases[0].length; j++) {
-                Case c = new Case(new Coord(j, i), map[i][j], this);
-                this.cases[i][j] = c;
+        for (int i = 0; i < this.HEIGHT; i++) {
+            for (int j = 0; j < this.WIDTH; j++) {
+                this.cases[i][j] = new Case(new Coord(j, i), map[i][j], this);
+            }
+        }
+        this.restart();
+    }
+
+    /**
+     * Rétablit les attributs initiaux de la Grille.
+     */
+    public void restart() {
+        this.ile.clear();
+        for (int i = 0; i < this.HEIGHT; i++) {
+            for (int j = 0; j < this.WIDTH; j++) {
+                Case c = this.getCase(j, i);
                 if (c.terrain == Terrain.TERRE) {
                     this.ile.add(c);
                 }

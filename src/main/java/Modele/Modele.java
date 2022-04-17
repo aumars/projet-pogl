@@ -33,6 +33,11 @@ public class Modele extends Observable {
     private Joueur joueurActuel;
 
     /**
+     * Marqueur pour la fin du jeu.
+     */
+    private boolean finJeu;
+
+    /**
      * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
      * @param carte Une carte
      * @param jeu L'ensemble d'objets et de joueurs.
@@ -47,9 +52,7 @@ public class Modele extends Observable {
             j.teleport(this.grille.getCase(c));
             this.ensemble.add(j);
         }
-        this.tour = 1;
-        this.iter = this.ensemble.iterator();
-        this.joueurActuel = this.iter.next();
+        this.restart();
     }
 
     public List<Joueur> getJoueurs(){
@@ -63,6 +66,18 @@ public class Modele extends Observable {
      */
     public Modele (String map_path, String game_path) throws InvalidGameException {
         this(new Carte(map_path), new Jeu(game_path));
+    }
+
+    /**
+     * Rétablit les attributs initiaux du modèle.
+     */
+    public void restart() {
+        this.grille.restart();
+        this.ensemble.forEach(j -> j.restart());
+        this.tour = 1;
+        this.iter = this.ensemble.iterator();
+        this.joueurActuel = this.iter.next();
+        this.finJeu = false;
     }
 
     /**
@@ -111,6 +126,7 @@ public class Modele extends Observable {
     public Joueur verifieGagnants() {
         for (Joueur j: this.ensemble) {
             if (j.verifieGagnant()) {
+                this.finJeu = true;
                 return j;
             }
         }
@@ -148,6 +164,18 @@ public class Modele extends Observable {
      * @return Vrai si tous les joueurs sont morts, Faux sinon.
      */
     public boolean tousJoueursMorts(){
-        return this.ensemble.stream().noneMatch(j -> j.estVivant());
+        if (this.ensemble.stream().noneMatch(j -> j.estVivant())) {
+            this.finJeu = true;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
+
+    /**
+     * Vérifie si le jeu est terminé.
+     * @return Vrai si le jeu est terminé, Faux sinon.
+     */
+    public boolean getFinJeu() { return this.finJeu; }
 }

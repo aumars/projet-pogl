@@ -81,6 +81,7 @@ package Modele {
     class Grille {
         -HEIGHT: int
         -WIDTH: int
+        +restart(): void
         +addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord>): void
         +addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets): void
         +getWidth(): int
@@ -93,8 +94,10 @@ package Modele {
     class Joueur {
       -vivant: boolean
       -endTurn: boolean
+      -numJoueur: int
+      +id: int
       +name: String
-      +joueurByID(String, Case): Joueur
+      +restart(): void
       +noie()
       +estVivant(): boolean
       +getEndTurn(): boolean
@@ -128,6 +131,8 @@ package Modele {
     Jeu "0..1" *-- "0..n" Joueur
 
     class Modele {
+        -finJeu: boolean
+        +restart(): void
         +getJoueurActuel(): Joueur
         +getNbJoueurs(): int
         +tourSuivant(): void
@@ -137,6 +142,7 @@ package Modele {
         +prochainJoueurVivant(): Joueur
         +tousJoueursMorts(): boolean
         +tourPeutfinir(): boolean
+        +getFinJeu(): boolean
     }
     Modele "0..1" *-- "1" Grille
     Modele "0..1" o-- "0..n" Joueur
