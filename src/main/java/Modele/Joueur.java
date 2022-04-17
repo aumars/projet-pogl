@@ -78,7 +78,7 @@ public class Joueur {
      * Noie le Joueur si sa case et ses adjacentes sont submergées.
      */
     public void noie() {
-        if (this.pos.adjacentSubmergee()) {
+        if (this.pos.adjacentSubmergee() && this.estVivant()) {
             System.out.printf("Case %s: Joueur est mort !%n", this.pos.coord);
             this.vivant = false;
         }
