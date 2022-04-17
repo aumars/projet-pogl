@@ -40,7 +40,7 @@ public class VueCase extends JPanel implements Observer {
     private void afficheUnJoueur(int i) {
         if (this.estCaseJoueur()) {
             if (!this.modele.getJoueurActuel().estVivant())
-                this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(i), this.ICN_SIZEX, this.ICN_SIZEY)));
+                this.add(new JLabel(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY)));
 
             else
                 this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(i), this.ICN_SIZEX, this.ICN_SIZEY)));

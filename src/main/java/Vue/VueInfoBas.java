@@ -21,12 +21,12 @@ public class VueInfoBas extends JPanel {
 
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE * this.modele.getGrille().getWidth() * 3/7, 120));
-        this.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 20));    
+        this.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));   
 
         this.add(this.vue_commande);
     }
 
-    public void verifieFinJeu(){
+    public boolean verifieFinJeu(){
         Joueur gagnant = this.modele.verifieGagnants();
         
         if(gagnant != null || this.modele.tousJoueursMorts()){
@@ -34,7 +34,10 @@ public class VueInfoBas extends JPanel {
             this.vue_fin_jeu = new VueFinJeu(this.modele, gagnant == null);
             this.est_fin_jeu = true;
             this.add(this.vue_fin_jeu);
+            return true;
         }
+
+        return false;
     }
     
     public void affichePanneauAide(){
@@ -49,5 +52,19 @@ public class VueInfoBas extends JPanel {
         }
         
         this.affiche_aide = !this.affiche_aide;
+    }
+
+    public void redemarre(){
+        affiche_aide = false;
+        est_fin_jeu = false;
+
+        this.removeAll();
+        // this.add(this.vue_commande);
+        
+        // this.updateUI();
+        this.revalidate();
+        this.repaint();
+        // super.validate();
+        // super.repaint();
     }
 }

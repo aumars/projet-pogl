@@ -6,6 +6,7 @@ import java.awt.*;
 
 public class VueFinJeu extends JPanel {
     private Modele modele;
+    public VueBouton btn_rejouer = new VueBouton("Lance une nouvelle partie", "Rejouer");
 
     public VueFinJeu(Modele m, boolean est_partie_perdante) {
         this.modele = m;
@@ -38,10 +39,7 @@ public class VueFinJeu extends JPanel {
 
         panel_text.add(lbl_titre, BorderLayout.PAGE_START);
         panel_text.add(lbl_text, BorderLayout.CENTER);
-
-        VueBouton btn_nouvelle_partie = new VueBouton("Lance une nouvelle partie", "Rejouer");
-        btn_nouvelle_partie.setEnabled(false);
-        panel_text.add(btn_nouvelle_partie, BorderLayout.LINE_END);
+        panel_text.add(this.btn_rejouer, BorderLayout.LINE_END);
 
         this.add(panel_text, BorderLayout.CENTER);
     }

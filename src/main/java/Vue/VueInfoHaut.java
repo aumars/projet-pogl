@@ -22,13 +22,18 @@ public class VueInfoHaut extends JPanel {
         
         this.add(this.btn_aide, BorderLayout.LINE_END);
     }
-
+    
     public void metAJourApresAction(){
         super.repaint();
+        this.btn_aide.setEnabled(!this.modele.getFinJeu());
         this.label_tour.setText(this.getTextTitre());
     }
 
     private String getTextTitre(){
         return "Tour n°" + this.modele.getTour() + " - Player" + this.modele.getJoueurActuel().id;
+    }
+
+    public void redemarre(){
+        super.repaint();
     }
 }

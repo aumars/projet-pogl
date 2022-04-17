@@ -146,6 +146,12 @@ public class Controleur implements ActionListener, KeyListener {
             this.vue.vue_info_bas.affichePanneauAide();
         }
 
+        if (this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
+            this.metAJourApresAction();
+            this.modele.restart();
+            this.vue.commencer();
+        }
+
         this.metAJourApresAction();
     }
 
@@ -159,9 +165,13 @@ public class Controleur implements ActionListener, KeyListener {
     }
 
     private void verifieFinJeu() {
-        this.vue.vue_info_bas.verifieFinJeu();
+        boolean fin_jeu = this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
         this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourEtatJoueur();
+
+        if (fin_jeu) {
+            this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
+        }
     }
 
     private void metAJourApresAction() {

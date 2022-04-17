@@ -10,7 +10,6 @@ public class Vue {
     private Modele modele;
 
     public VueInfoHaut vue_info_haut;
-    // public VueInventaire vue_inventaires;
     public VueContainerInventaires vue_inventaires;
     public VueGrille vue_grille;
     public VueInfoBas vue_info_bas;
@@ -24,7 +23,6 @@ public class Vue {
         this.fenetre.setResizable(false);
 
         this.vue_info_haut = new VueInfoHaut(this.modele);
-        // this.vue_inventaires = new VueInventaire(this.modele, Utils.souligneLabel(this.modele.getJoueurActuel().nom));
         this.vue_inventaires = new VueContainerInventaires(this.modele);
         this.vue_grille = new VueGrille(this.modele);
         this.vue_info_bas = new VueInfoBas(this.modele);
@@ -38,6 +36,23 @@ public class Vue {
         this.fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.fenetre.setLocationRelativeTo(null);
         this.fenetre.setVisible(true);
+    }
+    
+    public void commencer(){
+        this.fenetre.getContentPane().removeAll();
+        
+        this.vue_info_haut = new VueInfoHaut(this.modele);
+        this.vue_inventaires = new VueContainerInventaires(this.modele);
+        this.vue_grille = new VueGrille(this.modele);
+        this.vue_info_bas = new VueInfoBas(this.modele);
+
+        this.fenetre.add(this.vue_info_haut, Utils.positionneGrille(0, 0, 2, 1, 1));
+        this.fenetre.add(this.vue_inventaires, Utils.positionneGrille(0, 1, 1, 3, 0));
+        this.fenetre.add(this.vue_grille, Utils.positionneGrille(1, 1));
+        this.fenetre.add(this.vue_info_bas, Utils.positionneGrille(1, 2));
+        
+        this.fenetre.repaint();
+        this.fenetre.revalidate();
     }
 
     public JFrame getFenetre() {
