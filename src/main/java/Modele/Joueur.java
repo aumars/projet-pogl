@@ -111,7 +111,6 @@ public class Joueur {
         if (this.pos.aObjet()) {
             Objet objet = this.pos.getObjet();
             this.inventaire.add(this.pos.getObjet());
-            this.pos.detruitObjet();
             return objet;
         }
 
