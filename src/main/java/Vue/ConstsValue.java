@@ -3,7 +3,7 @@ package Vue;
 import java.awt.*;
 
 public final class ConstsValue {
-    public static int BOX_SIZE = 80;
+    public static int BOX_SIZE = 90;
     public static int GAP_CASE = 1;
 
     public static String FONT_FAMILY = "Arial";

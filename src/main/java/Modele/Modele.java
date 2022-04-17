@@ -52,6 +52,10 @@ public class Modele extends Observable {
         this.joueurActuel = this.iter.next();
     }
 
+    public List<Joueur> getJoueurs(){
+        return this.ensemble;
+    }
+
     /**
      * Construit un jeu à partir d'un fichier texte et d'un fichier XML.
      * @param map_path Un fichier texte

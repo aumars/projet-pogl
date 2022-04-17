@@ -6,33 +6,24 @@ import javax.swing.*;
 
 public class VueCase extends JPanel implements Observer {
     private int ICN_SIZEX = ConstsValue.BOX_SIZE / 2;
-    private int ICN_SIZEY = ConstsValue.BOX_SIZE / 2 + 10;
+    private int ICN_SIZEY = ConstsValue.BOX_SIZE / 2;
+    private int nb_joueurs;
 
     private Modele modele;
     private Case c;
-    private JPanel tuile_case = new JPanel();
-    private JLabel icn_avatar = new JLabel(Utils.tailleImg(ConstsIcon.AVATAR, this.ICN_SIZEX, this.ICN_SIZEY));
     private JLabel icn_objet = new JLabel();
 
     public VueCase(Modele m, Case c) {
         this.c = c;
-
         this.modele = m;
         this.modele.addObserver(this);
+        this.nb_joueurs = this.countNbJoueursCase();
 
-        if (this.estCaseJoueur()) {
-            this.ICN_SIZEX = this.ICN_SIZEX / 2;
-            this.ICN_SIZEY = this.ICN_SIZEY / 2;
-        }
-
-        this.setLayout(new FlowLayout());
         this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
-        this.afficheJoueur();
-        this.afficheObjet();
 
-        this.tuile_case.setOpaque(false);
-        this.tuile_case.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
-        this.add(this.tuile_case);
+        this.metAJourTailleIcon();
+        this.afficheTousJoueurs();
+        this.afficheObjet();
     }
 
     public void metAJourApresAction() {
@@ -44,32 +35,35 @@ public class VueCase extends JPanel implements Observer {
         colorieSol(g);
     }
 
-    private void afficheJoueur() {
-        this.tuile_case.remove(this.icn_avatar);
+    private void afficheUnJoueur(int i) {
+        if (this.estCaseJoueur()) {
+            if (!this.modele.getJoueurActuel().estVivant())
+                this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(i), this.ICN_SIZEX, this.ICN_SIZEY)));
 
-        if (!this.modele.getJoueurActuel().estVivant()) {
-            this.icn_avatar.setIcon(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY));
-            this.tuile_case.add(this.icn_avatar);
+            else
+                this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(i), this.ICN_SIZEX, this.ICN_SIZEY)));
         }
 
-        else if (this.estCaseJoueur()) {
-            this.tuile_case.add(this.icn_avatar);
-        }
+    }
+
+    private void afficheTousJoueurs() {
+        for (int i = 0; i < this.nb_joueurs; i++)
+            this.afficheUnJoueur(i);
     }
 
     private void afficheObjet() {
-        this.tuile_case.remove(this.icn_objet);
+        this.remove(this.icn_objet);
         this.icn_objet.setVisible(this.c.getObjetVisibilite());
 
         if (this.c.estHelipad()) {
             this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.HELICOPTERE, ICN_SIZEX, ICN_SIZEY));
-            this.tuile_case.add(this.icn_objet);
+            this.add(this.icn_objet);
         }
 
         else if (this.c.aObjet(Clef.class)) {
             this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.CLEF, ICN_SIZEX, ICN_SIZEY));
 
-            this.tuile_case.add(this.icn_objet);
+            this.add(this.icn_objet);
         }
 
         else if (this.c.aObjet(Artefact.class)) {
@@ -94,7 +88,7 @@ public class VueCase extends JPanel implements Observer {
                     break;
             }
 
-            this.tuile_case.add(this.icn_objet);
+            this.add(this.icn_objet);
         }
     }
 
@@ -124,11 +118,38 @@ public class VueCase extends JPanel implements Observer {
                     break;
             }
         }
-
         g.fillRect(0, 0, ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE);
     }
 
     private boolean estCaseJoueur() {
-        return this.modele.getJoueurActuel().getCoord() == this.c.coord;
+        java.util.List<Joueur> joueurs = this.modele.getJoueurs();
+
+        for (int i = 0; i < joueurs.size(); i++) {
+            if (joueurs.get(i).getCoord() == this.c.coord) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int countNbJoueursCase() {
+        int nb_joueurs = 0;
+        java.util.List<Joueur> joueurs = this.modele.getJoueurs();
+
+        for (int i = 0; i < joueurs.size(); i++) {
+            if (joueurs.get(i).getCoord() == this.c.coord) {
+                nb_joueurs++;
+            }
+        }
+
+        return nb_joueurs;
+    }
+
+    private void metAJourTailleIcon() {
+        if (this.estCaseJoueur()) {
+            this.ICN_SIZEX = this.ICN_SIZEX / (this.nb_joueurs + 1) + this.ICN_SIZEX / 3;
+            this.ICN_SIZEY = this.ICN_SIZEY / (this.nb_joueurs + 1) + this.ICN_SIZEY;
+        }
     }
 }
