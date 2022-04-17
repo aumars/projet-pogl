@@ -32,73 +32,75 @@ public class Controleur implements ActionListener, KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_Z:
-                this.deplaceJoueur(Direction.HAUT);
-                break;
+        if (!this.modele.getFinJeu()) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_Z:
+                    this.deplaceJoueur(Direction.HAUT);
+                    break;
 
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_S:
-                this.deplaceJoueur(Direction.BAS);
-                break;
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
+                    this.deplaceJoueur(Direction.BAS);
+                    break;
 
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_Q:
-                this.deplaceJoueur(Direction.GAUCHE);
-                break;
+                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_Q:
+                    this.deplaceJoueur(Direction.GAUCHE);
+                    break;
 
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_D:
-                this.deplaceJoueur(Direction.DROITE);
-                break;
+                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_D:
+                    this.deplaceJoueur(Direction.DROITE);
+                    break;
 
-            case KeyEvent.VK_ENTER:
-                this.tourSuivant();
-                break;
+                case KeyEvent.VK_ENTER:
+                    this.tourSuivant();
+                    break;
 
-            case KeyEvent.VK_A:
-                this.chercheClef();
-                break;
+                case KeyEvent.VK_A:
+                    this.chercheClef();
+                    break;
 
-            case KeyEvent.VK_F:
-                this.prendArtefact();
-                break;
+                case KeyEvent.VK_F:
+                    this.prendArtefact();
+                    break;
 
-            case KeyEvent.VK_O:
-                this.joueur.asseche(Direction.HAUT);
-                break;
+                case KeyEvent.VK_O:
+                    this.joueur.asseche(Direction.HAUT);
+                    break;
 
-            case KeyEvent.VK_K:
-                this.joueur.asseche(Direction.GAUCHE);
-                break;
+                case KeyEvent.VK_K:
+                    this.joueur.asseche(Direction.GAUCHE);
+                    break;
 
-            case KeyEvent.VK_L:
-                this.joueur.asseche(Direction.BAS);
-                break;
+                case KeyEvent.VK_L:
+                    this.joueur.asseche(Direction.BAS);
+                    break;
 
-            case KeyEvent.VK_M:
-                this.joueur.asseche(Direction.DROITE);
-                break;
+                case KeyEvent.VK_M:
+                    this.joueur.asseche(Direction.DROITE);
+                    break;
 
-            case KeyEvent.VK_SPACE:
-                this.joueur.asseche(Direction.NEUTRE);
-                break;
+                case KeyEvent.VK_SPACE:
+                    this.joueur.asseche(Direction.NEUTRE);
+                    break;
 
-            case KeyEvent.VK_ESCAPE:
-                this.vue.getFenetre().setVisible(false);
-                this.vue.getFenetre().dispose();
-                break;
+                case KeyEvent.VK_ESCAPE:
+                    this.vue.getFenetre().setVisible(false);
+                    this.vue.getFenetre().dispose();
+                    break;
 
-            case KeyEvent.VK_H:
-                this.vue.vue_info_bas.affichePanneauAide();
-                break;
+                case KeyEvent.VK_H:
+                    this.vue.vue_info_bas.affichePanneauAide();
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
+
+            this.metAJourApresAction();
         }
-
-        this.metAJourApresAction();
     }
 
     public void keyTyped(KeyEvent e) {
