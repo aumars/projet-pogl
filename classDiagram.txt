@@ -97,11 +97,17 @@ package Modele {
       -numJoueur: int
       +id: int
       +name: String
+      -actionSpeciale: boolean
+      -casesSurvecuesConsecutives: int
       +restart(): void
       -log(String): void
       +noie()
       +estVivant(): boolean
-      +getEndTurn(): boolean
+      +estSonTour(): boolean
+      +finishTurn(): void
+      +newTurn(): void
+      +gagneActionSpeciale(): void
+      +aActionSpeciale(): boolean
       +deplace(Direction): void
       +possedeClef(Element): boolean
       +prendObjet(Objet): void

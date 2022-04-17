@@ -131,6 +131,16 @@ public class Joueur {
      */
     public boolean deplace(Direction dir) {
         if (this.estSonTour() && this.pos.adjacent(dir).estTraversable()) {
+            if (!this.pos.estTraversable()) {
+                this.casesSurvecuesConsecutives = 0;
+            }
+            else {
+                this.casesSurvecuesConsecutives++;
+                if (this.casesSurvecuesConsecutives == 10) {
+                    this.gagneActionSpeciale();
+                    this.casesSurvecuesConsecutives = 0;
+                }
+            }
             Case adjacent = this.pos.adjacent(dir);
             this.log(String.format("se déplace vers %s à %s", dir, adjacent));
             this.pos = this.pos.adjacent(dir);
@@ -216,6 +226,9 @@ public class Joueur {
         this.finishTurn();
 
         if (this.pos.aObjet(Clef.class)) {
+            if (!this.pos.getObjetVisibilite()) {
+                this.gagneActionSpeciale();
+            }
             this.pos.setObjetVisibilite(true);
             return this.prendObjet();
         }
