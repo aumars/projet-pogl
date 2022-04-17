@@ -98,6 +98,7 @@ package Modele {
       +id: int
       +name: String
       +restart(): void
+      -log(String): void
       +noie()
       +estVivant(): boolean
       +getEndTurn(): boolean
@@ -107,6 +108,8 @@ package Modele {
       +getInventaire(): List<Objet>
       +getCoord(): Coord
       +asseche(Direction): boolean
+      +teleport(Case): void
+      +setPosInitiale(Case): void
       +surCaseTraversable(): boolean
       +surHelipad(): boolean
     }
