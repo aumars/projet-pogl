@@ -294,6 +294,17 @@ public class Joueur {
     }
 
     /**
+     * Action spéciale. Se transporte vers n'importe quelle case.
+     * @param c Une case.
+     */
+    public void helicoptere(Case c) {
+        if (this.aActionSpeciale() && c.estTraversable()) {
+            this.log(String.format("prend une hélicoptère vers %s (action spéciale)", c));
+            this.pos = c;
+        }
+    }
+
+    /**
      * Initialise la position initiale.
      * @param c Une Case.
      */
