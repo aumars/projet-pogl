@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VueInfoBas extends JPanel {
-    private Modele modele;
+    private final Modele modele;
     
     public VueCommande vue_commande;
     public VueFinJeu vue_fin_jeu;
