@@ -106,7 +106,7 @@ public class Grille {
                     c, this.getWidth(), this.getHeight()));
         }
         else {
-            this.cases[c.y()][c.x()].ajoutObjet(o);
+            this.getCase(c).ajoutObjet(o);
             this.ile.removeIf(k -> k.coord.equals(c));
         }
     }
