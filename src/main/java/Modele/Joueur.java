@@ -135,8 +135,7 @@ public class Joueur {
      */
     public void noie() {
         if (this.pos.adjacentSubmergee() && this.estVivant()) {
-            this.log("est mort !");
-            this.vivant = false;
+            this.meurt();
         }
     }
 
