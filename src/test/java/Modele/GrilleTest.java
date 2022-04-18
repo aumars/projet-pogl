@@ -20,4 +20,14 @@ public class GrilleTest {
         Assertions.assertThrows(RuntimeException.class, () -> this.g0.addObjet(a, new Coord(0, 0)));
         Assertions.assertThrows(RuntimeException.class, () -> this.g0.addObjet(a, new Coord(1, 1)));
     }
+
+    @Test
+    void grilleRestartObjet() {
+        Case c = this.g0.getCase(1, 1);
+        Objet o = new Artefact(Element.AIR);
+        c.ajoutObjet(o);
+        Assertions.assertTrue(c.aObjet());
+        this.g0.restart();
+        Assertions.assertTrue(c.aObjet());
+    }
 }
