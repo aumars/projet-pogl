@@ -58,35 +58,11 @@ public class VueCase extends JPanel implements Observer {
             this.add(this.icn_objet);
         }
 
-        else if (this.c.aObjet(Clef.class)) {
-            this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.CLEF, ICN_SIZEX, ICN_SIZEY));
-
-            this.add(this.icn_objet);
-        }
-
-        else if (this.c.aObjet(Artefact.class)) {
-            switch (this.c.getObjet().element) {
-                case EAU:
-                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.EAU, ICN_SIZEX, ICN_SIZEY));
-                    break;
-
-                case AIR:
-                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.AIR, ICN_SIZEX, ICN_SIZEY));
-                    break;
-
-                case TERRE:
-                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.TERRE, ICN_SIZEX, ICN_SIZEY));
-                    break;
-
-                case FEU:
-                    this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.FEU, ICN_SIZEX, ICN_SIZEY));
-                    break;
-
-                default:
-                    break;
-            }
-
-            this.add(this.icn_objet);
+        else if (this.c.aObjet()) {
+            VueObjet objet = new VueObjet(this.c.getObjet(), new Color(255, 255, 255), false);
+            objet.setOpaque(false);
+            objet.setVisible(this.c.getObjetVisibilite());
+            this.add(objet);
         }
     }
 
