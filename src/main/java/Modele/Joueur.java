@@ -303,9 +303,9 @@ public class Joueur {
         }
         else {
             double dice = new Random().nextDouble();
-            if (dice < 0.2) {
+            if (dice < this.probaClefInondation) {
                 this.pos.monteEaux();
-                this.log("n'a pas réussi de chercher une clef et sa case inonde !");
+                this.log(String.format("n'a pas réussi de chercher une clef et sa case inonde ! (proba de %.1f)", this.probaClefInondation));
             }
             else {
                 this.log("n'a pas réussi de chercher une clef");
