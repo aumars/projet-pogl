@@ -176,6 +176,7 @@ public class Joueur {
             return true;
         }
         else {
+            this.log(String.format("ne peut pas se déplacer vers %s à %s", dir, adjacent));
             return false;
         }
     }
