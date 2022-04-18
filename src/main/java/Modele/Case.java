@@ -79,6 +79,7 @@ public class Case {
         else {
             this.objet = o;
             this.setObjetVisibilite(!this.objet.getClass().equals(Clef.class));
+            System.out.printf("%s: %s ajouté%n", this, this.objet);
         }
     }
 
