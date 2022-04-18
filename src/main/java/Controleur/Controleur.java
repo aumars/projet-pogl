@@ -146,7 +146,7 @@ public class Controleur implements ActionListener, KeyListener {
             this.vue.vue_info_bas.affichePanneauAide();
         }
 
-        if (this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
+        if (this.vue.vue_info_bas.vue_fin_jeu != null && this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
             this.metAJourApresAction();
             this.modele.restart();
             this.vue.commencer();
