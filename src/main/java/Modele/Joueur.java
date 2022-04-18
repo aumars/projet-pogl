@@ -197,7 +197,9 @@ public class Joueur {
                 }
             }
             this.log(String.format("se déplace vers %s à %s", dir, adjacent));
+            this.pos.removeJoueur(this);
             this.pos = this.pos.adjacent(dir);
+            this.pos.setJoueur(this);
             this.finishTurn();
             return true;
         }
@@ -328,7 +330,10 @@ public class Joueur {
     public void helicoptere(Case c) {
         if (this.aActionSpeciale() && c.estTraversable()) {
             this.log(String.format("prend une hélicoptère vers %s (action spéciale)", c));
+            this.actionSpeciale = false;
+            this.pos.removeJoueur(this);
             this.pos = c;
+            this.pos.setJoueur(this);
         }
     }
 
