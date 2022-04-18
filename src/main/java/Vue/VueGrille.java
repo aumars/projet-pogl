@@ -7,7 +7,6 @@ import java.awt.*;
 public class VueGrille extends JPanel {
     private final int WIDTH;
     private final int HEIGHT;
-    private final int GAP_BORDER = 10;
 
     private Modele modele;
     private VueCase[][] grille;
@@ -21,7 +20,7 @@ public class VueGrille extends JPanel {
         this.grille = new VueCase[this.WIDTH][this.HEIGHT];
 
         this.setLayout(new GridBagLayout());
-        this.setBorder(BorderFactory.createEmptyBorder(0, this.GAP_BORDER, 0, this.GAP_BORDER));
+        this.setBorder(BorderFactory.createEmptyBorder(0, ConstsValue.BORDER_GRID, 0, ConstsValue.BORDER_GRID));
         this.afficheGrille();
     }
 

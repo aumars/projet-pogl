@@ -1,5 +1,8 @@
 package Modele;
 
+import java.util.Arrays;
+
+
 /**
  * Un point de composantes positives dans un plan orthonormé. Dans ce plan, l'origine est au plus haut-gauche,
  * la direction d'abscisses est vers la droite et la direction d'ordonnées est vers le bas.
@@ -94,5 +97,15 @@ public class Coord {
             default:
                 throw new IllegalArgumentException("La direction n'est pas reconnu.");
         }
+    }
+
+    public boolean estAdjacent(Coord c) {
+        Coord[] adjacents = { adjacent(Direction.HAUT),
+                adjacent(Direction.BAS),
+                adjacent(Direction.DROITE),
+                adjacent(Direction.GAUCHE), adjacent(Direction.NEUTRE)
+        };
+
+        return Arrays.asList(adjacents).contains(c);
     }
 }
