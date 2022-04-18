@@ -167,10 +167,12 @@ public class Modele extends Observable {
         }
         Joueur joueur = this.iter.next();
         while (!joueur.estVivant()) {
-            joueur = this.iter.next();
             if (!this.iter.hasNext()) {
                 this.tour++;
                 this.iter = this.ensemble.iterator();
+            }
+            else {
+                joueur = this.iter.next();
             }
         }
         return joueur;
