@@ -1,5 +1,8 @@
 package Modele;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Une case de la grille.
  */
@@ -17,7 +20,7 @@ public class Case {
     /**
      * L'état d'inondation de la case.
      */
-    private Inondation etat = Inondation.SECHE;
+    private Inondation etat;
 
     /**
      * L'objet qui est sur la case. On ne peut avoir qu'un seul objet.
@@ -27,12 +30,14 @@ public class Case {
     /**
      * Drapeau pour marquer la visibilité de l'objet de la case sur la grille.
      */
-    private boolean objetVisibilite = true;
+    private boolean objetVisibilite;
 
     /**
      * La grille dans se trouve la case.
      */
     private final Grille grille;
+
+    private final List<Joueur> joueurs;
 
     /**
      * Construit une case dans la grille.
@@ -44,7 +49,39 @@ public class Case {
         this.coord = coord;
         this.terrain = terrain;
         this.grille = g;
+        this.joueurs = new ArrayList<>();
+        this.setEtat(Inondation.SECHE);
+        this.setObjetVisibilite(true);
+        this.joueurs.clear();
     }
+
+    /**
+     * Redémarre la case.
+     */
+    public void restart() {
+        this.setEtat(Inondation.SECHE);
+        if (this.aObjet()) {
+            this.setObjetVisibilite(!this.getObjet().getClass().equals(Clef.class));
+        }
+        this.joueurs.clear();
+    }
+
+    /**
+     * Ajoute un Joueur
+     * @param j Un Joueur
+     */
+    public void setJoueur(Joueur j) { this.joueurs.add(j); }
+
+    /**
+     * Supprime un Joueur
+     * @param j Un Joueur
+     */
+    public void removeJoueur(Joueur j) { this.joueurs.remove(j); }
+
+    /**
+     * Renvoie la liste de joueurs sur la case.
+     */
+    public List<Joueur> getJoueurs() { return this.joueurs; }
 
     @Override
     public String toString() { return "Case " + this.coord.toString(); }

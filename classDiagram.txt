@@ -59,6 +59,10 @@ package Modele {
         +terrain: Terrain /' CONSTANTE '/
         -etat: Inondation
         -objetVisibilite: boolean
+        +restart(): void
+        +setJoueur(Joueur): void
+        +removeJoueur(Joueur): void
+        +getJoueurs(): List<Joueurs>
         +estTraversable(): boolean
         +estHelipad(): boolean
         +ajoutObjet(Objet): void
@@ -123,7 +127,7 @@ package Modele {
       +surHelipad(): boolean
     }
     Objet "0..n" o-- "0..1" Joueur
-    Case "0..1" o-- "0..4" Joueur
+    Case "0..1" o-- "0..4" Joueur /' A modifier avec la liste de joueurs dans une case '/
 
     class Carte {
         -terrainByID(char): Terrain /' Méthode statique '/
