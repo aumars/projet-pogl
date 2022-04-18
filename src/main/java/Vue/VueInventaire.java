@@ -6,10 +6,10 @@ import javax.swing.*;
 
 public class VueInventaire extends JPanel {
     private final int max_items = 9;
-    private Modele modele;
-    private JLabel label_nom_joueur = new JLabel();
-    private JPanel panel_objets = new JPanel();
-    private String nom;
+    private final Modele modele;
+    private final JLabel label_nom_joueur = new JLabel();
+    private final JPanel panel_objets = new JPanel();
+    private final String nom;
 
     public VueInventaire(Modele m, String nom) {
         this.modele = m;
