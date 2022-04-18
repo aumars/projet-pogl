@@ -103,9 +103,11 @@ public class Controleur implements ActionListener, KeyListener {
         }
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
     public void actionPerformed(ActionEvent e) {
         // Gere l'assechement du sol.
@@ -167,8 +169,7 @@ public class Controleur implements ActionListener, KeyListener {
     private void verifieFinJeu() {
         boolean fin_jeu = this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
-        this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourEtatJoueur();
-
+        this.vue.vue_inventaires.inventaires[this.joueur.id - 1].metAJourEtatJoueur();
         if (fin_jeu) {
             this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
         }
@@ -200,7 +201,7 @@ public class Controleur implements ActionListener, KeyListener {
             this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
             this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         }
-        
+
         this.verifieFinJeu();
     }
 }
