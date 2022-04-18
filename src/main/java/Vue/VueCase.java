@@ -37,19 +37,17 @@ public class VueCase extends JPanel implements Observer {
         colorieSol(g);
     }
 
-    private void afficheUnJoueur(int i) {
-        if (this.estCaseJoueur()) {
-            if (!this.modele.getJoueurActuel().estVivant())
-                this.add(new JLabel(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY)));
-
-            else
-                this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(i), this.ICN_SIZEX, this.ICN_SIZEY)));
+    private void afficheUnJoueur(Joueur j) {
+        if (!j.estVivant()) {
+            this.add(new JLabel(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY)));
+        }
+        else {
+            this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(j.id), this.ICN_SIZEX, this.ICN_SIZEY)));
         }
     }
 
     private void afficheTousJoueurs() {
-        for (Joueur j : this.joueurs_case)
-            this.afficheUnJoueur(j.id);
+        this.c.getJoueurs().forEach(this::afficheUnJoueur);
     }
 
     private void afficheObjet() {
