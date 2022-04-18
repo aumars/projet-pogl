@@ -9,7 +9,7 @@ public class Joueur {
     /**
      * Si le Joueur vive ou pas.
      */
-    private boolean vivant = true;
+    private boolean vivant;
 
     /**
      * La case actuelle du Joueur.
@@ -57,6 +57,11 @@ public class Joueur {
     private int casesSurvecuesConsecutives = 0;
 
     /**
+     * Probabilité (entre 0 et 1) d'inonder la case actuelle lors d'une recherche d'une clef.
+     */
+    private double probaClefInondation;
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
@@ -70,7 +75,7 @@ public class Joueur {
     public Joueur(Case c) {
         this.posInitiale = c;
         this.inventaire = new ArrayList<>();
-        this.id = numJoueurs + 1;
+        this.id = numJoueurs;
         numJoueurs++;
         this.restart();
     }
@@ -79,6 +84,7 @@ public class Joueur {
      * Rétablit les attributs initiaux du Joueur.
      */
     public void restart() {
+        this.vivant = true;
         this.teleport(this.posInitiale);
         this.inventaire.clear();
         this.newTurn();
@@ -103,12 +109,33 @@ public class Joueur {
     }
 
     /**
+     * Modifier la proba d'inonder une case en cherchant une clef.
+     * @param p La probabilité (entre 0 et 1)
+     */
+    public void setProbaClefInondation(double p) { this.probaClefInondation = p; }
+
+    /**
+     * Le Joueur meurt.
+     */
+    public void meurt() {
+        this.log("est mort !");
+        this.vivant = false;
+    }
+
+    /**
+     * Le Joueur revient en vie.
+     */
+    public void revive() {
+        this.log("est revenu !");
+        this.vivant = true;
+    }
+
+    /**
      * Noie le Joueur si sa case et ses adjacentes sont submergées.
      */
     public void noie() {
         if (this.pos.adjacentSubmergee() && this.estVivant()) {
-            this.log("est mort !");
-            this.vivant = false;
+            this.meurt();
         }
     }
 
@@ -157,6 +184,7 @@ public class Joueur {
      * @return Vrai le déplacement est réussi, faux sinon.
      */
     public boolean deplace(Direction dir) {
+        Case adjacent = this.pos.adjacent(dir);
         if (this.estSonTour() && this.pos.adjacent(dir).estTraversable()) {
             if (!this.pos.estTraversable()) {
                 this.casesSurvecuesConsecutives = 0;
@@ -168,13 +196,15 @@ public class Joueur {
                     this.casesSurvecuesConsecutives = 0;
                 }
             }
-            Case adjacent = this.pos.adjacent(dir);
             this.log(String.format("se déplace vers %s à %s", dir, adjacent));
+            this.pos.removeJoueur(this);
             this.pos = this.pos.adjacent(dir);
+            this.pos.setJoueur(this);
             this.finishTurn();
             return true;
         }
         else {
+            this.log(String.format("ne peut pas se déplacer vers %s à %s", dir, adjacent));
             return false;
         }
     }
@@ -273,9 +303,9 @@ public class Joueur {
         }
         else {
             double dice = new Random().nextDouble();
-            if (dice < 0.2) {
+            if (dice < this.probaClefInondation) {
                 this.pos.monteEaux();
-                this.log("n'a pas réussi de chercher une clef et sa case inonde !");
+                this.log(String.format("n'a pas réussi de chercher une clef et sa case inonde ! (proba de %.1f)", this.probaClefInondation));
             }
             else {
                 this.log("n'a pas réussi de chercher une clef");
@@ -300,7 +330,10 @@ public class Joueur {
     public void helicoptere(Case c) {
         if (this.aActionSpeciale() && c.estTraversable()) {
             this.log(String.format("prend une hélicoptère vers %s (action spéciale)", c));
+            this.actionSpeciale = false;
+            this.pos.removeJoueur(this);
             this.pos = c;
+            this.pos.setJoueur(this);
         }
     }
 

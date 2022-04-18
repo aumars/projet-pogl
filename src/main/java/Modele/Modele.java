@@ -38,11 +38,28 @@ public class Modele extends Observable {
     private boolean finJeu;
 
     /**
+     * Si le jeu est déterministe (utile pour les tests)
+     */
+    private final boolean deterministic;
+
+    /**
+     * La proba d'inonder une case en recherche d'une clef.
+     */
+    private final double probaClefInondation;
+
+    /**
      * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
      * @param carte Une carte
      * @param jeu L'ensemble d'objets et de joueurs.
      */
-    public Modele(Carte carte, Jeu jeu) {
+    public Modele(Carte carte, Jeu jeu, boolean deterministic) {
+        this.deterministic = deterministic;
+        if (this.deterministic) {
+            this.probaClefInondation = 0;
+        }
+        else {
+            this.probaClefInondation = 0.2;
+        }
         this.grille = new Grille(carte);
         this.grille.addObjets(jeu.objets);
         this.ensemble = new ArrayList<>();
@@ -50,13 +67,18 @@ public class Modele extends Observable {
             Joueur j = p.getKey();
             Coord c = p.getValue();
             j.setPosInitiale(this.grille.getCase(c));
+            j.setProbaClefInondation(this.probaClefInondation);
             this.ensemble.add(j);
         }
-        this.restart();
+        this.ensemble.forEach(j -> j.restart());
+        this.ensemble.forEach(j -> this.grille.getCase(j.getCoord()).setJoueur(j));
+        this.iter = this.ensemble.iterator();
+        this.finJeu = false;
+        this.commenceTour();
     }
 
-    public List<Joueur> getJoueurs(){
-        return this.ensemble;
+    public Modele(Carte carte, Jeu jeu) {
+        this(carte, jeu, false);
     }
 
     /**
@@ -64,8 +86,12 @@ public class Modele extends Observable {
      * @param map_path Un fichier texte
      * @param game_path Un fichier XML
      */
+    public Modele (String map_path, String game_path, boolean deterministic) throws InvalidGameException {
+        this(new Carte(map_path), new Jeu(game_path), deterministic);
+    }
+
     public Modele (String map_path, String game_path) throws InvalidGameException {
-        this(new Carte(map_path), new Jeu(game_path));
+        this(map_path, game_path, false);
     }
 
     /**
@@ -74,10 +100,15 @@ public class Modele extends Observable {
     public void restart() {
         this.grille.restart();
         this.ensemble.forEach(j -> j.restart());
+        this.ensemble.forEach(j -> this.grille.getCase(j.getCoord()).setJoueur(j));
         this.tour = 1;
         this.iter = this.ensemble.iterator();
         this.joueurActuel = this.iter.next();
         this.finJeu = false;
+    }
+
+    public List<Joueur> getJoueurs(){
+        return this.ensemble;
     }
 
     /**
@@ -99,11 +130,26 @@ public class Modele extends Observable {
      */
     public void tourSuivant() {
         if (this.tourPeutFinir()) {
-            this.grille.inonde();
-            this.joueurActuel = this.prochainJoueurVivant();
-            this.joueurActuel.newTurn();
+            if (!this.deterministic) {
+                this.grille.inonde();
+            }
             this.ensemble.forEach(j -> j.noie());
+            if (!this.tousJoueursMorts()) {
+                this.commenceTour();
+            }
+            else {
+                this.finJeu = true;
+            }
         }
+    }
+
+    /**
+     * Initialise un Tour.
+     */
+    private void commenceTour() {
+        this.joueurActuel = this.prochainJoueurVivant();
+        this.joueurActuel.newTurn();
+        System.out.printf("--- Tour %d | Joueur %d ---%n", this.getTour(), this.getJoueurActuel().id);
     }
 
     /**
@@ -167,10 +213,12 @@ public class Modele extends Observable {
         }
         Joueur joueur = this.iter.next();
         while (!joueur.estVivant()) {
-            joueur = this.iter.next();
             if (!this.iter.hasNext()) {
                 this.tour++;
                 this.iter = this.ensemble.iterator();
+            }
+            else {
+                joueur = this.iter.next();
             }
         }
         return joueur;

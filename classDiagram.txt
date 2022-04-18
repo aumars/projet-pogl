@@ -59,6 +59,10 @@ package Modele {
         +terrain: Terrain /' CONSTANTE '/
         -etat: Inondation
         -objetVisibilite: boolean
+        +restart(): void
+        +setJoueur(Joueur): void
+        +removeJoueur(Joueur): void
+        +getJoueurs(): List<Joueurs>
         +estTraversable(): boolean
         +estHelipad(): boolean
         +ajoutObjet(Objet): void
@@ -69,6 +73,7 @@ package Modele {
         +setObjetVisibilite(boolean): void
         +detruitObjet(): void
         +getEtat(): Inondation
+        +setEtat(Inondation): void
         +asseche(): boolean
         +monteEaux(): void
         +adjacent(Direction): Case
@@ -99,8 +104,12 @@ package Modele {
       +name: String
       -actionSpeciale: boolean
       -casesSurvecuesConsecutives: int
+      -probaClefInondation: int
       +restart(): void
       -log(String): void
+      +setProbaClefInondation(double): void
+      +meurt():void
+      +revive():void
       +noie()
       +estVivant(): boolean
       +estSonTour(): boolean
@@ -122,7 +131,7 @@ package Modele {
       +surHelipad(): boolean
     }
     Objet "0..n" o-- "0..1" Joueur
-    Case "0..1" o-- "0..4" Joueur
+    Case "0..1" o-- "0..4" Joueur /' A modifier avec la liste de joueurs dans une case '/
 
     class Carte {
         -terrainByID(char): Terrain /' Méthode statique '/
@@ -143,10 +152,15 @@ package Modele {
 
     class Modele {
         -finJeu: boolean
+        -deterministic: boolean
+        -probaClefInondation: double
+        -remplitIle(): void
         +restart(): void
+        +getJoueurs(): List<Joueur>
         +getJoueurActuel(): Joueur
         +getNbJoueurs(): int
         +tourSuivant(): void
+        -commenceTour(): void
         +getTour(): int
         +getGrille(): Grille
         +verifieGagnants(): boolean

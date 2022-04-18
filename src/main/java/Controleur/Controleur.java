@@ -202,6 +202,12 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
             this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_secher.getId());
         }
 
+        if (this.vue.vue_info_bas.vue_fin_jeu != null && this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
+            this.metAJourApresAction();
+            this.modele.restart();
+            this.vue.commencer();
+        }
+
         this.metAJourApresAction();
     }
 
@@ -217,7 +223,10 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
     private void verifieFinJeu() {
         boolean fin_jeu = this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
-        this.vue.vue_inventaires.inventaires[this.joueur.id - 1].metAJourEtatJoueur();
+
+        for (Joueur j: this.modele.getJoueurs()) {
+            this.vue.vue_inventaires.inventaires[j.id].metAJourEtatJoueur(j);
+        }
         if (fin_jeu) {
             this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
         }
@@ -241,7 +250,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.metAJourRadioBouton();
 
         if (this.joueur.chercheCle() != null) {
-            this.vue.vue_inventaires.inventaires[this.joueur.id - 1].metAJourAffichageObjet();
+            this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
         }
 
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
@@ -252,7 +261,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.metAJourRadioBouton();
 
         if (this.joueur.recupereArtefact() != null) {
-            this.vue.vue_inventaires.inventaires[this.joueur.id - 1].metAJourAffichageObjet();
+            this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
             this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         }
 

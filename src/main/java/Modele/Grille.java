@@ -54,13 +54,13 @@ public class Grille {
                 this.cases[i][j] = new Case(new Coord(j, i), map[i][j], this);
             }
         }
-        this.restart();
+        this.remplitIle();
     }
 
     /**
-     * Rétablit les attributs initiaux de la Grille.
+     * Marquer les cases inondables.
      */
-    public void restart() {
+    private void remplitIle() {
         this.ile.clear();
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {
@@ -70,6 +70,19 @@ public class Grille {
                 }
             }
         }
+    }
+
+    /**
+     * Rétablit les attributs initiaux de la Grille.
+     */
+    public void restart() {
+        for (int i = 0; i < this.HEIGHT; i++) {
+            for (int j = 0; j < this.WIDTH; j++) {
+                Case c = this.getCase(j, i);
+                c.restart();
+            }
+        }
+        this.remplitIle();
     }
 
     /**
@@ -106,7 +119,7 @@ public class Grille {
                     c, this.getWidth(), this.getHeight()));
         }
         else {
-            this.cases[c.y()][c.x()].ajoutObjet(o);
+            this.getCase(c).ajoutObjet(o);
             this.ile.removeIf(k -> k.coord.equals(c));
         }
     }

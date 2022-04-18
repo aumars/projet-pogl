@@ -6,10 +6,10 @@ import javax.swing.*;
 
 public class VueInventaire extends JPanel {
     private final int max_items = 9;
-    private Modele modele;
-    private JLabel label_nom_joueur = new JLabel();
-    private JPanel panel_objets = new JPanel();
-    private String nom;
+    private final Modele modele;
+    private final JLabel label_nom_joueur = new JLabel();
+    private final JPanel panel_objets = new JPanel();
+    private final String nom;
 
     public VueInventaire(Modele m, String nom) {
         this.modele = m;
@@ -48,8 +48,8 @@ public class VueInventaire extends JPanel {
             this.panel_objets.add(new VueObjet(null));
     }
 
-    public void metAJourEtatJoueur() {
-        if (!this.modele.getJoueurActuel().estVivant()) {
+    public void metAJourEtatJoueur(Joueur j) {
+        if (!j.estVivant()) {
             this.label_nom_joueur.setText("<html><strike>" + this.nom + "</strike></html>");
             this.label_nom_joueur.setForeground(Color.RED);
         }

@@ -98,4 +98,14 @@ class CaseTest {
         Assertions.assertSame(this.g2, this.g0.adjacent(Direction.BAS));
         Assertions.assertThrows(IllegalArgumentException.class, () -> this.g0.adjacent(Direction.HAUT));
     }
+
+    @Test
+    void caseRestart() {
+        Case c = new Case(new Coord(0, 0), Terrain.TERRE, null);
+        Objet o = new Artefact(Element.AIR);
+        c.ajoutObjet(o);
+        Assertions.assertTrue(c.aObjet());
+        c.restart();
+        Assertions.assertTrue(c.aObjet());
+    }
 }

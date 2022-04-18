@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VueInfoBas extends JPanel {
-    private Modele modele;
+    private final Modele modele;
     
     public VueCommande vue_commande;
     public VueFinJeu vue_fin_jeu;
@@ -29,7 +29,7 @@ public class VueInfoBas extends JPanel {
     public boolean verifieFinJeu(){
         boolean jeuGagne = this.modele.verifieGagnants();
 
-        if (jeuGagne || this.modele.tousJoueursMorts()) {
+        if (this.modele.getFinJeu()) {
             this.vue_commande.setVisible(false);
             this.vue_fin_jeu = new VueFinJeu(this.modele, !jeuGagne);
             this.est_fin_jeu = true;
