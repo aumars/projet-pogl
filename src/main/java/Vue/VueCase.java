@@ -9,17 +9,13 @@ public class VueCase extends JPanel implements Observer {
     private int ICN_SIZEY = ConstsValue.BOX_SIZE / 2;
     private int nb_joueurs;
 
-    private Modele modele;
-    private Case c;
-    private JLabel icn_objet = new JLabel();
-    private java.util.List<Joueur> joueurs_case;
+    private final Case c;
+    private final JLabel icn_objet = new JLabel();
 
     public VueCase(Modele m, Case c) {
         this.c = c;
-        this.modele = m;
-        this.modele.addObserver(this);
-        this.joueurs_case = this.joueursCase();
-        this.nb_joueurs = this.joueurs_case.size();
+        m.addObserver(this);
+        this.nb_joueurs = this.c.getJoueurs().size();
 
         this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
 
