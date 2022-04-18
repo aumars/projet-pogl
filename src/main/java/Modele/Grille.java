@@ -54,7 +54,7 @@ public class Grille {
                 this.cases[i][j] = new Case(new Coord(j, i), map[i][j], this);
             }
         }
-        this.restart();
+        this.remplitIle();
     }
 
     /**
@@ -70,6 +70,19 @@ public class Grille {
                 }
             }
         }
+    }
+
+    /**
+     * Rétablit les attributs initiaux de la Grille.
+     */
+    public void restart() {
+        for (int i = 0; i < this.HEIGHT; i++) {
+            for (int j = 0; j < this.WIDTH; j++) {
+                Case c = this.getCase(j, i);
+                c.restart();
+            }
+        }
+        this.remplitIle();
     }
 
     /**
