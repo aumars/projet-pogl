@@ -167,8 +167,9 @@ public class Controleur implements ActionListener, KeyListener {
     private void verifieFinJeu() {
         boolean fin_jeu = this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
-        this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourEtatJoueur();
-
+        for (Joueur j: this.modele.getJoueurs()) {
+            this.vue.vue_inventaires.inventaires[j.id].metAJourEtatJoueur(j);
+        }
         if (fin_jeu) {
             this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
         }

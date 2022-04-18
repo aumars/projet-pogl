@@ -48,8 +48,8 @@ public class VueInventaire extends JPanel {
             this.panel_objets.add(new VueObjet(null));
     }
 
-    public void metAJourEtatJoueur() {
-        if (!this.modele.getJoueurActuel().estVivant()) {
+    public void metAJourEtatJoueur(Joueur j) {
+        if (!j.estVivant()) {
             this.label_nom_joueur.setText("<html><strike>" + this.nom + "</strike></html>");
             this.label_nom_joueur.setForeground(Color.RED);
         }
