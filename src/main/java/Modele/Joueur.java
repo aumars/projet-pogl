@@ -158,6 +158,7 @@ public class Joueur {
      * @return Vrai le déplacement est réussi, faux sinon.
      */
     public boolean deplace(Direction dir) {
+        Case adjacent = this.pos.adjacent(dir);
         if (this.estSonTour() && this.pos.adjacent(dir).estTraversable()) {
             if (!this.pos.estTraversable()) {
                 this.casesSurvecuesConsecutives = 0;
@@ -169,7 +170,6 @@ public class Joueur {
                     this.casesSurvecuesConsecutives = 0;
                 }
             }
-            Case adjacent = this.pos.adjacent(dir);
             this.log(String.format("se déplace vers %s à %s", dir, adjacent));
             this.pos = this.pos.adjacent(dir);
             this.finishTurn();
