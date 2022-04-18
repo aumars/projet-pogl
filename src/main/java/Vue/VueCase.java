@@ -3,19 +3,23 @@ package Vue;
 import Modele.*;
 import java.awt.*;
 import javax.swing.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class VueCase extends JPanel implements Observer {
     private int ICN_SIZEX = ConstsValue.BOX_SIZE / 2;
     private int ICN_SIZEY = ConstsValue.BOX_SIZE / 2;
     private int nb_joueurs;
 
+    private Modele modele;
     private final Case c;
     private final JLabel icn_objet = new JLabel();
 
     public VueCase(Modele m, Case c) {
+        this.modele = m;
         this.c = c;
-        m.addObserver(this);
-        this.nb_joueurs = this.c.getJoueurs().size();
+        this.modele.addObserver(this);
+        this.nb_joueurs = this.getJoueurs().size();
 
         this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
 
@@ -36,14 +40,13 @@ public class VueCase extends JPanel implements Observer {
     private void afficheUnJoueur(Joueur j) {
         if (!j.estVivant()) {
             this.add(new JLabel(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY)));
-        }
-        else {
+        } else {
             this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(j.id), this.ICN_SIZEX, this.ICN_SIZEY)));
         }
     }
 
     private void afficheTousJoueurs() {
-        this.c.getJoueurs().forEach(this::afficheUnJoueur);
+        this.getJoueurs().forEach(this::afficheUnJoueur);
     }
 
     private void afficheObjet() {
@@ -116,8 +119,18 @@ public class VueCase extends JPanel implements Observer {
         g.fillRect(0, 0, ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE);
     }
 
-    private boolean estCaseJoueur() {
-        return this.c.getJoueurs().size() != 0;
+    public boolean estCaseJoueur() {
+        return this.getJoueurs().size() != 0;
+    }
+
+    private List<Joueur> getJoueurs() {
+        List<Joueur> joueurs = new ArrayList<>();
+
+        for (Joueur joueur : this.modele.getJoueurs())
+            if (joueur.getCoord().equals(this.c.coord))
+                joueurs.add(joueur);
+
+        return joueurs;
     }
 
     private void metAJourTailleIcon() {
