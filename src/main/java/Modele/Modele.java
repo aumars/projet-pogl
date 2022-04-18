@@ -38,6 +38,16 @@ public class Modele extends Observable {
     private boolean finJeu;
 
     /**
+     * Si le jeu est déterministe (utile pour les tests)
+     */
+    private final boolean deterministic;
+
+    /**
+     * La proba d'inonder une case en recherche d'une clef.
+     */
+    private final double probaClefInondation;
+
+    /**
      * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
      * @param carte Une carte
      * @param jeu L'ensemble d'objets et de joueurs.

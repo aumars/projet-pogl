@@ -152,6 +152,8 @@ package Modele {
 
     class Modele {
         -finJeu: boolean
+        -deterministic: boolean
+        -probaClefInondation: double
         -remplitIle(): void
         +restart(): void
         +getJoueurActuel(): Joueur
