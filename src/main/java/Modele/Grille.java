@@ -58,9 +58,9 @@ public class Grille {
     }
 
     /**
-     * Rétablit les attributs initiaux de la Grille.
+     * Marquer les cases inondables.
      */
-    public void restart() {
+    private void remplitIle() {
         this.ile.clear();
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {

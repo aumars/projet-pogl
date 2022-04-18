@@ -148,6 +148,7 @@ package Modele {
 
     class Modele {
         -finJeu: boolean
+        -remplitIle(): void
         +restart(): void
         +getJoueurActuel(): Joueur
         +getNbJoueurs(): int
