@@ -29,7 +29,7 @@ public class VueInfoBas extends JPanel {
     public boolean verifieFinJeu(){
         boolean jeuGagne = this.modele.verifieGagnants();
 
-        if (jeuGagne || this.modele.tousJoueursMorts()) {
+        if (this.modele.getFinJeu()) {
             this.vue_commande.setVisible(false);
             this.vue_fin_jeu = new VueFinJeu(this.modele, !jeuGagne);
             this.est_fin_jeu = true;
