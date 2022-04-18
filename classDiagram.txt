@@ -69,6 +69,7 @@ package Modele {
         +setObjetVisibilite(boolean): void
         +detruitObjet(): void
         +getEtat(): Inondation
+        +setEtat(Inondation): void
         +asseche(): boolean
         +monteEaux(): void
         +adjacent(Direction): Case

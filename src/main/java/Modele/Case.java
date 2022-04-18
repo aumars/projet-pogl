@@ -131,13 +131,19 @@ public class Case {
     public Inondation getEtat() { return this.etat; }
 
     /**
+     * Modifié l'état d'inondation d'une Case.
+     * @param etat Nouvel état d'inondation
+     */
+    public void setEtat(Inondation etat) { this.etat = etat; }
+
+    /**
      * Réduit l'état d'inondation de la case.
      * @return Vrai si le séchage est réussi, Faux sinon.
      */
     public boolean asseche() {
         switch (this.getEtat()) {
             case SECHE: return true;
-            case INONDEE: this.etat = Inondation.SECHE; return true;
+            case INONDEE: this.setEtat(Inondation.SECHE); return true;
             case SUBMERGEE:
             default: return false;
         }
@@ -148,8 +154,8 @@ public class Case {
      */
     public void monteEaux() {
         switch (this.getEtat()) {
-            case SECHE: this.etat = Inondation.INONDEE; break;
-            case INONDEE: this.etat = Inondation.SUBMERGEE; break;
+            case SECHE: this.setEtat(Inondation.INONDEE); break;
+            case INONDEE: this.setEtat(Inondation.SUBMERGEE); break;
         }
     }
 
