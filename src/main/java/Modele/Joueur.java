@@ -57,6 +57,11 @@ public class Joueur {
     private int casesSurvecuesConsecutives = 0;
 
     /**
+     * Probabilité (entre 0 et 1) d'inonder la case actuelle lors d'une recherche d'une clef.
+     */
+    private double probaClefInondation;
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
