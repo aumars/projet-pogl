@@ -116,19 +116,6 @@ public class VueCase extends JPanel implements Observer {
         g.fillRect(0, 0, ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE);
     }
 
-    private java.util.List<Joueur> joueursCase() {
-        java.util.List<Joueur> joueurs = this.modele.getJoueurs();
-        java.util.List<Joueur> joueurs_case = new java.util.ArrayList<>();
-
-        for (int i = 0; i < joueurs.size(); i++) {
-            if (joueurs.get(i).getCoord() == this.c.coord) {
-                joueurs_case.add(joueurs.get(i));
-            }
-        }
-
-        return joueurs_case;
-    }
-
     private boolean estCaseJoueur() {
         return this.c.getJoueurs().size() != 0;
     }
