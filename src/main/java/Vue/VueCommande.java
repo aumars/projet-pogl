@@ -10,13 +10,15 @@ public class VueCommande extends JPanel {
 
     public VueBouton btn_clef = new VueBouton("Recherche une clef autour [A]", "Clef");
     public VueBouton btn_prendre = new VueBouton("Récupère l'artefact [F]", "Artefact");
-    public VueBoutonRadio btn_secher = new VueBoutonRadio(0, id_radio_active, "Récupère l'artefact [F]",
-            "Sécher une case");
-
     public VueBouton btn_fin_tour = new VueBouton("Termine le tour [ENTER]", "Fin");
-
-    public VueBoutonRadio btn_sac_sable = new VueBoutonRadio(1, id_radio_active, "Ensable une case", "Ensabler");
-    public VueBoutonRadio btn_teleporte = new VueBoutonRadio(2, id_radio_active, "Se teleporter", "Téléporter");
+    
+    
+    public VueBoutonRadio btn_secher = new VueBoutonRadio(0, id_radio_active, "Cliquer sur une case pour la sécher.",
+    "Sécher une case");
+    public VueBoutonRadio btn_sac_sable = new VueBoutonRadio(1, id_radio_active,
+            "Cliquer sur une case pour l'ensabler.", "Sac de sable");
+    public VueBoutonRadio btn_teleporte = new VueBoutonRadio(2, id_radio_active,
+            "Cliquer sur une case pour se teleporter.", "Téléportation");
 
     public VueCommande(Modele m) {
         this.modele = m;
@@ -46,14 +48,14 @@ public class VueCommande extends JPanel {
 
     public void gereVisibiliteBoutons() {
         boolean peut_jouer = this.modele.getJoueurActuel().estSonTour();
-        
-        this.btn_secher.setEnabled(this.estAdjacentJoueurInondee());
+
         this.btn_clef.setEnabled(peut_jouer);
+        this.btn_secher.setEnabled(peut_jouer && this.estAdjacentJoueurInondee());
         this.btn_prendre.setEnabled(peut_jouer && estCaseArtefact());
         this.btn_fin_tour.setEnabled(this.modele.tourPeutFinir());
 
-        this.btn_sac_sable.setEnabled(this.modele.getJoueurActuel().aActionSpeciale());
-        this.btn_teleporte.setEnabled(this.modele.getJoueurActuel().aActionSpeciale());
+        this.btn_sac_sable.setEnabled(peut_jouer && this.modele.getJoueurActuel().aActionSpeciale());
+        this.btn_teleporte.setEnabled(peut_jouer && this.modele.getJoueurActuel().aActionSpeciale());
 
         this.revalidate();
         this.repaint();
@@ -67,8 +69,8 @@ public class VueCommande extends JPanel {
         for (Direction dir : Direction.values()) {
             Coord coord_joueurs = this.modele.getJoueurActuel().getCoord();
             Case case_joueurs = this.modele.getGrille().getCase(coord_joueurs).adjacent(dir);
-            
-            if(case_joueurs.getEtat() == Inondation.INONDEE)
+
+            if (case_joueurs.getEtat() == Inondation.INONDEE)
                 return true;
         }
 
@@ -97,7 +99,7 @@ public class VueCommande extends JPanel {
         this.btn_teleporte.update();
     }
 
-    public void metAJourRadioBouton(){
+    public void metAJourRadioBouton() {
         this.metAJourRadioBouton(-1);
     }
 }

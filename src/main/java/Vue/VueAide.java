@@ -18,26 +18,24 @@ public class VueAide extends JPanel {
         deplacement.add(getLabel("Gauche: [D] ou [Flèche Droite]"));
         this.add(deplacement);
 
-        JPanel secher = new JPanel();
-        secher.setLayout(new BoxLayout(secher, BoxLayout.Y_AXIS));
-        secher.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 0));
-        secher.add(getTitre("Sécher une case :"));
-        secher.add(getLabel("Haut: [O]"));
-        secher.add(getLabel("Bas: [K]"));
-        secher.add(getLabel("Centre: [ESPACE]"));
-        secher.add(getLabel("Droite: [L]"));
-        secher.add(getLabel("Gauche: [M]"));
-        this.add(secher);
-
         JPanel actions = new JPanel();
         actions.setLayout(new BoxLayout(actions, BoxLayout.Y_AXIS));
         actions.add(getTitre("Actions :"));
         actions.add(getLabel("Chercher une clef: [A]"));
         actions.add(getLabel("Prendre un artefact: [F]"));
-        actions.add(getLabel("Fin du tour: [ENTER]"));
-        actions.add(getLabel("Afficher l'aide: [H]"));
-        actions.add(getLabel("Fermer le jeu: [ECHAPPE]"));
+        actions.add(getLabel("Secher une case: [Cliquer sur la case]"));
+        actions.add(getLabel("Se teleporter: [Cliquer sur la case]"));
+        actions.add(getLabel("Ensabler une case: [Cliquer sur la case]"));
         this.add(actions);
+
+        JPanel general = new JPanel();
+        general.setLayout(new BoxLayout(general, BoxLayout.Y_AXIS));
+        general.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 0));
+        general.add(getTitre("Générals :"));
+        general.add(getLabel("Afficher l'aide: [H]"));
+        general.add(getLabel("Fermer le jeu: [ECHAPPE]"));
+        general.add(getLabel("Finir le tour: [ENTER]"));
+        this.add(general);
     }
 
     private JLabel getLabel(String text) {
