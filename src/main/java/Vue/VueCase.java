@@ -136,7 +136,7 @@ public class VueCase extends JPanel implements Observer {
     }
 
     private boolean estCaseJoueur() {
-        return this.joueurs_case.size() != 0;
+        return this.c.getJoueurs().size() != 0;
     }
 
     private void metAJourTailleIcon() {
