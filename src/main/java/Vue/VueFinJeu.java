@@ -30,7 +30,7 @@ public class VueFinJeu extends JPanel {
         }
 
         else {
-            lbl_titre.setText("BRAVO " + this.modele.getJoueurActuel().nom);
+            lbl_titre.setText("BRAVO");
             lbl_titre.setFont(new Font(ConstsValue.FONT_FAMILY, Font.BOLD, 20));
 
             lbl_text.setText("Deux choses comptent : gagner et s'amuser. Gagner sans s'amuser n'a aucun intérêt.");

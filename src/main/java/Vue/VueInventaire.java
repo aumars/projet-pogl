@@ -11,17 +11,18 @@ public class VueInventaire extends JPanel {
     private final JPanel panel_objets = new JPanel();
     private final String nom;
 
-    public VueInventaire(Modele m, String nom) {
+    public VueInventaire(Modele m, int id) {
         this.modele = m;
-        this.nom = nom;
+        this.nom = ConstsValue.getNomJoueur(id);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.label_nom_joueur.setText(nom);
+        
+        this.label_nom_joueur.setIcon(Utils.tailleImg(ConstsIcon.getImgAvatar(id), 24, 24));
+        this.label_nom_joueur.setText(this.nom);
         this.label_nom_joueur.setPreferredSize(new Dimension(100, 100));
-        this.label_nom_joueur.setBorder(BorderFactory.createEmptyBorder(20, 25, 5, 0));
+        this.label_nom_joueur.setBorder(BorderFactory.createEmptyBorder(20, 5, 5, 0));
         this.label_nom_joueur.setFont(new Font(ConstsValue.FONT_FAMILY, Font.BOLD, 20));
-        this.label_nom_joueur.setHorizontalAlignment(SwingConstants.LEFT);
+        this.label_nom_joueur.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label_nom_joueur);
 
         this.panel_objets.setLayout(new BoxLayout(this.panel_objets, BoxLayout.PAGE_AXIS));

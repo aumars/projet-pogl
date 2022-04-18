@@ -32,11 +32,6 @@ public class Joueur {
     private boolean sonTour;
 
     /**
-     * Le nom du joueur.
-     */
-    public final String nom = "Player";
-
-    /**
      * Le nombre de Joueurs instanciés.
      */
     private static int numJoueurs = 0;

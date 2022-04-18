@@ -18,7 +18,7 @@ public class VueContainerInventaires extends JPanel {
         this.inventaires = new VueInventaire[nb_joueurs];
         
         for (int i = 0; i < nb_joueurs; i++) {
-            this.inventaires[i] = new VueInventaire(this.modele, "Player"+i);
+            this.inventaires[i] = new VueInventaire(this.modele, i);
             this.add(this.inventaires[i]);
         }
     }
