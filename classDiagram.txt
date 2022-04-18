@@ -107,6 +107,9 @@ package Modele {
       -probaClefInondation: int
       +restart(): void
       -log(String): void
+      +setProbaClefInondation(double): void
+      +meurt():void
+      +revive():void
       +noie()
       +estVivant(): boolean
       +estSonTour(): boolean

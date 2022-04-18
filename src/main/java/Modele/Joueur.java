@@ -109,6 +109,28 @@ public class Joueur {
     }
 
     /**
+     * Modifier la proba d'inonder une case en cherchant une clef.
+     * @param p La probabilité (entre 0 et 1)
+     */
+    public void setProbaClefInondation(double p) { this.probaClefInondation = p; }
+
+    /**
+     * Le Joueur meurt.
+     */
+    public void meurt() {
+        this.log("est mort !");
+        this.vivant = false;
+    }
+
+    /**
+     * Le Joueur revient en vie.
+     */
+    public void revive() {
+        this.log("est revenu !");
+        this.vivant = true;
+    }
+
+    /**
      * Noie le Joueur si sa case et ses adjacentes sont submergées.
      */
     public void noie() {
