@@ -9,8 +9,8 @@ public class ModeleTest {
     Modele modeleM1G1, modeleM1G2;
     @BeforeEach
     void modeleInit() throws InvalidGameException {
-        this.modeleM1G1 = new Modele("map1.txt", "game1.xml");
-        this.modeleM1G2 = new Modele("map1.txt", "game2.xml");
+        this.modeleM1G1 = new Modele("map1.txt", "game1.xml", true);
+        this.modeleM1G2 = new Modele("map1.txt", "game2.xml", true);
     }
 
     @Test
@@ -84,17 +84,29 @@ public class ModeleTest {
     @Test
     void modeleTestGame1() {
         Modele m = this.modeleM1G1;
+        Case c0 = m.getGrille().getCase(1, 1);
+        Case c1 = m.getGrille().getCase(2, 1);
+        Assertions.assertEquals(4, c0.getJoueurs().size());
+        Assertions.assertEquals(0, c1.getJoueurs().size());
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(3, c0.getJoueurs().size());
+        Assertions.assertEquals(1, c1.getJoueurs().size());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(2, c0.getJoueurs().size());
+        Assertions.assertEquals(2, c1.getJoueurs().size());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(1, c0.getJoueurs().size());
+        Assertions.assertEquals(3, c1.getJoueurs().size());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(0, c0.getJoueurs().size());
+        Assertions.assertEquals(4, c1.getJoueurs().size());
     }
 
     @Test
@@ -150,5 +162,79 @@ public class ModeleTest {
         Assertions.assertTrue(m.tourPeutFinir());
         m.tourSuivant();
         Assertions.assertEquals(tour + 1, m.getTour());
+    }
+
+    @Test
+    void modele3Morts1VivantAGame1() {
+        Modele m = this.modeleM1G1;
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        Joueur j = m.getJoueurActuel();
+        j.deplace(Direction.DROITE);
+        Assertions.assertEquals(new Coord(2, 1), j.getCoord());
+        m.tourSuivant();
+        m.getJoueurActuel().deplace(Direction.DROITE);
+        Assertions.assertSame(j, m.getJoueurActuel());
+        Assertions.assertEquals(new Coord(3, 1), j.getCoord());
+    }
+
+    @Test
+    void modele3Morts1VivantBGame1() {
+        Modele m = this.modeleM1G1;
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        Joueur j = m.getJoueurActuel();
+        j.deplace(Direction.DROITE);
+        Assertions.assertEquals(new Coord(2, 1), j.getCoord());
+        m.tourSuivant();
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        m.getJoueurActuel().deplace(Direction.DROITE);
+        Assertions.assertSame(j, m.getJoueurActuel());
+        Assertions.assertEquals(new Coord(3, 1), j.getCoord());
+    }
+
+    @Test
+    void modele3Morts1VivantCGame1() {
+        Modele m = this.modeleM1G1;
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        Joueur j = m.getJoueurActuel();
+        j.deplace(Direction.DROITE);
+        Assertions.assertEquals(new Coord(2, 1), j.getCoord());
+        m.tourSuivant();
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        m.getJoueurActuel().meurt();
+        m.tourSuivant();
+        m.getJoueurActuel().deplace(Direction.DROITE);
+        Assertions.assertSame(j, m.getJoueurActuel());
+        Assertions.assertEquals(new Coord(3, 1), j.getCoord());
+    }
+
+    @Test
+    void modeleRestartObjetGame1() {
+        Modele m = this.modeleM1G1;
+        Case c = m.getGrille().getCase(4, 2);
+        Assertions.assertTrue(c.aObjet());
+        m.restart();
+        Assertions.assertTrue(c.aObjet());
+    }
+
+    @Test
+    void modeleRestartVisibiliteGame1() {
+        Modele m = this.modeleM1G1;
+        Case c = m.getGrille().getCase(4, 2);
+        Assertions.assertFalse(c.getObjetVisibilite());
+        c.setObjetVisibilite(true);
+        Assertions.assertTrue(c.getObjetVisibilite());
+        m.restart();
+        Assertions.assertFalse(c.getObjetVisibilite());
     }
 }

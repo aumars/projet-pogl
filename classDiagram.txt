@@ -156,9 +156,11 @@ package Modele {
         -probaClefInondation: double
         -remplitIle(): void
         +restart(): void
+        +getJoueurs(): List<Joueur>
         +getJoueurActuel(): Joueur
         +getNbJoueurs(): int
         +tourSuivant(): void
+        -commenceTour(): void
         +getTour(): int
         +getGrille(): Grille
         +verifieGagnants(): boolean
