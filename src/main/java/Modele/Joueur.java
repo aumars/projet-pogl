@@ -9,7 +9,7 @@ public class Joueur {
     /**
      * Si le Joueur vive ou pas.
      */
-    private boolean vivant = true;
+    private boolean vivant;
 
     /**
      * La case actuelle du Joueur.
@@ -79,6 +79,7 @@ public class Joueur {
      * Rétablit les attributs initiaux du Joueur.
      */
     public void restart() {
+        this.vivant = true;
         this.teleport(this.posInitiale);
         this.inventaire.clear();
         this.newTurn();
