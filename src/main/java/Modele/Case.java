@@ -194,6 +194,7 @@ public class Case {
         switch (this.getEtat()) {
             case SECHE: this.setEtat(Inondation.INONDEE); break;
             case INONDEE: this.setEtat(Inondation.SUBMERGEE); break;
+            default: break;
         }
     }
 
