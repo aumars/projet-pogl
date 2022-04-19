@@ -176,7 +176,6 @@ public class Grille {
             this.ile.get(case1).monteEaux();
             this.ile.get(case2).monteEaux();
             this.ile.get(case3).monteEaux();
-            this.ile.removeIf(p -> p.getEtat() == Inondation.SUBMERGEE);
         }
     }
 }
