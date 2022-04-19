@@ -8,6 +8,13 @@ import javax.swing.*;
 public class VueObjet extends JPanel {
     private final int SIZE = 40;
 
+    /**
+     * Affiche un objet.
+     * 
+     * @param o                  L'objet. Si null affiche une case vide.
+     * @param foreground         La couleur du texte.
+     * @param afficheDescription Affiche un texte descriptifs de l'objet.
+     */
     public VueObjet(Objet o, Color foreground, boolean afficheDescription) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -24,7 +31,7 @@ public class VueObjet extends JPanel {
 
         else if (o.getClass().equals(Clef.class)) {
             icon.setIcon(Utils.tailleImg(ConstsIcon.CLEF, this.SIZE, this.SIZE));
-            String pre_text = "Clef";
+            String pre_text = "Clef: ";
 
             if (afficheDescription)
                 pre_text = "";
@@ -60,14 +67,31 @@ public class VueObjet extends JPanel {
         this.add(icon);
     }
 
+    /**
+     * Affiche un objet.
+     * 
+     * @param o L'objet. Si null affiche une case vide.
+     */
     public VueObjet(Objet o) {
         this(o, new Color(0, 0, 0), true);
     }
 
+    /**
+     * Affiche un objet.
+     * 
+     * @param o          L'objet. Si null affiche une case vide.
+     * @param foreground Affiche un texte descriptifs de l'objet.
+     */
     public VueObjet(Objet o, Color foreground) {
         this(o, foreground, true);
     }
 
+    /**
+     * Affiche un objet.
+     * 
+     * @param o                  L'objet. Si null affiche une case vide.
+     * @param afficheDescription Affiche un texte descriptifs de l'objet.
+     */
     public VueObjet(Objet o, boolean afficheDescription) {
         this(o, new Color(0, 0, 0), afficheDescription);
     }

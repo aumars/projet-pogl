@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.*;
+
 import java.awt.*;
 import javax.swing.*;
 import java.util.List;
@@ -15,6 +16,12 @@ public class VueCase extends JPanel implements Observer {
     private final Case c;
     private final JLabel icn_objet = new JLabel();
 
+    /**
+     * Affichage d'une case de la grille.
+     * 
+     * @param m Le modele.
+     * @param c La case dans la grille du jeu.
+     */
     public VueCase(Modele m, Case c) {
         this.modele = m;
         this.c = c;
@@ -28,15 +35,26 @@ public class VueCase extends JPanel implements Observer {
         this.afficheObjet();
     }
 
+    /**
+     * Mets a jours l'affichage du bouton.
+     */
     public void metAJourApresAction() {
         this.repaint();
     }
 
+    /**
+     * Paint la case.
+     */
     public void paintComponent(Graphics g) {
         super.repaint();
         colorieSol(g);
     }
 
+    /**
+     * Affiche un joueurs sur la case.
+     * 
+     * @param j Le joueurs à afficher
+     */
     private void afficheUnJoueur(Joueur j) {
         if (!j.estVivant()) {
             this.add(new JLabel(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY)));
@@ -45,10 +63,16 @@ public class VueCase extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Affiche tous les joueurs sur la case.
+     */
     private void afficheTousJoueurs() {
         this.getJoueurs().forEach(this::afficheUnJoueur);
     }
 
+    /**
+     * Affiche un objet sur la case.
+     */
     private void afficheObjet() {
         this.remove(this.icn_objet);
         this.icn_objet.setVisible(this.c.getObjetVisibilite());
@@ -66,6 +90,11 @@ public class VueCase extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Colorie le sol en fonction de son état.
+     * 
+     * @param g Le graphique.
+     */
     private void colorieSol(Graphics g) {
         if (this.c.terrain == Terrain.MER)
             g.setColor(ConstsValue.COLOR_MER);
@@ -95,10 +124,20 @@ public class VueCase extends JPanel implements Observer {
         g.fillRect(0, 0, ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE);
     }
 
+    /**
+     * Renvoie si un joueur est sur cette case.
+     * 
+     * @return True si la case contient un joueur. False sinon.
+     */
     public boolean estCaseJoueur() {
         return this.getJoueurs().size() != 0;
     }
 
+    /**
+     * Recupere tous les joueurs présents sur la case.
+     * 
+     * @return Une liste des joueurs sur la case.
+     */
     private List<Joueur> getJoueurs() {
         List<Joueur> joueurs = new ArrayList<>();
 
@@ -109,6 +148,9 @@ public class VueCase extends JPanel implements Observer {
         return joueurs;
     }
 
+    /**
+     * Met a jour la taille des icones de la case.
+     */
     private void metAJourTailleIcon() {
         if (this.estCaseJoueur()) {
             this.ICN_SIZEX = this.ICN_SIZEX / (this.nb_joueurs + 1) + this.ICN_SIZEX / 3;

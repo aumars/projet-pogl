@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.*;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,12 +12,18 @@ public class VueInventaire extends JPanel {
     private final JPanel panel_objets = new JPanel();
     private final String nom;
 
+    /**
+     * Affiche un inventaire.
+     * 
+     * @param m  Le modele.
+     * @param id L'ID du joueur qui possède cet inventaire.
+     */
     public VueInventaire(Modele m, int id) {
         this.modele = m;
         this.nom = ConstsValue.getNomJoueur(id);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
+
         this.label_nom_joueur.setIcon(Utils.tailleImg(ConstsIcon.getImgAvatar(id), 24, 24));
         this.label_nom_joueur.setText(this.nom);
         this.label_nom_joueur.setPreferredSize(new Dimension(100, 50));
@@ -27,11 +34,14 @@ public class VueInventaire extends JPanel {
 
         this.panel_objets.setLayout(new BoxLayout(this.panel_objets, BoxLayout.PAGE_AXIS));
         this.panel_objets.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
-        
+
         this.remplieInventaireVide();
         this.add(panel_objets);
     }
 
+    /**
+     * Mets a jour l'affichage des objets dans l'inventaires.
+     */
     public void metAJourAffichageObjet() {
         this.panel_objets.removeAll();
 
@@ -43,12 +53,20 @@ public class VueInventaire extends JPanel {
         this.updateUI();
     }
 
+    /**
+     * Remplie les cases vides de l'inventaire par une image significatif.
+     */
     private void remplieInventaireVide() {
         int nb_items = this.panel_objets.getComponentCount();
-        for (int i = 0; i < this.max_items-nb_items; i++)
+        for (int i = 0; i < this.max_items - nb_items; i++)
             this.panel_objets.add(new VueObjet(null));
     }
 
+    /**
+     * Mets a jour l'etat du joueur.
+     * 
+     * @param j Le joueur.
+     */
     public void metAJourEtatJoueur(Joueur j) {
         if (!j.estVivant()) {
             this.label_nom_joueur.setText("<html><strike>" + this.nom + "</strike></html>");

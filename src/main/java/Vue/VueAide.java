@@ -1,10 +1,16 @@
 package Vue;
 
 import Modele.Modele;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class VueAide extends JPanel {
+    /**
+     * Affichage du menu d'aide.
+     * 
+     * @param m Le modele du jeu.
+     */
     public VueAide(Modele m) {
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         this.setLayout(new GridLayout(1, 3));
@@ -38,12 +44,24 @@ public class VueAide extends JPanel {
         this.add(general);
     }
 
+    /**
+     * Creer un composent JLabel pour afficher les commandes.
+     * 
+     * @param text le texte du label.
+     * @return le composent JLabel au format commande.
+     */
     private JLabel getLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(new Font(ConstsValue.FONT_FAMILY, Font.PLAIN, 13));
         return label;
     }
 
+    /**
+     * Creer un composent JLabel pour afficher les titres.
+     * 
+     * @param text le texte du label.
+     * @return le composent JLabel au format titre.
+     */
     private JLabel getTitre(String text) {
         JLabel label = new JLabel(Utils.souligneLabel(text));
         label.setFont(new Font(ConstsValue.FONT_FAMILY, Font.BOLD, 13));

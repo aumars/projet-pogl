@@ -15,6 +15,11 @@ public class Vue {
     public VueLog vue_log;
     public VueInfoBas vue_info_bas;
 
+    /**
+     * Controle l'affichage global du jeu.
+     * 
+     * @param m Le modele du jeu.
+     */
     public Vue(Modele m) {
         this.modele = m;
 
@@ -30,10 +35,13 @@ public class Vue {
         this.fenetre.setLocationRelativeTo(null);
         this.fenetre.setVisible(true);
     }
-    
-    public void commencer(){
+
+    /**
+     * Créer l'affichage du jeu.
+     */
+    public void commencer() {
         this.fenetre.getContentPane().removeAll();
-        
+
         this.vue_info_haut = new VueInfoHaut(this.modele);
         this.vue_inventaires = new VueContainerInventaires(this.modele);
         this.vue_grille = new VueGrille(this.modele);
@@ -50,6 +58,9 @@ public class Vue {
         this.fenetre.revalidate();
     }
 
+    /**
+     * Récupere la fenetre global du jeu.
+     */
     public JFrame getFenetre() {
         return this.fenetre;
     }

@@ -1,12 +1,16 @@
 package Vue;
 
-import Modele.Modele;
 import javax.swing.*;
 import java.awt.*;
 
 public class VueFinJeu extends JPanel {
     public VueBouton btn_rejouer = new VueBouton("Lance une nouvelle partie", "Rejouer");
 
+    /**
+     * Affiche le menu de fin de jeu.
+     * 
+     * @param est_partie_perdante True si la partie est perdu. False sinon.
+     */
     public VueFinJeu(boolean est_partie_perdante) {
         this.setLayout(new BorderLayout());
 

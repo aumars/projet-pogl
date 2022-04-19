@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,6 +12,11 @@ public class VueGrille extends JPanel {
     private Modele modele;
     private VueCase[][] grille;
 
+    /**
+     * Affichage d'une grille.
+     * 
+     * @param m Le modele.
+     */
     public VueGrille(Modele m) {
         this.modele = m;
 
@@ -24,7 +30,10 @@ public class VueGrille extends JPanel {
         this.afficheGrille();
     }
 
-    public void afficheGrille() {
+    /**
+     * Affiche la grille.
+     */
+    private void afficheGrille() {
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {
                 Case c = this.modele.getGrille().getCase(j, i);
@@ -34,6 +43,9 @@ public class VueGrille extends JPanel {
         }
     }
 
+    /**
+     * Mets à jours l'affichage de toutes les cases de la grille.
+     */
     public void metAJourToutesCases() {
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {
@@ -45,6 +57,11 @@ public class VueGrille extends JPanel {
         }
     }
 
+    /**
+     * Mets à jours l'affichage d'une case de la grille.
+     * 
+     * @param coord La coordonnées de la case.
+     */
     public void metAJourCase(Coord coord) {
         Case c = this.modele.getGrille().getCase(coord);
 
@@ -56,6 +73,12 @@ public class VueGrille extends JPanel {
         this.repaint();
     }
 
+    /**
+     * Mets à jours les cases lorsqu'un joueur se déplace.
+     * 
+     * @param prev Les coordonnées de la case initiale du joueur.
+     * @param next Les coordonnées de la case où le joueur se déplace.
+     */
     public void metAJourDeplacementJoueur(Coord prev, Coord next) {
         Case c_prev = this.modele.getGrille().getCase(prev);
         Case c_next = this.modele.getGrille().getCase(next);

@@ -12,6 +12,12 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
     private VueCommande vue_commande;
     private Joueur joueur;
 
+    /**
+     * Controlleur du jeu.
+     * 
+     * @param m Le modele.
+     * @param v La vue.
+     */
     public Controleur(Modele m, Vue v) {
         this.modele = m;
         this.vue = v;
@@ -35,6 +41,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue.vue_grille.addMouseListener(this);
     }
 
+    /**
+     * Methode appelé lorsqu'une touche est préssée.
+     */
     public void keyPressed(KeyEvent e) {
         if (!this.modele.getFinJeu()) {
             switch (e.getKeyCode()) {
@@ -107,10 +116,16 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         }
     }
 
+    /**
+     * Methode appelé lorsque la souris quitte la VueGrille.
+     */
     public void mouseExited(MouseEvent e) {
         this.vue.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
+    /**
+     * Methode appelé lorsque la souris se deplace.
+     */
     public void mouseMoved(MouseEvent e) {
         if (this.vue_commande.btn_secher.estActive()) {
             Case case_over = getMouseCase(e.getX(), e.getY());
@@ -139,28 +154,30 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         }
     }
 
-
+    /**
+     * Methode appelé l'on clique sur la souris.
+     */
     public void mousePressed(MouseEvent e) {
         if (this.vue_commande.btn_secher.estActive()) {
             Case case_pressed = getMouseCase(e.getX(), e.getY());
-            
+
             if (this.joueur.getCoord().estAdjacent(case_pressed.coord)) {
                 this.joueur.asseche(case_pressed);
                 this.vue.vue_grille.metAJourCase(case_pressed.coord);
             }
         }
-        
+
         if (this.vue_commande.btn_sac_sable.estActive()) {
             Case case_pressed = getMouseCase(e.getX(), e.getY());
-            
+
             this.joueur.asseche(case_pressed);
             this.vue.vue_grille.metAJourCase(case_pressed.coord);
         }
-        
+
         if (this.vue_commande.btn_teleporte.estActive()) {
             Coord case_prev_joueur = this.joueur.getCoord();
             Case case_pressed = getMouseCase(e.getX(), e.getY());
-            
+
             if (case_pressed.estTraversable()) {
                 this.joueur.teleport(case_pressed);
                 this.vue.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.coord);
@@ -171,6 +188,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.metAJourApresAction();
     }
 
+    /**
+     * Methode appelé lorsqu'on clique sur un bouton.
+     */
     public void actionPerformed(ActionEvent e) {
         // Gere les actions de la partie.
         if (this.vue_commande.btn_prendre.getModel().isArmed()) {
@@ -202,7 +222,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
             this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_secher.getId());
         }
 
-        if (this.vue.vue_info_bas.vue_fin_jeu != null && this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
+        if (this.vue.vue_info_bas.vue_fin_jeu != null
+                && this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
             this.metAJourApresAction();
             this.modele.restart();
             this.vue.commencer();
@@ -211,20 +232,27 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.metAJourApresAction();
     }
 
-    private boolean deplaceJoueur(Direction dir) {
+    /**
+     * Deplace le joueur.
+     * 
+     * @param dir La direction de deplacement.
+     */
+    private void deplaceJoueur(Direction dir) {
         Coord prev = this.joueur.getCoord();
         Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).coord;
-        boolean est_fini = this.joueur.deplace(dir);
+        this.joueur.deplace(dir);
         this.vue.vue_grille.metAJourDeplacementJoueur(prev, next);
         this.verifieFinJeu();
-        return est_fini;
     }
 
+    /**
+     * Verifie si c'est la fin du jeu.
+     */
     private void verifieFinJeu() {
         boolean fin_jeu = this.vue.vue_info_bas.verifieFinJeu();
         this.vue.vue_info_haut.metAJourApresAction();
 
-        for (Joueur j: this.modele.getJoueurs()) {
+        for (Joueur j : this.modele.getJoueurs()) {
             this.vue.vue_inventaires.inventaires[j.id].metAJourEtatJoueur(j);
         }
         if (fin_jeu) {
@@ -232,6 +260,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         }
     }
 
+    /**
+     * Mets a jours lorsque l'utilisateur realise une action.
+     */
     private void metAJourApresAction() {
         this.vue.vue_log.ajoutLog(this.joueur.getLogString());
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
@@ -241,12 +272,18 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.verifieFinJeu();
     }
 
+    /**
+     * Change de tour de la partie.
+     */
     private void tourSuivant() {
         this.vue_commande.metAJourRadioBouton();
         this.modele.tourSuivant();
         this.vue.vue_info_haut.metAJourApresAction();
     }
 
+    /**
+     * Le joueur cherche une clef.
+     */
     private void chercheClef() {
         this.vue_commande.metAJourRadioBouton();
 
@@ -258,6 +295,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.verifieFinJeu();
     }
 
+    /**
+     * Le joueur prend un artefact.
+     */
     private void prendArtefact() {
         this.vue_commande.metAJourRadioBouton();
 
@@ -269,6 +309,13 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.verifieFinJeu();
     }
 
+    /**
+     * Calcul les coordonnées de la case à partir de coordonnées de la souris.
+     * 
+     * @param m_x Les coordonnées en x de la souris.
+     * @param m_y Les coordonnées en y de la souris.
+     * @return les coordonnées de la case.
+     */
     private Coord getMouseCoord(int m_x, int m_y) {
         int coord_x = Math.floorDiv(m_x - ConstsValue.BORDER_GRID, ConstsValue.BOX_SIZE + ConstsValue.GAP_CASE);
         int coord_y = Math.floorDiv(m_y, ConstsValue.BOX_SIZE + ConstsValue.GAP_CASE);
@@ -285,19 +332,32 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         return new Coord(coord_x, coord_y);
     }
 
+    /**
+     * Récupère la case à partir de coordonnées de la souris.
+     * 
+     * @param m_x Les coordonnées en x de la souris.
+     * @param m_y Les coordonnées en y de la souris.
+     * @return la case qui correspond au coordonnées de la souris.
+     */
     private Case getMouseCase(int m_x, int m_y) {
         return this.modele.getGrille().getCase(getMouseCoord(m_x, m_y));
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+    }
 
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
 
-    public void mouseDragged(MouseEvent e) {}
+    public void mouseDragged(MouseEvent e) {
+    }
 
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 }

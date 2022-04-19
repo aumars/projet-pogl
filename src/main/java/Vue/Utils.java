@@ -3,7 +3,20 @@ package Vue;
 import java.awt.*;
 import javax.swing.ImageIcon;
 
+/**
+ * Contient des fonctions utiles pour la VUE.
+ */
 public final class Utils {
+	/**
+	 * Permets de positionner un element dans un GridBagLayout.
+	 * 
+	 * @param pos_x  la position en x de l'element dans la grille parent.
+	 * @param pos_y  la position en y de l'element dans la grille parent.
+	 * @param width  la longeur qu'occupe l'element dans la grille parents.
+	 * @param height la largeur qu'occupe l'element dans la grille parents.
+	 * @param pad    l'épaisseur de la marge qui entoure l'éléments.
+	 * @return Un GridBagLayout qui permet de positionner l'element dans la grille.
+	 */
 	public static GridBagConstraints positionneGrille(int pos_x, int pos_y, int width, int height, int pad) {
 		GridBagConstraints gc = new GridBagConstraints();
 
@@ -17,14 +30,37 @@ public final class Utils {
 		return gc;
 	}
 
+	/**
+	 * Permets de positionner un element dans un GridBagLayout.
+	 * 
+	 * @param pos_x la position en x de l'element dans la grille parent.
+	 * @param pos_y la position en y de l'element dans la grille parent.
+	 * @param pad   l'épaisseur de la marge qui entoure l'éléments.
+	 * @return Un GridBagLayout qui permet de positionner l'element dans la grille.
+	 */
 	public static GridBagConstraints positionneGrille(int pos_x, int pos_y, int pad) {
 		return positionneGrille(pos_x, pos_y, 1, 1, pad);
 	}
 
+	/**
+	 * Permets de positionner un element dans un GridBagLayout.
+	 * 
+	 * @param pos_x la position en x de l'element dans la grille parent.
+	 * @param pos_y la position en y de l'element dans la grille parent.
+	 * @return Un GridBagLayout qui permet de positionner l'element dans la grille.
+	 */
 	public static GridBagConstraints positionneGrille(int pos_x, int pos_y) {
 		return positionneGrille(pos_x, pos_y, 1, 1, 0);
 	}
 
+	/**
+	 * Redimensionne une image sans perdre son ratio.
+	 * 
+	 * @param icon   L'image à redimensionner.
+	 * @param size_w La longeur de l'image.
+	 * @param size_h La largeur de l'image.
+	 * @return l'image redimensionner.
+	 */
 	public static ImageIcon tailleImg(ImageIcon icon, int size_w, int size_h) {
 		int width = icon.getIconWidth();
 		int height = icon.getIconHeight();
@@ -42,7 +78,13 @@ public final class Utils {
 		return new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 	}
 
-	public static String souligneLabel(String text){
+	/**
+	 * Ajoute les balises html pour souligner le text.
+	 * 
+	 * @param text Le texte à souligner.
+	 * @return le texte avec les balises html de soulignements.
+	 */
+	public static String souligneLabel(String text) {
 		return "<html><u>" + text + "</u></html>";
 	}
 }

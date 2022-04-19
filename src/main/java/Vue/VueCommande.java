@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.*;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,15 +12,19 @@ public class VueCommande extends JPanel {
     public VueBouton btn_clef = new VueBouton("Recherche une clef autour [A]", "Clef");
     public VueBouton btn_prendre = new VueBouton("Récupère l'artefact [F]", "Artefact");
     public VueBouton btn_fin_tour = new VueBouton("Termine le tour [ENTER]", "Fin");
-    
-    
+
     public VueBoutonRadio btn_secher = new VueBoutonRadio(0, id_radio_active, "Cliquer sur une case pour la sécher.",
-    "Sécher une case");
+            "Sécher une case");
     public VueBoutonRadio btn_sac_sable = new VueBoutonRadio(1, id_radio_active,
             "Cliquer sur une case pour l'ensabler.", "Sac de sable");
     public VueBoutonRadio btn_teleporte = new VueBoutonRadio(2, id_radio_active,
             "Cliquer sur une case pour se teleporter.", "Téléportation");
 
+    /**
+     * Affichage du menu de commande.
+     * 
+     * @param m Le modele.
+     */
     public VueCommande(Modele m) {
         this.modele = m;
 
@@ -46,6 +51,10 @@ public class VueCommande extends JPanel {
         this.gereVisibiliteBoutons();
     }
 
+    /**
+     * Active et desactive les boutons qui ne sont pas utilisable par le joueur
+     * actuel.
+     */
     public void gereVisibiliteBoutons() {
         boolean peut_jouer = this.modele.getJoueurActuel().estSonTour();
 
@@ -61,10 +70,21 @@ public class VueCommande extends JPanel {
         this.repaint();
     }
 
+    /**
+     * Renvoie si une case possède un artefact.
+     * 
+     * @return True si l'objet contient un artefact. False sinon.
+     */
     private boolean estCaseArtefact() {
         return this.modele.getGrille().getCase(this.modele.getJoueurActuel().getCoord()).aObjet(Artefact.class);
     }
 
+    /**
+     * Renvoie si toutes la case et les cases adjacentes du joueurs sont inondees.
+     * 
+     * @return Vrai si la case et toutes les cases adjacentes du joueurs sont
+     *         inondees. Faux sinon.
+     */
     private boolean estAdjacentJoueurInondee() {
         for (Direction dir : Direction.values()) {
             Coord coord_joueurs = this.modele.getJoueurActuel().getCoord();
@@ -77,12 +97,23 @@ public class VueCommande extends JPanel {
         return false;
     }
 
+    /**
+     * Créer un composent JLabel pour afficher un titre.
+     * 
+     * @param text Le texte du label.
+     * @return
+     */
     private JLabel titre(String text) {
         JLabel titre = new JLabel(Utils.souligneLabel(text));
         titre.setFont(new Font(ConstsValue.FONT_FAMILY, Font.BOLD, 17));
         return titre;
     }
 
+    /**
+     * Mets a jours les boutons radio.
+     * 
+     * @param id_pressed L'ID du bouton radio préssée.
+     */
     public void metAJourRadioBouton(int id_pressed) {
         if (this.id_radio_active != id_pressed)
             this.id_radio_active = id_pressed;
@@ -99,6 +130,9 @@ public class VueCommande extends JPanel {
         this.btn_teleporte.update();
     }
 
+    /**
+     * Reinitialise les boutons radio.
+     */
     public void metAJourRadioBouton() {
         this.metAJourRadioBouton(-1);
     }
