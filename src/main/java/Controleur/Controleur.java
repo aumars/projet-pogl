@@ -128,7 +128,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     public void mouseMoved(MouseEvent e) {
         if (this.vue_commande.btn_secher.estActive()) {
-            Case case_over = getMouseCase(e.getX(), e.getY());
+            Case case_over = this.getMouseCase(e.getX(), e.getY());
 
             if (case_over.getEtat() == Inondation.INONDEE && this.joueur.getCoord().estAdjacent(case_over.coord))
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
@@ -137,16 +137,26 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
         }
 
-        if (this.vue_commande.btn_sac_sable.estActive()) {
-            if (getMouseCase(e.getX(), e.getY()).getEtat() == Inondation.INONDEE)
+        else if (this.vue_commande.btn_sac_sable.estActive()) {
+            if (this.getMouseCase(e.getX(), e.getY()).getEtat() == Inondation.INONDEE)
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
 
             else
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
         }
 
-        if (this.vue_commande.btn_teleporte.estActive()) {
+        else if (this.vue_commande.btn_teleporte.estActive()) {
             if (this.getMouseCase(e.getX(), e.getY()).estTraversable())
+                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
+
+            else
+                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
+        }
+
+        else {
+            Case case_over = this.getMouseCase(e.getX(), e.getY());
+
+            if (this.joueur.getCoord().estAdjacent(case_over.coord, false) && case_over.estTraversable())
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
 
             else
@@ -159,7 +169,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     public void mousePressed(MouseEvent e) {
         if (this.vue_commande.btn_secher.estActive()) {
-            Case case_pressed = getMouseCase(e.getX(), e.getY());
+            Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
             if (this.joueur.getCoord().estAdjacent(case_pressed.coord)) {
                 this.joueur.asseche(case_pressed);
@@ -167,21 +177,28 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
             }
         }
 
-        if (this.vue_commande.btn_sac_sable.estActive()) {
-            Case case_pressed = getMouseCase(e.getX(), e.getY());
+        else if (this.vue_commande.btn_sac_sable.estActive()) {
+            Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
             this.joueur.asseche(case_pressed);
             this.vue.vue_grille.metAJourCase(case_pressed.coord);
         }
 
-        if (this.vue_commande.btn_teleporte.estActive()) {
+        else if (this.vue_commande.btn_teleporte.estActive()) {
             Coord case_prev_joueur = this.joueur.getCoord();
-            Case case_pressed = getMouseCase(e.getX(), e.getY());
+            Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
             if (case_pressed.estTraversable()) {
                 this.joueur.teleport(case_pressed);
                 this.vue.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.coord);
             }
+        }
+
+        else {
+            Case case_pressed = this.getMouseCase(e.getX(), e.getY());
+
+            if (this.joueur.getCoord().estAdjacent(case_pressed.coord, false) && case_pressed.estTraversable())
+                this.deplaceJoueur(this.joueur.getCoord().adjacentDir(case_pressed.coord));
         }
 
         this.vue_commande.metAJourRadioBouton();

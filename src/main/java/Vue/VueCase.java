@@ -47,7 +47,8 @@ public class VueCase extends JPanel implements Observer {
      */
     public void paintComponent(Graphics g) {
         super.repaint();
-        colorieSol(g);
+        this.colorieSol(g);
+        this.dessineCaseAdjacent(g);
     }
 
     /**
@@ -155,6 +156,26 @@ public class VueCase extends JPanel implements Observer {
         if (this.estCaseJoueur()) {
             this.ICN_SIZEX = this.ICN_SIZEX / (this.nb_joueurs + 1) + this.ICN_SIZEX / 3;
             this.ICN_SIZEY = this.ICN_SIZEY / (this.nb_joueurs + 1) + this.ICN_SIZEY;
+        }
+    }
+
+    /**
+     * Dessine un point sur la case le joueur peut jouet et
+     * si elle est traversable et adjacente au joueur.
+     * 
+     * @param g Le graphique.
+     */
+    private void dessineCaseAdjacent(Graphics g) {
+        Joueur joueur = this.modele.getJoueurActuel();
+
+        if (joueur.estSonTour() && joueur.getCoord().estAdjacent(this.c.coord, false) && this.c.estTraversable()) {
+            int x = ConstsValue.BOX_SIZE / 2;
+            int y = ConstsValue.BOX_SIZE / 2;
+            int radius = ConstsValue.BOX_SIZE / 8;
+            int diameter = radius * 2;
+
+            g.setColor(Color.YELLOW);
+            g.fillOval(x - radius, y - radius, diameter, diameter);
         }
     }
 }
