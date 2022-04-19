@@ -30,6 +30,6 @@ public class VueInfoHaut extends JPanel {
     }
 
     private String getTextTitre(){
-        return String.format("Tour %d | Player %d", this.modele.getTour(), this.modele.getJoueurActuel().id);
+        return String.format("Tour %d | %s", this.modele.getTour(), ConstsValue.getNomJoueur(this.modele.getJoueurActuel().id));
     }
 }
