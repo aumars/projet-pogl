@@ -5,15 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VueFinJeu extends JPanel {
-    private Modele modele;
     public VueBouton btn_rejouer = new VueBouton("Lance une nouvelle partie", "Rejouer");
 
-    public VueFinJeu(Modele m, boolean est_partie_perdante) {
-        this.modele = m;
-
+    public VueFinJeu(boolean est_partie_perdante) {
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE * this.modele.getGrille().getWidth() * 3 / 7, 100));
-        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         JPanel panel_text = new JPanel();
         panel_text.setLayout(new BorderLayout());

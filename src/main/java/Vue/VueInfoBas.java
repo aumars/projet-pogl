@@ -20,8 +20,7 @@ public class VueInfoBas extends JPanel {
         this.vue_aide = new VueAide(this.modele);
 
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE * this.modele.getGrille().getWidth() * 3/7, 120));
-        this.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));   
+        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));   
 
         this.add(this.vue_commande);
     }
@@ -31,7 +30,7 @@ public class VueInfoBas extends JPanel {
 
         if (this.modele.getFinJeu()) {
             this.vue_commande.setVisible(false);
-            this.vue_fin_jeu = new VueFinJeu(this.modele, !jeuGagne);
+            this.vue_fin_jeu = new VueFinJeu(!jeuGagne);
             this.est_fin_jeu = true;
             this.add(this.vue_fin_jeu);
             return true;

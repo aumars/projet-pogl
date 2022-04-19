@@ -57,6 +57,11 @@ public class Joueur {
     private double probaClefInondation;
 
     /**
+     * La phrase de log actuel.
+     */
+    private String log;
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
@@ -96,11 +101,13 @@ public class Joueur {
      */
     private void log(String msg) {
         if (this.pos != null) {
-            System.out.printf("%s: %s %s%n", this.pos, this, msg);
+            this.log = String.format("%s: %s %s%n", this.pos, this, msg);
         }
         else {
-            System.out.printf("%s %s%n", this, msg);
+            this.log = String.format("%s %s%n", this, msg);
         }
+
+        System.out.printf(this.log);
     }
 
     /**
@@ -300,10 +307,10 @@ public class Joueur {
             double dice = new Random().nextDouble();
             if (dice < this.probaClefInondation) {
                 this.pos.monteEaux();
-                this.log(String.format("n'a pas réussi de chercher une clef et sa case inonde ! (proba de %.1f)", this.probaClefInondation));
+                this.log(String.format("n'a pas trouvé de clef et sa case inonde ! (proba de %.1f)", this.probaClefInondation));
             }
             else {
-                this.log("n'a pas réussi de chercher une clef");
+                this.log("n'a pas trouvé de clef");
             }
             return null;
         }
@@ -324,7 +331,7 @@ public class Joueur {
      */
     public void helicoptere(Case c) {
         if (this.aActionSpeciale() && c.estTraversable()) {
-            this.log(String.format("prend une hélicoptère vers %s (action spéciale)", c));
+            this.log(String.format("prend un hélicoptère vers %s (action spéciale)", c));
             this.actionSpeciale = false;
             this.pos.removeJoueur(this);
             this.pos = c;
@@ -356,6 +363,10 @@ public class Joueur {
      */
     public boolean surHelipad() {
         return this.pos.estHelipad();
+    }
+
+    public String getLogString(){
+        return this.log;
     }
 }
 
