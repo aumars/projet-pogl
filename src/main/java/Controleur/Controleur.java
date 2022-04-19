@@ -281,12 +281,12 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * Mets a jours lorsque l'utilisateur realise une action.
      */
     private void metAJourApresAction() {
+        this.verifieFinJeu();
         this.vue.vue_log.ajoutLog(this.joueur.getLogString());
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
-        this.joueur = this.modele.getJoueurActuel();
         this.vue.vue_info_bas.vue_commande.gereVisibiliteBoutons();
         this.vue.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        this.verifieFinJeu();
+        this.joueur = this.modele.getJoueurActuel();
     }
 
     /**
