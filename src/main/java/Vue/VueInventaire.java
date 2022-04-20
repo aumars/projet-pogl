@@ -1,7 +1,6 @@
 package Vue;
 
 import Modele.*;
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -14,17 +13,17 @@ public class VueInventaire extends JPanel {
 
     /**
      * Affiche un inventaire.
-     * 
+     *
      * @param m  Le modele.
-     * @param id L'ID du joueur qui possède cet inventaire.
+     * @param joueur Le joueur qui possède cet inventaire.
      */
-    public VueInventaire(Modele m, int id) {
+    public VueInventaire(Modele m, Joueur joueur) {
         this.modele = m;
-        this.nom = ConstsValue.getNomJoueur(id);
+        this.nom = joueur.toString();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.label_nom_joueur.setIcon(Utils.tailleImg(ConstsIcon.getImgAvatar(id), 24, 24));
+        
+        this.label_nom_joueur.setIcon(Utils.tailleImg(ConstsIcon.getImgAvatar(joueur.id), 24, 24));
         this.label_nom_joueur.setText(this.nom);
         this.label_nom_joueur.setPreferredSize(new Dimension(100, 50));
         this.label_nom_joueur.setBorder(BorderFactory.createEmptyBorder(20, 5, 5, 0));
@@ -34,7 +33,7 @@ public class VueInventaire extends JPanel {
 
         this.panel_objets.setLayout(new BoxLayout(this.panel_objets, BoxLayout.PAGE_AXIS));
         this.panel_objets.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
-
+        
         this.remplieInventaireVide();
         this.add(panel_objets);
     }
@@ -64,7 +63,7 @@ public class VueInventaire extends JPanel {
 
     /**
      * Mets a jour l'etat du joueur.
-     * 
+     *
      * @param j Le joueur.
      */
     public void metAJourEtatJoueur(Joueur j) {
