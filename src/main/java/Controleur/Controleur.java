@@ -24,8 +24,11 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.joueur = this.modele.getJoueurActuel();
         this.metsAJourEventListener();
     }
-    
-    private void metsAJourEventListener(){
+
+    /**
+     * Mets à jours les events listener.
+     */
+    private void metsAJourEventListener() {
         this.vue.getFenetre().addKeyListener(this);
         this.vue_commande = this.vue.vue_info_bas.vue_commande;
 
@@ -33,7 +36,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue.vue_start.btn_normal.addActionListener(this);
         this.vue.vue_start.btn_difficile.addActionListener(this);
         this.vue.vue_start.btn_jouer.addActionListener(this);
-        
+
         this.vue_commande.btn_secher.addActionListener(this);
 
         this.vue_commande.btn_fin_tour.addActionListener(this);
@@ -45,7 +48,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
         this.vue.vue_info_haut.btn_aide.addActionListener(this);
         this.vue.vue_grille.addMouseMotionListener(this);
-        
+
         this.vue.vue_grille.addMouseListener(this);
     }
 
@@ -164,7 +167,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else {
             Case case_over = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_over.coord) && case_over.estTraversable())
+            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_over.coord)
+                    && case_over.estTraversable())
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
 
             else
@@ -207,7 +211,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else {
             Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_pressed.coord) && case_pressed.estTraversable())
+            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_pressed.coord)
+                    && case_pressed.estTraversable())
                 this.deplaceJoueur(this.joueur.getCoord().adjacentDir(case_pressed.coord));
         }
 
@@ -252,7 +257,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         if (this.vue.vue_start.btn_facile.getModel().isArmed()) {
             this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_facile.getId());
         }
-        
+
         if (this.vue.vue_start.btn_normal.getModel().isArmed()) {
             this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_normal.getId());
         }
@@ -260,8 +265,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         if (this.vue.vue_start.btn_difficile.getModel().isArmed()) {
             this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_difficile.getId());
         }
-        
-        if(this.vue.vue_start.btn_jouer.getModel().isArmed()){
+
+        if (this.vue.vue_start.btn_jouer.getModel().isArmed()) {
             this.vue.afficheMenuDemarrage = false;
             this.vue.afficheFenetre();
             this.metsAJourEventListener();

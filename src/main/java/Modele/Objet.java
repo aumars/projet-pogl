@@ -1,7 +1,8 @@
 package Modele;
 
 /**
- * Objet associé à un élément, récupérable par un joueur et visible dans la grille.
+ * Objet associé à un élément, récupérable par un joueur et visible dans la
+ * grille.
  */
 public abstract class Objet {
     /**
@@ -11,6 +12,7 @@ public abstract class Objet {
 
     /**
      * Construit un objet associé à un élément.
+     * 
      * @param el Element de l'objet
      */
     public Objet(Element el) {

@@ -37,6 +37,9 @@ public class Vue {
         this.afficheFenetre();
     }
 
+    /**
+     * Selectionne d'afficher la fenetre de démarrage ou de jeu.
+     */
     public void afficheFenetre(){        
         if (afficheMenuDemarrage) {
             this.fenetre_demarrage.setTitle("L'Ile Interdite");

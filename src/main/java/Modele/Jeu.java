@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Une classe qui modélise les coordonnées de tous les {@link Objet}s et {@link Joueur}s dans un jeu.
+ * Une classe qui modélise les coordonnées de tous les {@link Objet}s et
+ * {@link Joueur}s dans un jeu.
  */
 public final class Jeu {
     /**
@@ -30,6 +31,7 @@ public final class Jeu {
 
     /**
      * Modélise un jeu (avec {@link Joueur}s) à partir d'un fichier XML.
+     * 
      * @param game_path Chemin du fichier XML.
      * @throws InvalidGameException S'il existe une erreur avec le fichier XML.
      */
@@ -39,29 +41,29 @@ public final class Jeu {
 
     /**
      * Modélise un jeu (avec {@link Joueur}s) à partir d'un fichier XML.
+     * 
      * @param game_path Chemin du fichier XML.
-     * @param vide S'il y a des {@link Joueur}s dans le jeu.
+     * @param vide      S'il y a des {@link Joueur}s dans le jeu.
      * @throws InvalidGameException S'il existe une erreur avec le fichier XML.
      */
     public Jeu(String game_path, boolean vide) throws InvalidGameException {
         Document game;
         try {
             game = parseGame(game_path);
-        }
-        catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new InvalidGameException(e.getMessage(), e.getCause());
         }
         this.objets = parseGameObjet(game);
         if (vide) {
             this.ensemble = new ArrayList<>();
-        }
-        else {
+        } else {
             this.ensemble = parseGameJoueur(game);
         }
     }
 
     /**
      * Lit un fichier XML.
+     * 
      * @param game_path Chemin du fichier XML.
      * @return Le document XML.
      */
@@ -73,11 +75,14 @@ public final class Jeu {
 
     /**
      * Lit le document XML pour les {@link Objet}s et leur position sur un plan.
+     * 
      * @param game Document XML.
      * @return Liste de pairs d'{@link Objet} et d'{@link Coord} associée.
-     * @throws InvalidGameException Deux {@link Objet}s sont sur le même {@link Coord}.
+     * @throws InvalidGameException Deux {@link Objet}s sont sur le même
+     *                              {@link Coord}.
      */
-    private static List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game) throws InvalidGameException {
+    private static List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game)
+            throws InvalidGameException {
         List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> a = new ArrayList<>();
         NodeList list = game.getElementsByTagName("objet");
         for (int i = 0; i < list.getLength(); i++) {
@@ -87,7 +92,7 @@ public final class Jeu {
                 String id = element.getAttribute("id");
                 String objet_element = element.getElementsByTagName("element").item(0).getTextContent();
                 Coord pos = parsePosition(element.getElementsByTagName("position"));
-                for (AbstractMap.SimpleImmutableEntry<Objet, Coord> ex: a) {
+                for (AbstractMap.SimpleImmutableEntry<Objet, Coord> ex : a) {
                     if (ex.getValue().equals(pos)) {
                         throw new InvalidGameException(String.format("Deux objets sont sur le même point %s", pos));
                     }
@@ -102,6 +107,7 @@ public final class Jeu {
 
     /**
      * Lit le document XML pour les {@link Joueur}s et leur position sur un plan.
+     * 
      * @param game Document XML.
      * @return Liste de pairs d'{@link Joueur} et d'{@link Coord} associée.
      */
@@ -123,6 +129,7 @@ public final class Jeu {
 
     /**
      * Construit un {@link Coord}.
+     * 
      * @param pos Position du noeud XML "position".
      * @return Un {@link Coord}
      */
@@ -141,6 +148,7 @@ public final class Jeu {
 
     /**
      * Associe l'élément à une chaine de caractères donnée.
+     * 
      * @param s Chaine de caractères associée à un élément.
      * @return L'élément associé.
      */
@@ -161,8 +169,9 @@ public final class Jeu {
 
     /**
      * Construit un objet associé à un élément selon son id.
+     * 
      * @param id Une chaine de caractères
-     * @param e Un {@link Element}
+     * @param e  Un {@link Element}
      * @return Un {@link Objet}
      * @exception IllegalArgumentException Si {@code s} n'est pas reconnu.
      */
@@ -179,6 +188,7 @@ public final class Jeu {
 
     /**
      * Construit un {@link Joueur} selon son id.
+     * 
      * @param name Une chaine de caractères
      * @return Un {@link Joueur}
      */

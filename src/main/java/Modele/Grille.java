@@ -33,6 +33,7 @@ public class Grille {
 
     /**
      * Construit la grille à partir d'une carte.
+     * 
      * @param carte Une {@link Carte}
      */
     public Grille(Carte carte) {
@@ -41,6 +42,7 @@ public class Grille {
 
     /**
      * Construit la grille à partir d'un tableau de tableaux de {@link Terrain}.
+     * 
      * @param map Un tableau de tableaux de {@link Terrain}.
      */
     public Grille(Terrain[][] map) {
@@ -86,9 +88,11 @@ public class Grille {
     }
 
     /**
-     * Construit une grille à partir d'un tableau de tableaux de {@link Terrain}  avec une liste de pairs d'{@link Objet}
+     * Construit une grille à partir d'un tableau de tableaux de {@link Terrain}
+     * avec une liste de pairs d'{@link Objet}
      * et de {@link Coord}.
-     * @param map Un tableau de tableaux de {@link Terrain}.
+     * 
+     * @param map    Un tableau de tableaux de {@link Terrain}.
      * @param objets Une liste de pairs d'{@link Objet} et de {@link Coord}.
      */
     public Grille(Terrain[][] map, List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
@@ -98,8 +102,10 @@ public class Grille {
 
     /**
      * Ajout un {@link Objet} dans une case spécifiée de la grille.
+     * 
      * @param p Un pair d'{@link Objet} et de {@link Coord}.
-     * @throws IllegalArgumentException Si le point ne peut pas exister dans la grille.
+     * @throws IllegalArgumentException Si le point ne peut pas exister dans la
+     *                                  grille.
      */
     public void addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord> p) {
         Objet o = p.getKey();
@@ -109,16 +115,17 @@ public class Grille {
 
     /**
      * Ajout un {@link Objet} dans une case spécifiée de la grille.
+     * 
      * @param o Un objet
      * @param c Un coord
-     * @throws IllegalArgumentException Si le point ne peut pas exister dans la grille.
+     * @throws IllegalArgumentException Si le point ne peut pas exister dans la
+     *                                  grille.
      */
     public void addObjet(Objet o, Coord c) {
         if (c.y() >= this.getHeight() || c.x() >= this.getWidth()) {
             throw new IllegalArgumentException(String.format("Le point %s n'existe pas dans une grille %d * %d.",
                     c, this.getWidth(), this.getHeight()));
-        }
-        else {
+        } else {
             this.getCase(c).ajoutObjet(o);
             this.ile.removeIf(k -> k.coord.equals(c));
         }
@@ -126,8 +133,10 @@ public class Grille {
 
     /**
      * Ajout un {@link Objet} dans une case spécifiée de la grille.
+     * 
      * @param objets Une liste de pairs d'{@link Objet} et de {@link Coord}.
-     * @throws IllegalArgumentException Si un point ne peut pas exister dans la grille.
+     * @throws IllegalArgumentException Si un point ne peut pas exister dans la
+     *                                  grille.
      */
     public void addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
         objets.forEach(this::addObjet);
@@ -135,18 +144,25 @@ public class Grille {
 
     /**
      * Renvoie la largeur de la grille.
+     * 
      * @return La largeur de la grille.
      */
-    public int getWidth() { return this.WIDTH; }
+    public int getWidth() {
+        return this.WIDTH;
+    }
 
     /**
      * Renvoie la hauteur de la grille.
+     * 
      * @return La hauteur de la grille.
      */
-    public int getHeight() { return this.HEIGHT; }
+    public int getHeight() {
+        return this.HEIGHT;
+    }
 
     /**
      * Renvoie la {@link Case} dans des coordonnées données.
+     * 
      * @param x L'abscisse.
      * @param y L'ordonnée
      * @return Une {@link Case}
@@ -157,6 +173,7 @@ public class Grille {
 
     /**
      * Renvoie la {@link Case} dans des coordonnées données.
+     * 
      * @param c Un {@link Coord} du plan.
      * @return Une {@link Case}.
      */

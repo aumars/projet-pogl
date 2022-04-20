@@ -15,23 +15,13 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
             "Difficile");
     public VueBouton btn_jouer = new VueBouton("Lance une nouvelle partie.", "Jouer");
 
+    /**
+     * Affiche un menu de démarrage.
+     */
     public VueStart() {
         this.setPreferredSize(new Dimension(500, 400));
         this.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         this.setLayout(new BorderLayout());
-        this.affichePanelTitre();
-        this.affichePanelCorps();
-        this.add(this.btn_jouer, BorderLayout.PAGE_END);
-    }
-
-    private JLabel sousTitre(String text) {
-        JLabel label = new JLabel(Utils.souligneLabel(text));
-        label.setFont(new Font(ConstsValue.FONT_FAMILY, Font.PLAIN, 13));
-        label.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        return label;
-    }
-
-    private void affichePanelTitre() {
         JPanel panel_titre = new JPanel();
         panel_titre.setLayout(new GridBagLayout());
 
@@ -46,9 +36,7 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         panel_titre.add(punchline, Utils.positionneGrille(0, 1));
 
         this.add(panel_titre, BorderLayout.PAGE_START);
-    }
 
-    private void affichePanelCorps() {
         JPanel corps = new JPanel();
         corps.setLayout(new GridBagLayout());
         corps.add(this.sousTitre("Les règles du jeu"), Utils.positionneGrille(0, 0));
@@ -76,8 +64,27 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         corps.add(panel_btn_difficulte, Utils.positionneGrille(0, 3));
 
         this.add(corps, BorderLayout.LINE_START);
+
+        this.add(this.btn_jouer, BorderLayout.PAGE_END);
     }
 
+    /**
+     * Créer un label pour le sous-titre.
+     * 
+     * @param text Le texte du sous-titre.
+     * @return le label au format sous-titre.
+     */
+    private JLabel sousTitre(String text) {
+        JLabel label = new JLabel(Utils.souligneLabel(text));
+        label.setFont(new Font(ConstsValue.FONT_FAMILY, Font.PLAIN, 13));
+        label.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        return label;
+    }
+
+    /**
+     * Mets à jour les boutons radio.
+     * @param id_pressed L'id du bouton radio actif.
+     */
     public void metAJourRadioBouton(int id_pressed) {
         if (this.id_difficulte_active != id_pressed)
             this.id_difficulte_active = id_pressed;
@@ -96,6 +103,9 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         this.revalidate();
     }
 
+    /**
+     * Réinitialise les boutons radio.
+     */
     public void metAJourRadioBouton() {
         this.metAJourRadioBouton(0);
     }

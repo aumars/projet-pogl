@@ -41,9 +41,10 @@ public class Case {
 
     /**
      * Construit une case dans la grille.
-     * @param coord Coordonnées de la case.
+     * 
+     * @param coord   Coordonnées de la case.
      * @param terrain Terrain de la case.
-     * @param g Grille associée à la case.
+     * @param g       Grille associée à la case.
      */
     public Case(Coord coord, Terrain terrain, Grille g) {
         this.coord = coord;
@@ -68,26 +69,37 @@ public class Case {
 
     /**
      * Ajoute un Joueur
+     * 
      * @param j Un Joueur
      */
-    public void setJoueur(Joueur j) { this.joueurs.add(j); }
+    public void setJoueur(Joueur j) {
+        this.joueurs.add(j);
+    }
 
     /**
      * Supprime un Joueur
+     * 
      * @param j Un Joueur
      */
-    public void removeJoueur(Joueur j) { this.joueurs.remove(j); }
+    public void removeJoueur(Joueur j) {
+        this.joueurs.remove(j);
+    }
 
     /**
      * Renvoie la liste de joueurs sur la case.
      */
-    public List<Joueur> getJoueurs() { return this.joueurs; }
+    public List<Joueur> getJoueurs() {
+        return this.joueurs;
+    }
 
     @Override
-    public String toString() { return "Case " + this.coord.toString(); }
+    public String toString() {
+        return "Case " + this.coord.toString();
+    }
 
     /**
      * Vérifie si la case est traversable par un Joueur.
+     * 
      * @return Vrai la case est traversable par un Joueur, Faux sinon.
      */
     public boolean estTraversable() {
@@ -96,12 +108,17 @@ public class Case {
 
     /**
      * Vérifie si la case a un helipad.
+     * 
      * @return True si la case a un helipad, Faux sinon.
      */
-    public boolean estHelipad() { return this.terrain == Terrain.HELIPAD; }
+    public boolean estHelipad() {
+        return this.terrain == Terrain.HELIPAD;
+    }
 
     /**
-     * Ajouter un objet sur la case. Si l'objet est une Clef, la visibilité de l'objet est initialisée à Faux.
+     * Ajouter un objet sur la case. Si l'objet est une Clef, la visibilité de
+     * l'objet est initialisée à Faux.
+     * 
      * @param o Un objet.
      * @throws RuntimeException Si la case n'est pas vide.
      * @throws RuntimeException Si la case n'a pas un terrain de type TERRE.
@@ -109,11 +126,9 @@ public class Case {
     public void ajoutObjet(Objet o) {
         if (this.objet != null) {
             throw new RuntimeException(String.format("Il existe déjà un objet dans %s", this));
-        }
-        else if (this.terrain != Terrain.TERRE) {
+        } else if (this.terrain != Terrain.TERRE) {
             throw new RuntimeException(String.format("%s n'a pas un terrain de type TERRE.", this));
-        }
-        else {
+        } else {
             this.objet = o;
             this.setObjetVisibilite(!this.objet.getClass().equals(Clef.class));
             System.out.printf("%s: %s ajouté%n", this, this.objet);
@@ -122,31 +137,47 @@ public class Case {
 
     /**
      * Vérifie si un objet existe sur la case.
+     * 
      * @return Vrai si un objet existe sur la case, Faux sinon.
      */
-    public boolean aObjet() { return this.objet != null; }
+    public boolean aObjet() {
+        return this.objet != null;
+    }
 
     /**
      * Vérifie si un objet de classe spécifiée existe sur la case.
+     * 
      * @param c Classe
-     * @return Vrai si si un objet de classe {@code c} existe sur la case, Faux sinon.
+     * @return Vrai si si un objet de classe {@code c} existe sur la case, Faux
+     *         sinon.
      */
-    public boolean aObjet(Class<?> c) { return this.objet != null && this.objet.getClass().equals(c); }
+    public boolean aObjet(Class<?> c) {
+        return this.objet != null && this.objet.getClass().equals(c);
+    }
 
     /**
      * Renvoie l'objet sur la case.
+     * 
      * @return L'objet sur la case.
      */
-    public Objet getObjet() { return this.objet; }
+    public Objet getObjet() {
+        return this.objet;
+    }
 
     /**
-     * Renvoie la visibilité de l'objet sur la case, même s'il n'y a pas d'objet sur la case.
-     * @return La visibilité de l'objet sur la case, même s'il n'y a pas d'objet sur la case.
+     * Renvoie la visibilité de l'objet sur la case, même s'il n'y a pas d'objet sur
+     * la case.
+     * 
+     * @return La visibilité de l'objet sur la case, même s'il n'y a pas d'objet sur
+     *         la case.
      */
-    public boolean getObjetVisibilite() { return this.objetVisibilite; }
+    public boolean getObjetVisibilite() {
+        return this.objetVisibilite;
+    }
 
     /**
      * Modifie la visibilité de l'objet sur la grille.
+     * 
      * @param b La visibilité de l'objet.
      */
     public void setObjetVisibilite(boolean b) {
@@ -164,26 +195,37 @@ public class Case {
 
     /**
      * Renvoie l'état d'inondation de la case.
+     * 
      * @return L'état d'inondation de la case.
      */
-    public Inondation getEtat() { return this.etat; }
+    public Inondation getEtat() {
+        return this.etat;
+    }
 
     /**
      * Modifié l'état d'inondation d'une Case.
+     * 
      * @param etat Nouvel état d'inondation
      */
-    public void setEtat(Inondation etat) { this.etat = etat; }
+    public void setEtat(Inondation etat) {
+        this.etat = etat;
+    }
 
     /**
      * Réduit l'état d'inondation de la case.
+     * 
      * @return Vrai si le séchage est réussi, Faux sinon.
      */
     public boolean asseche() {
         switch (this.getEtat()) {
-            case SECHE: return true;
-            case INONDEE: this.setEtat(Inondation.SECHE); return true;
+            case SECHE:
+                return true;
+            case INONDEE:
+                this.setEtat(Inondation.SECHE);
+                return true;
             case SUBMERGEE:
-            default: return false;
+            default:
+                return false;
         }
     }
 
@@ -192,34 +234,41 @@ public class Case {
      */
     public void monteEaux() {
         switch (this.getEtat()) {
-            case SECHE: this.setEtat(Inondation.INONDEE); break;
-            case INONDEE: this.setEtat(Inondation.SUBMERGEE); break;
-            default: break;
+            case SECHE:
+                this.setEtat(Inondation.INONDEE);
+                break;
+            case INONDEE:
+                this.setEtat(Inondation.SUBMERGEE);
+                break;
+            default:
+                break;
         }
     }
 
     /**
      * Renvoie la case adjacente de la case actuelle par rapport à sa direction.
+     * 
      * @param dir Direction de la case adjacente.
      * @return La case adjacente.
-     * @throws RuntimeException Si la case n'est pas associée à une grille.
+     * @throws RuntimeException         Si la case n'est pas associée à une grille.
      * @throws IllegalArgumentException Si {@code dir} n'est pas reconnu.
      */
     public Case adjacent(Direction dir) {
         if (dir == Direction.NEUTRE) {
             return this;
-        }
-        else if (this.grille != null) {
+        } else if (this.grille != null) {
             return this.grille.getCase(this.coord.adjacent(dir));
-        }
-        else {
+        } else {
             throw new RuntimeException("La case n'est pas associée à une grille.");
         }
     }
 
     /**
-     * Vérifie si la case actuelle est ses cases adjacentes ne sont pas traversables.
-     * @return Vrai si la case actuelle est ses cases adjacentes ne sont pas traversables, Faux sinon.
+     * Vérifie si la case actuelle est ses cases adjacentes ne sont pas
+     * traversables.
+     * 
+     * @return Vrai si la case actuelle est ses cases adjacentes ne sont pas
+     *         traversables, Faux sinon.
      */
     public boolean adjacentSubmergee() {
         return !adjacent(Direction.HAUT).estTraversable()

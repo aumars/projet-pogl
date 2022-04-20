@@ -52,7 +52,8 @@ public class Joueur {
     private int casesSurvecuesConsecutives = 0;
 
     /**
-     * Probabilité (entre 0 et 1) d'inonder la case actuelle lors d'une recherche d'une clef.
+     * Probabilité (entre 0 et 1) d'inonder la case actuelle lors d'une recherche
+     * d'une clef.
      */
     private double probaClefInondation;
 
@@ -67,7 +68,8 @@ public class Joueur {
     private final static String[] avatars = { "Jack", "Guy", "Ninja", "Pinky" };
 
     /**
-     * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
+     * Construit un Joueur sans position. Il faut donc préciser sa position plus
+     * tard avec teleport().
      */
     public Joueur() {
         this(null);
@@ -75,6 +77,7 @@ public class Joueur {
 
     /**
      * Construit un Joueur avec position.
+     * 
      * @param c Position du Joueur.
      */
     public Joueur(Case c) {
@@ -97,19 +100,19 @@ public class Joueur {
 
     @Override
     public String toString() {
-        //return String.format("%s (%d)", avatars[this.id % 4], this.id);
+        // return String.format("%s (%d)", avatars[this.id % 4], this.id);
         return avatars[this.id % 4];
     }
 
     /**
      * Afficher un message qui décrit l'action du Joueur.
+     * 
      * @param msg Une action du Joueur (ex : "se déplace").
      */
     private void log(String msg) {
         if (this.pos != null) {
             this.log = String.format("%s: %s %s%n", this.pos, this, msg);
-        }
-        else {
+        } else {
             this.log = String.format("%s %s%n", this, msg);
         }
 
@@ -118,9 +121,12 @@ public class Joueur {
 
     /**
      * Modifier la proba d'inonder une case en cherchant une clef.
+     * 
      * @param p La probabilité (entre 0 et 1)
      */
-    public void setProbaClefInondation(double p) { this.probaClefInondation = p; }
+    public void setProbaClefInondation(double p) {
+        this.probaClefInondation = p;
+    }
 
     /**
      * Le Joueur meurt.
@@ -149,25 +155,35 @@ public class Joueur {
 
     /**
      * Renvoie le status du Joueur.
+     * 
      * @return Vrai si le Joueur vive, Faux sinon.
      */
-    public boolean estVivant() { return this.vivant; }
+    public boolean estVivant() {
+        return this.vivant;
+    }
 
     /**
      * Renvoie le tour du Joueur.
+     * 
      * @return Le tour du Joueur.
      */
-    public boolean estSonTour() { return this.sonTour; }
+    public boolean estSonTour() {
+        return this.sonTour;
+    }
 
     /**
      * Termine le tour du Joueur.
      */
-    public void finishTurn() { this.sonTour = false; }
+    public void finishTurn() {
+        this.sonTour = false;
+    }
 
     /**
      * Renouvelle le tour du Joueur.
      */
-    public void newTurn() { this.sonTour = true; }
+    public void newTurn() {
+        this.sonTour = true;
+    }
 
     /**
      * On gagne une action spéciale si :
@@ -189,6 +205,7 @@ public class Joueur {
 
     /**
      * Déplace le Joueur à une case adjacente.
+     * 
      * @param dir Direction du déplacement.
      * @return Vrai le déplacement est réussi, faux sinon.
      */
@@ -197,8 +214,7 @@ public class Joueur {
         if (this.estSonTour() && this.pos.adjacent(dir).estTraversable()) {
             if (!this.pos.estTraversable()) {
                 this.casesSurvecuesConsecutives = 0;
-            }
-            else {
+            } else {
                 this.casesSurvecuesConsecutives++;
                 if (this.casesSurvecuesConsecutives == 10) {
                     this.gagneActionSpeciale();
@@ -211,8 +227,7 @@ public class Joueur {
             this.pos.setJoueur(this);
             this.finishTurn();
             return true;
-        }
-        else {
+        } else {
             this.log(String.format("ne peut pas se déplacer vers %s à %s", dir, adjacent));
             return false;
         }
@@ -220,6 +235,7 @@ public class Joueur {
 
     /**
      * Vérifie si le Joueur possède la clef d'un élément spécifié.
+     * 
      * @param el Element.
      * @return Vrai si le Joueur la possède, Faux sinon.
      */
@@ -236,8 +252,7 @@ public class Joueur {
             this.inventaire.add(objet);
             this.log(String.format("prend %s", objet));
             return objet;
-        }
-        else {
+        } else {
             this.log("ne prend pas d'objet");
             return null;
         }
@@ -245,20 +260,25 @@ public class Joueur {
 
     /**
      * Renvoie la liste d'{@link Objet}s en possession du Joueur.
+     * 
      * @return La liste d'{@link Objet}s en possession du Joueur.
      */
-    public List<Objet> getInventaire(){
+    public List<Objet> getInventaire() {
         return this.inventaire;
     }
 
     /**
      * Renvoie les coordonnées du Joueur.
+     * 
      * @return Les coordonnées du Joueur.
      */
-    public Coord getCoord() { return this.pos.coord; }
+    public Coord getCoord() {
+        return this.pos.coord;
+    }
 
     /**
      * Assèche une case adjacente au Joueur.
+     * 
      * @param dir Direction que le Joueur souhaite assécher.
      */
     public void asseche(Direction dir) {
@@ -271,6 +291,7 @@ public class Joueur {
 
     /**
      * Action spéciale. Assèche n'importe quelle case assèchable.
+     * 
      * @param c Une case.
      */
     public void asseche(Case c) {
@@ -289,8 +310,7 @@ public class Joueur {
             Objet artefact = this.prendObjet();
             this.finishTurn();
             return artefact;
-        }
-        else {
+        } else {
             this.log("ne prend pas d'artefact");
             return null;
         }
@@ -298,7 +318,8 @@ public class Joueur {
 
     /**
      * Cherche une Clef dans la case du Joueur.
-     * @return la clef si le joueur la récupére sinon null. 
+     * 
+     * @return la clef si le joueur la récupére sinon null.
      */
     public Objet chercheCle() {
         this.finishTurn();
@@ -309,14 +330,13 @@ public class Joueur {
             }
             this.pos.setObjetVisibilite(true);
             return this.prendObjet();
-        }
-        else {
+        } else {
             double dice = new Random().nextDouble();
             if (dice < this.probaClefInondation) {
                 this.pos.monteEaux();
-                this.log(String.format("n'a pas trouvé de clef et sa case inonde ! (proba de %.1f)", this.probaClefInondation));
-            }
-            else {
+                this.log(String.format("n'a pas trouvé de clef et sa case inonde ! (proba de %.1f)",
+                        this.probaClefInondation));
+            } else {
                 this.log("n'a pas trouvé de clef");
             }
             return null;
@@ -325,6 +345,7 @@ public class Joueur {
 
     /**
      * Met à jour la position du Joueur dans une case de la grille.
+     * 
      * @param c Une case de la grille.
      */
     public void teleport(Case c) {
@@ -334,6 +355,7 @@ public class Joueur {
 
     /**
      * Action spéciale. Se transporte vers n'importe quelle case.
+     * 
      * @param c Une case.
      */
     public void helicoptere(Case c) {
@@ -349,6 +371,7 @@ public class Joueur {
 
     /**
      * Initialise la position initiale.
+     * 
      * @param c Une Case.
      */
     public void setPosInitiale(Case c) {
@@ -360,6 +383,7 @@ public class Joueur {
 
     /**
      * Vérifie si le Joueur est sur une case traversable.
+     * 
      * @return Vrai si le Joueur est sur une case traversable, Faux sinon.
      */
     public boolean surCaseTraversable() {
@@ -373,8 +397,7 @@ public class Joueur {
         return this.pos.estHelipad();
     }
 
-    public String getLogString(){
+    public String getLogString() {
         return this.log;
     }
 }
-
