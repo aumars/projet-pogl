@@ -6,7 +6,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class VueCommande extends JPanel {
-    private Modele modele;
+    private final Modele modele;
     public int id_radio_active = -1;
 
     public VueBouton btn_clef = new VueBouton("Recherche une clef autour [A]", "Clef");
@@ -18,7 +18,7 @@ public class VueCommande extends JPanel {
     public VueBoutonRadio btn_sac_sable = new VueBoutonRadio(1, id_radio_active,
             "Cliquer sur une case pour l'ensabler.", "Sac de sable");
     public VueBoutonRadio btn_teleporte = new VueBoutonRadio(2, id_radio_active,
-            "Cliquer sur une case pour se teleporter.", "Téléportation");
+            "Cliquer sur une case pour prendre une hélicoptère.", "Hélicoptère");
 
     /**
      * Affichage du menu de commande.

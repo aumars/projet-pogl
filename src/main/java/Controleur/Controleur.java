@@ -7,9 +7,9 @@ import java.awt.Cursor;
 import java.awt.event.*;
 
 public class Controleur implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
-    private Modele modele;
-    private Vue vue;
-    private VueCommande vue_commande;
+    private final Modele modele;
+    private final Vue vue;
+    private final VueCommande vue_commande;
     private Joueur joueur;
 
     /**
@@ -189,7 +189,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
             Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
             if (case_pressed.estTraversable()) {
-                this.joueur.teleport(case_pressed);
+                this.joueur.helicoptere(case_pressed);
                 this.vue.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.coord);
             }
         }
