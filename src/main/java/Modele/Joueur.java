@@ -246,7 +246,7 @@ public class Joueur {
     /**
      * Prend l'objet de la case du Joueur.
      */
-    public Objet prendObjet() {
+    private Objet prendObjet() {
         if (this.pos.aObjet()) {
             Objet objet = this.pos.getObjet();
             this.inventaire.add(objet);

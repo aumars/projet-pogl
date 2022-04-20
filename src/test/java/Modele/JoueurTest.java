@@ -26,10 +26,4 @@ public class JoueurTest {
         Assertions.assertFalse(this.j0.possedeClef(Element.AIR));
         Assertions.assertFalse(this.j1.possedeClef(Element.AIR));
     }
-
-    @Test
-    void joueurPrendObjet() {
-        Assertions.assertThrows(RuntimeException.class, () -> this.j0.prendObjet());
-        Assertions.assertNull(this.j1.prendObjet());
-    }
 }
