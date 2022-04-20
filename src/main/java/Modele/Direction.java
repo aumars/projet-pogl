@@ -20,6 +20,7 @@ public enum Direction {
             case BAS: return "le bas";
             case GAUCHE: return "la gauche";
             case DROITE: return "la droite";
+            case NEUTRE: return "neutre";
             default: throw new RuntimeException();
         }
     }

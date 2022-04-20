@@ -123,30 +123,16 @@ public class Coord {
     /**
      * Renvoie si le point est adjacent.
      * 
-     * @param c                 Le point.
-     * @param neutreEstAdjacent True considére neutre comme adjacents. Sinon False
-     * @return True si le point est adjacent. False sinon.
-     */
-    public boolean estAdjacent(Coord c, boolean neutreEstAdjacent) {
-        List<Coord> adjacents = Arrays.asList(adjacent(Direction.HAUT),
-                adjacent(Direction.BAS),
-                adjacent(Direction.DROITE),
-                adjacent(Direction.GAUCHE));
-
-        if (neutreEstAdjacent)
-            adjacents.add(adjacent(Direction.NEUTRE));
-
-        return adjacents.contains(c);
-    }
-
-    /**
-     * Renvoie si le point est adjacent.
-     * 
      * @param c Le point.
      * @return True si le point est adjacent. False sinon.
      */
     public boolean estAdjacent(Coord c) {
-        return this.estAdjacent(c, true);
+        List<Coord> adjacents = Arrays.asList(adjacent(Direction.HAUT),
+                adjacent(Direction.BAS),
+                adjacent(Direction.DROITE),
+                adjacent(Direction.GAUCHE), adjacent(Direction.NEUTRE));
+
+        return adjacents.contains(c);
     }
 
     /**

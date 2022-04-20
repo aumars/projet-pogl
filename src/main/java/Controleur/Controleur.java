@@ -164,7 +164,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else {
             Case case_over = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.getCoord().estAdjacent(case_over.coord, false) && case_over.estTraversable())
+            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_over.coord) && case_over.estTraversable())
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
 
             else
@@ -207,7 +207,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else {
             Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.getCoord().estAdjacent(case_pressed.coord, false) && case_pressed.estTraversable())
+            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_pressed.coord) && case_pressed.estTraversable())
                 this.deplaceJoueur(this.joueur.getCoord().adjacentDir(case_pressed.coord));
         }
 
