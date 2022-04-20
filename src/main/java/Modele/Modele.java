@@ -38,23 +38,20 @@ public class Modele extends Observable {
     private boolean finJeu;
 
     /**
-     * Si le jeu est déterministe (utile pour les tests)
-     */
-    private final boolean deterministic;
-
-    /**
      * La proba d'inonder une case en recherche d'une clef.
      */
     private final double probaClefInondation;
+
+    private final Difficulte difficulte;
 
     /**
      * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
      * @param carte Une carte
      * @param jeu L'ensemble d'objets et de joueurs.
      */
-    public Modele(Carte carte, Jeu jeu, boolean deterministic) {
-        this.deterministic = deterministic;
-        if (this.deterministic) {
+    public Modele(Carte carte, Jeu jeu, Difficulte difficulte) {
+        this.difficulte = difficulte;
+        if (this.difficulte == Difficulte.DETERMINISTE) {
             this.probaClefInondation = 0;
         }
         else {
@@ -77,21 +74,13 @@ public class Modele extends Observable {
         this.commenceTour();
     }
 
-    public Modele(Carte carte, Jeu jeu) {
-        this(carte, jeu, false);
-    }
-
     /**
      * Construit un jeu à partir d'un fichier texte et d'un fichier XML.
      * @param map_path Un fichier texte
      * @param game_path Un fichier XML
      */
-    public Modele (String map_path, String game_path, boolean deterministic) throws InvalidGameException {
-        this(new Carte(map_path), new Jeu(game_path), deterministic);
-    }
-
-    public Modele (String map_path, String game_path) throws InvalidGameException {
-        this(map_path, game_path, false);
+    public Modele (String map_path, String game_path, Difficulte difficulte) throws InvalidGameException {
+        this(new Carte(map_path), new Jeu(game_path), difficulte);
     }
 
     /**
@@ -106,6 +95,8 @@ public class Modele extends Observable {
         this.joueurActuel = this.iter.next();
         this.finJeu = false;
     }
+
+    private boolean estDeterministe() { return this.difficulte == Difficulte.DETERMINISTE; }
 
     public List<Joueur> getJoueurs(){
         return this.ensemble;
@@ -130,7 +121,13 @@ public class Modele extends Observable {
      */
     public void tourSuivant() {
         if (this.tourPeutFinir()) {
-            if (!this.deterministic) {
+            switch (this.difficulte) {
+                case DIFFICILE: this.getGrille().inonde();
+                case MOYEN: this.getGrille().inonde();
+                case FACILE: this.getGrille().inonde();
+                default:
+            }
+            if (!this.estDeterministe()) {
                 this.grille.inonde();
             }
             this.ensemble.forEach(j -> j.noie());

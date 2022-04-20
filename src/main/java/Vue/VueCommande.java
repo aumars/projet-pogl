@@ -18,7 +18,7 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
     public VueBoutonRadio btn_sac_sable = new VueBoutonRadio(1, id_radio_active,
             "Cliquer sur une case pour l'ensabler.", "Sac de sable");
     public VueBoutonRadio btn_teleporte = new VueBoutonRadio(2, id_radio_active,
-            "Cliquer sur une case pour se teleporter.", "Téléportation");
+            "Cliquer sur une case pour prendre une hélicoptère.", "Hélicoptère");
 
     /**
      * Affichage du menu de commande.

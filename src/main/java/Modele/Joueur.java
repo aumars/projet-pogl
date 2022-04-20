@@ -62,6 +62,11 @@ public class Joueur {
     private String log;
 
     /**
+     * Les noms des Joueurs.
+     */
+    private final static String[] avatars = { "Jack", "Guy", "Ninja", "Pinky" };
+
+    /**
      * Construit un Joueur sans position. Il faut donc préciser sa position plus tard avec teleport().
      */
     public Joueur() {
@@ -92,7 +97,8 @@ public class Joueur {
 
     @Override
     public String toString() {
-        return String.format("Joueur %d", this.id);
+        //return String.format("%s (%d)", avatars[this.id % 4], this.id);
+        return avatars[this.id % 4];
     }
 
     /**
@@ -171,6 +177,7 @@ public class Joueur {
     public void gagneActionSpeciale() {
         this.actionSpeciale = true;
         this.log("gagne une action spéciale !");
+        this.newTurn();
     }
 
     /**
@@ -336,6 +343,7 @@ public class Joueur {
             this.pos.removeJoueur(this);
             this.pos = c;
             this.pos.setJoueur(this);
+            this.finishTurn();
         }
     }
 

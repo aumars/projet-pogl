@@ -9,8 +9,8 @@ public class ModeleTest {
     Modele modeleM1G1, modeleM1G2;
     @BeforeEach
     void modeleInit() throws InvalidGameException {
-        this.modeleM1G1 = new Modele("map1.txt", "game1.xml", true);
-        this.modeleM1G2 = new Modele("map1.txt", "game2.xml", true);
+        this.modeleM1G1 = new Modele("map1.txt", "game1.xml", Difficulte.DETERMINISTE);
+        this.modeleM1G2 = new Modele("map1.txt", "game2.xml", Difficulte.DETERMINISTE);
     }
 
     @Test

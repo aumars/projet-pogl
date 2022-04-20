@@ -1,5 +1,5 @@
 import Modele.Exception.InvalidGameException;
-import Modele.Modele;
+import Modele.*;
 import Vue.Vue;
 
 import Controleur.Controleur;
@@ -12,7 +12,7 @@ public class IleInterdite {
         EventQueue.invokeLater(() -> {
             Modele modele;
             try {
-                modele = new Modele("map1.txt", "game2.xml");
+                modele = new Modele("map1.txt", "game1.xml", Difficulte.DIFFICILE);
                 Vue vue = new Vue(modele);
                 Controleur controleur = new Controleur(modele, vue);
             } catch (InvalidGameException e) {
