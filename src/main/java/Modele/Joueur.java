@@ -193,7 +193,6 @@ public class Joueur {
     public void gagneActionSpeciale() {
         this.actionSpeciale = true;
         this.log("gagne une action spéciale !");
-        this.newTurn();
     }
 
     /**
