@@ -38,11 +38,6 @@ public class Modele extends Observable {
     private boolean finJeu;
 
     /**
-     * La proba d'inonder une case en recherche d'une clef.
-     */
-    private final double probaClefInondation;
-
-    /**
      * La difficulté du jeu
      */
     private Difficulte difficulte;
@@ -55,10 +50,12 @@ public class Modele extends Observable {
      */
     public Modele(Carte carte, Jeu jeu, Difficulte difficulte) {
         this.difficulte = difficulte;
+        double probaClefInondation;
         if (this.difficulte == Difficulte.DETERMINISTE) {
-            this.probaClefInondation = 0;
-        } else {
-            this.probaClefInondation = 0.2;
+            probaClefInondation = 0;
+        }
+        else {
+            probaClefInondation = 0.2;
         }
         this.grille = new Grille(carte);
         this.grille.addObjets(jeu.objets);
@@ -67,7 +64,7 @@ public class Modele extends Observable {
             Joueur j = p.getKey();
             Coord c = p.getValue();
             j.setPosInitiale(this.grille.getCase(c));
-            j.setProbaClefInondation(this.probaClefInondation);
+            j.setProbaClefInondation(probaClefInondation);
             this.ensemble.add(j);
         }
         this.ensemble.forEach(j -> j.restart());
