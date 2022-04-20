@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class Controleur implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
     private final Modele modele;
     private final Vue vue;
-    private final VueCommande vue_commande;
+    private VueCommande vue_commande;
     private Joueur joueur;
 
     /**
@@ -22,12 +22,12 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.modele = m;
         this.vue = v;
         this.joueur = this.modele.getJoueurActuel();
-        this.vue_commande = this.vue.vue_info_bas.vue_commande;
         this.metsAJourEventListener();
     }
-
+    
     private void metsAJourEventListener(){
         this.vue.getFenetre().addKeyListener(this);
+        this.vue_commande = this.vue.vue_info_bas.vue_commande;
 
         this.vue.vue_start.btn_facile.addActionListener(this);
         this.vue.vue_start.btn_normal.addActionListener(this);

@@ -40,7 +40,7 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         titre.setFont(new Font(ConstsValue.FONT_FAMILY, Font.BOLD, 30));
         panel_titre.add(titre, Utils.positionneGrille(0, 0));
 
-        JLabel punchline = new JLabel("Là y aura une petite phrase, je sais pas trop quoi encore...",
+        JLabel punchline = new JLabel("Un lieu magique où chaque filet d'eau a son chemin...",
                 SwingConstants.CENTER);
         punchline.setFont(new Font(ConstsValue.FONT_FAMILY, Font.ITALIC, 13));
         panel_titre.add(punchline, Utils.positionneGrille(0, 1));
@@ -53,10 +53,10 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         corps.setLayout(new GridBagLayout());
         corps.add(this.sousTitre("Les règles du jeu"), Utils.positionneGrille(0, 0));
 
-        JTextArea regle_area = new JTextArea("Alors la tu fais ça, y a ca qui se passe. ");
+        JTextArea regle_area = new JTextArea(ConstsValue.TEXTE_REGLE);
 
         JScrollPane regle = new JScrollPane(regle_area);
-        regle.setPreferredSize(new Dimension(480, 50));
+        regle.setPreferredSize(new Dimension(480, 100));
         regle.setBorder(BorderFactory.createEmptyBorder());
 
         regle_area.setBackground(ConstsValue.COLOR_DEFAULT);
