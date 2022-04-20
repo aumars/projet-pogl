@@ -171,11 +171,7 @@ public class Grille {
         if (this.ile.size() > 0) {
             Random rng = new Random();
             int case1 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
-            int case2 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
-            int case3 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
             this.ile.get(case1).monteEaux();
-            this.ile.get(case2).monteEaux();
-            this.ile.get(case3).monteEaux();
         }
     }
 }
