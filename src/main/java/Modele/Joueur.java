@@ -116,7 +116,7 @@ public class Joueur {
             this.log = String.format("%s %s%n", this, msg);
         }
 
-        System.out.printf(this.log);
+        System.out.print(this.log);
     }
 
     /**
