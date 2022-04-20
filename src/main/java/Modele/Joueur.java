@@ -196,6 +196,13 @@ public class Joueur {
     }
 
     /**
+     * Finir l'action spéciale
+     */
+    private void finishActionSpeciale() {
+        this.actionSpeciale = false;
+    }
+
+    /**
      * Vérifie si le Joueur peut faire une action spéciale.
      */
     public boolean aActionSpeciale() {
