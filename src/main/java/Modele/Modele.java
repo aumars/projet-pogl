@@ -100,6 +100,12 @@ public class Modele extends Observable {
         this.finJeu = false;
     }
 
+    /**
+     * Modifie difficulté
+     * @param difficulte Nouvelle difficulté
+     */
+    public void setDifficulte(Difficulte difficulte) { this.difficulte = difficulte; }
+
     private boolean estDeterministe() { return this.difficulte == Difficulte.DETERMINISTE; }
 
     public List<Joueur> getJoueurs(){
