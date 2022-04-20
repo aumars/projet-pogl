@@ -13,6 +13,7 @@ public class VueFinJeu extends JPanel {
      */
     public VueFinJeu(boolean est_partie_perdante) {
         this.setLayout(new BorderLayout());
+        this.setBorder(BorderFactory.createEmptyBorder(35, 0, 35, 0));
 
         JPanel panel_text = new JPanel();
         panel_text.setLayout(new BorderLayout());

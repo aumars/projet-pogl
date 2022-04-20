@@ -7,9 +7,11 @@ import java.awt.*;
 public class VueInfoBas extends JPanel {
     private final Modele modele;
 
+    private JPanel container = new JPanel();
     public VueCommande vue_commande;
     public VueFinJeu vue_fin_jeu;
     public VueAide vue_aide;
+    public VueLog vue_log;
 
     private boolean affiche_aide = false;
     private boolean est_fin_jeu = false;
@@ -23,12 +25,16 @@ public class VueInfoBas extends JPanel {
     public VueInfoBas(Modele m) {
         this.modele = m;
         this.vue_commande = new VueCommande(this.modele);
-        this.vue_aide = new VueAide(this.modele);
+        this.vue_aide = new VueAide();
+        this.vue_log = new VueLog();
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        this.add(this.vue_commande);
+        this.container.setLayout(new GridBagLayout());
+        this.container.add(this.vue_commande, Utils.positionneGrille(0, 0));
+        this.container.add(this.vue_log, Utils.positionneGrille(0, 1));
+        this.add(this.container);
     }
 
     /**
@@ -40,7 +46,7 @@ public class VueInfoBas extends JPanel {
         boolean jeuGagne = this.modele.verifieGagnants();
 
         if (this.modele.getFinJeu()) {
-            this.vue_commande.setVisible(false);
+            this.container.setVisible(false);
             this.vue_fin_jeu = new VueFinJeu(!jeuGagne);
             this.est_fin_jeu = true;
             this.add(this.vue_fin_jeu);
@@ -55,12 +61,14 @@ public class VueInfoBas extends JPanel {
      */
     public void affichePanneauAide() {
         if (!affiche_aide) {
-            this.vue_commande.setVisible(false);
+            this.container.setVisible(false);
+            // this.vue_commande.setVisible(false);
             this.add(this.vue_aide, BorderLayout.LINE_START);
         }
 
         else {
-            this.vue_commande.setVisible(!this.est_fin_jeu);
+            this.container.setVisible(!this.est_fin_jeu);
+            // this.vue_commande.setVisible(!this.est_fin_jeu);
             this.remove(this.vue_aide);
         }
 

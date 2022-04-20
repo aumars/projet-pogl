@@ -1,17 +1,13 @@
 package Vue;
 
-import Modele.Modele;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class VueAide extends JPanel {
     /**
      * Affichage du menu d'aide.
-     * 
-     * @param m Le modele du jeu.
      */
-    public VueAide(Modele m) {
+    public VueAide() {
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         this.setLayout(new GridLayout(1, 3));
 
@@ -36,7 +32,7 @@ public class VueAide extends JPanel {
 
         JPanel general = new JPanel();
         general.setLayout(new BoxLayout(general, BoxLayout.Y_AXIS));
-        general.setBorder(BorderFactory.createEmptyBorder(0, 50, 50, 0));
+        general.setBorder(BorderFactory.createEmptyBorder(0, 50, 65, 0));
         general.add(getTitre("Générals :"));
         general.add(getLabel("Afficher l'aide: [H]"));
         general.add(getLabel("Fermer le jeu: [ECHAPPE]"));

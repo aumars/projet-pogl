@@ -310,7 +310,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     private void metAJourApresAction() {
         this.verifieFinJeu();
-        this.vue.vue_log.ajoutLog(this.joueur.getLogString());
+        this.vue.vue_info_bas.vue_log.ajoutLog(this.joueur.getLogString());
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         this.vue.vue_info_bas.vue_commande.gereVisibiliteBoutons();
         this.vue.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
