@@ -63,7 +63,7 @@ public class ModeleTest {
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
         m.getJoueurActuel().deplace(Direction.DROITE);
-        Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(new Coord(3, 1), m.getJoueurActuel().getCoord());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
@@ -75,10 +75,10 @@ public class ModeleTest {
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
         m.getJoueurActuel().deplace(Direction.DROITE);
-        Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(new Coord(3, 1), m.getJoueurActuel().getCoord());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
-        Assertions.assertEquals(new Coord(3, 1), m.getJoueurActuel().getCoord());
+        Assertions.assertEquals(new Coord(4, 1), m.getJoueurActuel().getCoord());
     }
 
     @Test

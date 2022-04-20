@@ -42,6 +42,6 @@ public class VueInfoHaut extends JPanel {
      * Recupere le titre du texte.
     */
     private String getTextTitre(){
-        return String.format("Tour %d | %s", this.modele.getTour(), this.modele.getJoueurActuel());
+        return String.format("Tour %d | %s (%d)", this.modele.getTour(), this.modele.getJoueurActuel(), this.modele.getJoueurActuel().nbActions());
     }
 }
