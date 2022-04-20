@@ -23,9 +23,17 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue = v;
         this.joueur = this.modele.getJoueurActuel();
         this.vue_commande = this.vue.vue_info_bas.vue_commande;
+        this.metsAJourEventListener();
+    }
 
+    private void metsAJourEventListener(){
         this.vue.getFenetre().addKeyListener(this);
 
+        this.vue.vue_start.btn_facile.addActionListener(this);
+        this.vue.vue_start.btn_normal.addActionListener(this);
+        this.vue.vue_start.btn_difficile.addActionListener(this);
+        this.vue.vue_start.btn_jouer.addActionListener(this);
+        
         this.vue_commande.btn_secher.addActionListener(this);
 
         this.vue_commande.btn_fin_tour.addActionListener(this);
@@ -37,7 +45,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
         this.vue.vue_info_haut.btn_aide.addActionListener(this);
         this.vue.vue_grille.addMouseMotionListener(this);
-
+        
         this.vue.vue_grille.addMouseListener(this);
     }
 
@@ -180,8 +188,10 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else if (this.vue_commande.btn_sac_sable.estActive()) {
             Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
-            this.joueur.asseche(case_pressed);
-            this.vue.vue_grille.metAJourCase(case_pressed.coord);
+            if (case_pressed.getEtat() == Inondation.INONDEE) {
+                this.joueur.asseche(case_pressed);
+                this.vue.vue_grille.metAJourCase(case_pressed.coord);
+            }
         }
 
         else if (this.vue_commande.btn_teleporte.estActive()) {
@@ -237,6 +247,24 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
         if (this.vue_commande.btn_secher.getModel().isArmed()) {
             this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_secher.getId());
+        }
+
+        if (this.vue.vue_start.btn_facile.getModel().isArmed()) {
+            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_facile.getId());
+        }
+        
+        if (this.vue.vue_start.btn_normal.getModel().isArmed()) {
+            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_normal.getId());
+        }
+
+        if (this.vue.vue_start.btn_difficile.getModel().isArmed()) {
+            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_difficile.getId());
+        }
+        
+        if(this.vue.vue_start.btn_jouer.getModel().isArmed()){
+            this.vue.afficheMenuDemarrage = false;
+            this.vue.afficheFenetre();
+            this.metsAJourEventListener();
         }
 
         if (this.vue.vue_info_bas.vue_fin_jeu != null

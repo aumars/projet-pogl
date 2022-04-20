@@ -5,7 +5,7 @@ import Modele.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class VueCommande extends JPanel {
+public class VueCommande extends JPanel implements ContainerBoutonRadio {
     private Modele modele;
     public int id_radio_active = -1;
 
@@ -128,6 +128,8 @@ public class VueCommande extends JPanel {
         this.btn_secher.update();
         this.btn_sac_sable.update();
         this.btn_teleporte.update();
+
+        this.revalidate();
     }
 
     /**

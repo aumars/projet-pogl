@@ -26,6 +26,7 @@ public class VueBoutonRadio extends VueBouton {
 
         this.id = id;
         this.id_active = id_active;
+        this.update();
     }
 
     /**
