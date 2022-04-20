@@ -42,13 +42,16 @@ public class Modele extends Observable {
      */
     private final double probaClefInondation;
 
-    private final Difficulte difficulte;
+    /**
+     * La difficulté du jeu
+     */
+    private Difficulte difficulte;
 
     /**
      * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
-     * 
      * @param carte Une carte
-     * @param jeu   L'ensemble d'objets et de joueurs.
+     * @param jeu L'ensemble d'objets et de joueurs.
+     * @param difficulte La difficulté du jeu
      */
     public Modele(Carte carte, Jeu jeu, Difficulte difficulte) {
         this.difficulte = difficulte;
@@ -60,7 +63,7 @@ public class Modele extends Observable {
         this.grille = new Grille(carte);
         this.grille.addObjets(jeu.objets);
         this.ensemble = new ArrayList<>();
-        for (AbstractMap.SimpleImmutableEntry<Joueur, Coord> p : jeu.ensemble) {
+        for (AbstractMap.SimpleImmutableEntry<Joueur, Coord> p: jeu.ensemble) {
             Joueur j = p.getKey();
             Coord c = p.getValue();
             j.setPosInitiale(this.grille.getCase(c));
@@ -76,11 +79,11 @@ public class Modele extends Observable {
 
     /**
      * Construit un jeu à partir d'un fichier texte et d'un fichier XML.
-     * 
-     * @param map_path  Un fichier texte
+     * @param map_path Un fichier texte
      * @param game_path Un fichier XML
+     * @param difficulte La difficulté du jeu.
      */
-    public Modele(String map_path, String game_path, Difficulte difficulte) throws InvalidGameException {
+    public Modele (String map_path, String game_path, Difficulte difficulte) throws InvalidGameException {
         this(new Carte(map_path), new Jeu(game_path), difficulte);
     }
 
@@ -97,29 +100,23 @@ public class Modele extends Observable {
         this.finJeu = false;
     }
 
-    private boolean estDeterministe() {
-        return this.difficulte == Difficulte.DETERMINISTE;
-    }
+    private boolean estDeterministe() { return this.difficulte == Difficulte.DETERMINISTE; }
 
-    public List<Joueur> getJoueurs() {
+    public List<Joueur> getJoueurs(){
         return this.ensemble;
     }
 
     /**
      * Renvoie le joueur actuel.
-     * 
      * @return Le joueur actuel.
      */
-    public Joueur getJoueurActuel() {
-        return this.joueurActuel;
-    }
+    public Joueur getJoueurActuel() { return this.joueurActuel; }
 
     /**
      * Renvoie le nombre de joueurs au total.
-     * 
      * @return Renvoie le nombre de joueurs au total.
      */
-    public int getNbJoueurs() {
+    public int getNbJoueurs(){
         return this.ensemble.size();
     }
 
@@ -129,12 +126,9 @@ public class Modele extends Observable {
     public void tourSuivant() {
         if (this.tourPeutFinir()) {
             switch (this.difficulte) {
-                case DIFFICILE:
-                    this.getGrille().inonde();
-                case MOYEN:
-                    this.getGrille().inonde();
-                case FACILE:
-                    this.getGrille().inonde();
+                case DIFFICILE: this.getGrille().inonde();
+                case MOYEN: this.getGrille().inonde();
+                case FACILE: this.getGrille().inonde();
                 default:
             }
             if (!this.estDeterministe()) {
@@ -143,7 +137,8 @@ public class Modele extends Observable {
             this.ensemble.forEach(j -> j.noie());
             if (!this.tousJoueursMorts()) {
                 this.commenceTour();
-            } else {
+            }
+            else {
                 this.finJeu = true;
             }
         }
@@ -160,21 +155,15 @@ public class Modele extends Observable {
 
     /**
      * Renvoie le tour actuel.
-     * 
      * @return Le tour actuel.
      */
-    public int getTour() {
-        return this.tour;
-    }
+    public int getTour() { return this.tour; }
 
     /**
      * Renvoie la grille.
-     * 
      * @return La grille.
      */
-    public Grille getGrille() {
-        return this.grille;
-    }
+    public Grille getGrille(){ return this.grille; }
 
     /**
      * Vérifie si est le jeu est gagné.
@@ -195,9 +184,9 @@ public class Modele extends Observable {
      */
     private boolean tousArtefactsRecuperes() {
         Set<Artefact> a = new HashSet<>();
-        for (Joueur j : this.ensemble) {
+        for (Joueur j: this.ensemble) {
             List<Objet> objets = j.getInventaire();
-            for (Objet o : objets) {
+            for (Objet o: objets) {
                 if (o instanceof Artefact) {
                     a.add((Artefact) o);
                 }
@@ -208,7 +197,6 @@ public class Modele extends Observable {
 
     /**
      * Vérifie si le tour actuel peut se terminer.
-     * 
      * @return Vrai si oui, Faux sinon.
      */
     public boolean tourPeutFinir() {
@@ -217,7 +205,6 @@ public class Modele extends Observable {
 
     /**
      * Calcule le joueur prochain vivant.
-     * 
      * @return le joueur prochain vivant.
      */
     private Joueur prochainJoueurVivant() {
@@ -230,7 +217,8 @@ public class Modele extends Observable {
             if (!this.iter.hasNext()) {
                 this.tour++;
                 this.iter = this.ensemble.iterator();
-            } else {
+            }
+            else {
                 joueur = this.iter.next();
             }
         }
@@ -239,24 +227,21 @@ public class Modele extends Observable {
 
     /**
      * Vérifie si tous les joueurs sont morts.
-     * 
      * @return Vrai si tous les joueurs sont morts, Faux sinon.
      */
     public boolean tousJoueursMorts() {
         if (this.ensemble.stream().noneMatch(j -> j.estVivant())) {
             this.finJeu = true;
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
 
     /**
      * Vérifie si le jeu est terminé.
-     * 
      * @return Vrai si le jeu est terminé, Faux sinon.
      */
-    public boolean getFinJeu() {
-        return this.finJeu;
-    }
+    public boolean getFinJeu() { return this.finJeu; }
 }
