@@ -7,6 +7,13 @@ Observable <-[dashed]- Controleur
 interface Observer
 Observer <-[dashed]- Vue
 
+class IleInterdite {
+    {static} + main(): void
+}
+IleInterdite "1" *-- "1" Modele
+IleInterdite "1" *-- "1" Vue
+IleInterdite "1" *-- "1" Controleur
+
 Modele "1" -- "1" Vue
 Modele "1" -- "1" Controleur
 
@@ -37,143 +44,46 @@ package Modele {
         HELIPAD
     }
 
-    abstract class Objet {
-        +element: Element
-        +objetByID(String, Element): Objet
+    enum Difficulte {
+        FACILE
+        MOYEN
+        DIFFICILE
+        DETERMINISTE
     }
 
+    abstract class Objet
     Objet <-- Artefact
     Objet <-- Clef
 
-    class Coord {
-        -x: int
-        -y: int
-        +x(): int
-        +y(): int
-        +toString(): String
-        +equals(Object): boolean
-        +hashCode(): int
-    }
+    class Coord
 
-    class Case {
-        +terrain: Terrain /' CONSTANTE '/
-        -etat: Inondation
-        -objetVisibilite: boolean
-        +restart(): void
-        +setJoueur(Joueur): void
-        +removeJoueur(Joueur): void
-        +getJoueurs(): List<Joueurs>
-        +estTraversable(): boolean
-        +estHelipad(): boolean
-        +ajoutObjet(Objet): void
-        +aObjet(): boolean
-        +aObjet(Class): boolean
-        +getObjet(): Objet
-        +getObjetVisibilite(): boolean
-        +setObjetVisibilite(boolean): void
-        +detruitObjet(): void
-        +getEtat(): Inondation
-        +setEtat(Inondation): void
-        +asseche(): boolean
-        +monteEaux(): void
-        +adjacent(Direction): Case
-        +adjacentSubmergee(): boolean
-    }
-    Case "0..n" o-- "1" Coord /' Case est associé à un Coord '/
-    Case "0..n" o-- "0..1" Objet /' Case est associé à un Objet '/
-    Case "0..n" *--o "0..1" Grille /' Case appartient à une Grille '/
+    class Case
+    Case "0..1" o-- "1" Coord /' Case est associé à un Coord '/
+    Case "0..1" -- "0..1" Objet /' Case est associé à un Objet '/
 
-    class Grille {
-        -HEIGHT: int
-        -WIDTH: int
-        +restart(): void
-        +addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord>): void
-        +addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets): void
-        +getWidth(): int
-        +getHauteur(): int
-        +getCase(int, int): Case
-        +getCase(Coord): Case
-        +inonde(): void
-    }
+    class Grille
+    Grille "1" *-- "Case"
 
-    class Joueur {
-      -vivant: boolean
-      -endTurn: boolean
-      -numJoueur: int
-      +id: int
-      +name: String
-      -actionSpeciale: boolean
-      -casesSurvecuesConsecutives: int
-      -probaClefInondation: int
-      +restart(): void
-      -log(String): void
-      +setProbaClefInondation(double): void
-      +meurt():void
-      +revive():void
-      +noie()
-      +estVivant(): boolean
-      +estSonTour(): boolean
-      +finishTurn(): void
-      +newTurn(): void
-      +gagneActionSpeciale(): void
-      +aActionSpeciale(): boolean
-      +deplace(Direction): void
-      +possedeClef(Element): boolean
-      +prendObjet(Objet): void
-      +getInventaire(): List<Objet>
-      +getCoord(): Coord
-      +asseche(Direction): void
-      +asseche(Case): void
-      +teleport(Case): void
-      +helicoptere(Case): void
-      +setPosInitiale(Case): void
-      +surCaseTraversable(): boolean
-      +surHelipad(): boolean
-    }
-    Objet "0..n" o-- "0..1" Joueur
-    Case "0..1" o-- "0..4" Joueur /' A modifier avec la liste de joueurs dans une case '/
+    class Joueur
+    Joueur "1" -- "0..n" Objet
+    Case "0..1" -- "0..4" Joueur /' A modifier avec la liste de joueurs dans une case '/
 
-    class Carte {
-        -terrainByID(char): Terrain /' Méthode statique '/
-    }
-    Carte "0..1" *-- "1" Grille
+    class Carte
+    Carte "1" *-- "1" Grille
 
-    class Jeu {
-        -parseGame(String): org.w3c.dom.Document
-        -parseGameObjet(org.w3c.dom.Document): List<AbstractMap.SimpleImmutableEntry<Objet, Coord>
-        -parseGameJoueur(org.w3c.dom.Document): List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>
-        -parsePosition(org.w3c.dom.NodeList): Coord
-        -elementById(String): Element
-        -objetsByID(String, Element): Objet
-        -joueurById(String): Joueur
-    }
-    Jeu "0..1" *-- "0..n" Objet
-    Jeu "0..1" *-- "0..n" Coord
-    Jeu "0..1" *-- "0..n" Joueur
+    class Jeu
+    Jeu "1" *-- "0..n" Objet
+    Jeu "1" *-- "0..n" Coord
+    Jeu "1" *-- "0..4" Joueur
 
-    class Modele {
-        -finJeu: boolean
-        -deterministic: boolean
-        -probaClefInondation: double
-        -remplitIle(): void
-        +restart(): void
-        +getJoueurs(): List<Joueur>
-        +getJoueurActuel(): Joueur
-        +getNbJoueurs(): int
-        +tourSuivant(): void
-        -commenceTour(): void
-        +getTour(): int
-        +getGrille(): Grille
-        +verifieGagnants(): boolean
-        -tousJoueursSurHelipad(): boolean
-        -tousArtefactsRecuperes(): boolean
-        +prochainJoueurVivant(): Joueur
-        +tousJoueursMorts(): boolean
-        +tourPeutfinir(): boolean
-        +getFinJeu(): boolean
+    class Modele
+    Modele "1" *-- "1" Carte
+    Modele "1" *-- "1" Jeu
+    Modele "1" o-- "1..4" Joueur
+
+    package Exception {
+        class InvalidGameException
     }
-    Modele "0..1" o-- "1" Carte
-    Modele "0..1" o-- "1" Jeu
 }
 
 package Controleur {
