@@ -56,7 +56,7 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         
         corps.add(regle, Utils.positionneGrille(0, 1));
         
-        corps.add(this.sousTitre("La difficultée"), Utils.positionneGrille(0, 2));
+        corps.add(this.sousTitre("La difficulté"), Utils.positionneGrille(0, 2));
         
         JPanel panel_btn_difficulte = new JPanel();
         panel_btn_difficulte.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 35));
