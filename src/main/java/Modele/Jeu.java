@@ -10,7 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +22,12 @@ public final class Jeu {
     /**
      * Une liste qui associe des {@link Objet}s à son {@link Coord}.
      */
-    public final List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets;
+    public final List<SimpleImmutableEntry<Objet, Coord>> objets;
 
     /**
      * Une liste qui associe des {@link Joueur}s à son {@link Coord}.
      */
-    public final List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> ensemble;
+    public final List<SimpleImmutableEntry<Joueur, Coord>> ensemble;
 
     /**
      * Modélise un jeu (avec {@link Joueur}s) à partir d'un fichier XML.
@@ -81,9 +81,9 @@ public final class Jeu {
      * @throws InvalidGameException Deux {@link Objet}s sont sur le même
      *                              {@link Coord}.
      */
-    private static List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game)
+    private static List<SimpleImmutableEntry<Objet, Coord>> parseGameObjet(Document game)
             throws InvalidGameException {
-        List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> a = new ArrayList<>();
+        List<SimpleImmutableEntry<Objet, Coord>> a = new ArrayList<>();
         NodeList list = game.getElementsByTagName("objet");
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
@@ -92,14 +92,14 @@ public final class Jeu {
                 String id = element.getAttribute("id");
                 String objet_element = element.getElementsByTagName("element").item(0).getTextContent();
                 Coord pos = parsePosition(element.getElementsByTagName("position"));
-                for (AbstractMap.SimpleImmutableEntry<Objet, Coord> ex : a) {
+                for (SimpleImmutableEntry<Objet, Coord> ex : a) {
                     if (ex.getValue().equals(pos)) {
                         throw new InvalidGameException(String.format("Deux objets sont sur le même point %s", pos));
                     }
                 }
                 Element e = elementById(objet_element);
                 Objet o = objetsByID(id, e);
-                a.add(new AbstractMap.SimpleImmutableEntry<>(o, pos));
+                a.add(new SimpleImmutableEntry<>(o, pos));
             }
         }
         return a;
@@ -111,8 +111,8 @@ public final class Jeu {
      * @param game Document XML.
      * @return Liste de pairs d'{@link Joueur} et d'{@link Coord} associée.
      */
-    private static List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> parseGameJoueur(Document game) {
-        List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> s = new ArrayList<>();
+    private static List<SimpleImmutableEntry<Joueur, Coord>> parseGameJoueur(Document game) {
+        List<SimpleImmutableEntry<Joueur, Coord>> s = new ArrayList<>();
         NodeList list = game.getElementsByTagName("personnage");
         for (int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
@@ -121,7 +121,7 @@ public final class Jeu {
                 String id = element.getAttribute("id");
                 Coord pos = parsePosition(element.getElementsByTagName("position"));
                 Joueur j = joueurById(id);
-                s.add(new AbstractMap.SimpleImmutableEntry<>(j, pos));
+                s.add(new SimpleImmutableEntry<>(j, pos));
             }
         }
         return s;
