@@ -136,6 +136,7 @@ package Modele {
     class Carte {
         -terrainByID(char): Terrain /' Méthode statique '/
     }
+    Carte "0..1" *-- "1" Grille
 
     class Jeu {
         -parseGame(String): org.w3c.dom.Document
@@ -171,8 +172,8 @@ package Modele {
         +tourPeutfinir(): boolean
         +getFinJeu(): boolean
     }
-    Modele "0..1" *-- "1" Grille
-    Modele "0..1" o-- "0..n" Joueur
+    Modele "0..1" o-- "1" Carte
+    Modele "0..1" o-- "1" Jeu
 }
 
 package Controleur {
