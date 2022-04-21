@@ -11,6 +11,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
     private final Vue vue;
     private VueCommande vue_commande;
     private Joueur joueur;
+    private boolean est_presse_touche = false;
 
     /**
      * Controlleur du jeu.
@@ -35,6 +36,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue.vue_start.btn_facile.addActionListener(this);
         this.vue.vue_start.btn_normal.addActionListener(this);
         this.vue.vue_start.btn_difficile.addActionListener(this);
+        this.vue.vue_start.btn_deterministe.addActionListener(this);
         this.vue.vue_start.btn_jouer.addActionListener(this);
 
         this.vue_commande.btn_secher.addActionListener(this);
@@ -56,6 +58,11 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * Methode appelé lorsqu'une touche est préssée.
      */
     public void keyPressed(KeyEvent e) {
+        if (est_presse_touche)
+            return;
+        else
+            this.est_presse_touche = true;
+
         if (!this.modele.getFinJeu()) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
@@ -256,14 +263,22 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
         if (this.vue.vue_start.btn_facile.getModel().isArmed()) {
             this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_facile.getId());
+            this.modele.setDifficulte(Difficulte.FACILE);
         }
 
         if (this.vue.vue_start.btn_normal.getModel().isArmed()) {
             this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_normal.getId());
+            this.modele.setDifficulte(Difficulte.MOYEN);
         }
 
         if (this.vue.vue_start.btn_difficile.getModel().isArmed()) {
             this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_difficile.getId());
+            this.modele.setDifficulte(Difficulte.DIFFICILE);
+        }
+
+        if (this.vue.vue_start.btn_deterministe.getModel().isArmed()) {
+            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_deterministe.getId());
+            this.modele.setDifficulte(Difficulte.DETERMINISTE);
         }
 
         if (this.vue.vue_start.btn_jouer.getModel().isArmed()) {
@@ -397,6 +412,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
     }
 
     public void keyReleased(KeyEvent e) {
+        this.est_presse_touche = false;
     }
 
     public void mouseClicked(MouseEvent e) {

@@ -13,6 +13,8 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
             "Normal");
     public VueBoutonRadio btn_difficile = new VueBoutonRadio(2, id_difficulte_active, "Mode de difficulté: Difficile",
             "Difficile");
+    public VueBoutonRadio btn_deterministe = new VueBoutonRadio(3, id_difficulte_active, "Mode de difficulté: Deterministe",
+            "Déterministe");
     public VueBouton btn_jouer = new VueBouton("Lance une nouvelle partie.", "Jouer");
 
     /**
@@ -46,17 +48,19 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         JScrollPane regle = new JScrollPane(regle_area);
         regle.setPreferredSize(new Dimension(480, 100));
         regle.setBorder(BorderFactory.createEmptyBorder());
-
+        
         regle_area.setBackground(ConstsValue.COLOR_DEFAULT);
         regle_area.setFocusable(false);
         regle_area.setEditable(false);
         regle_area.setFont(new Font(ConstsValue.FONT_FAMILY, Font.PLAIN, 13));
-
+        
         corps.add(regle, Utils.positionneGrille(0, 1));
-
+        
         corps.add(this.sousTitre("La difficultée"), Utils.positionneGrille(0, 2));
-
+        
         JPanel panel_btn_difficulte = new JPanel();
+        panel_btn_difficulte.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 35));
+        panel_btn_difficulte.add(this.btn_deterministe);
         panel_btn_difficulte.add(this.btn_facile);
         panel_btn_difficulte.add(this.btn_normal);
         panel_btn_difficulte.add(this.btn_difficile);
@@ -83,6 +87,7 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
 
     /**
      * Mets à jour les boutons radio.
+     * 
      * @param id_pressed L'id du bouton radio actif.
      */
     public void metAJourRadioBouton(int id_pressed) {
@@ -95,10 +100,12 @@ public class VueStart extends JPanel implements ContainerBoutonRadio {
         this.btn_difficile.id_active = this.id_difficulte_active;
         this.btn_normal.id_active = this.id_difficulte_active;
         this.btn_facile.id_active = this.id_difficulte_active;
+        this.btn_deterministe.id_active = this.id_difficulte_active;
 
         this.btn_difficile.update();
         this.btn_normal.update();
         this.btn_facile.update();
+        this.btn_deterministe.update();
 
         this.revalidate();
     }
