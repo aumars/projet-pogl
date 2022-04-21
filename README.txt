@@ -26,6 +26,7 @@ Pour l'interface graphique, on a principalement utilisé le souris (pour le mouv
 -------------------------
 Aucun problème grave est présent.
 
+Actuellement, la lecture des fichiers texte de la Carte et des fichiers XML du Jeu ne sont pas bien testés, mais l'utilisateur n'est pas concerné de ces fichiers donc ce n'est pas important.
 
 (4/4) Morceaux de code empruntés
 --------------------------------
