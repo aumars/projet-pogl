@@ -2,20 +2,21 @@ package Modele;
 
 import Modele.Exception.InvalidGameException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Le système de jeu.
  */
 public class Modele extends Observable {
     /**
-     * La grille du jeu.
+     * La carte du jeu.
      */
-    private final Grille grille;
+    private final Carte carte;
 
     /**
-     * L'ensemble de joueurs.
+     * Le jeu.
      */
-    private final List<Joueur> ensemble;
+    private final Jeu jeu;
 
     /**
      * Un itérateur de l'ensemble de joueurs.
@@ -49,6 +50,8 @@ public class Modele extends Observable {
      * @param difficulte La difficulté du jeu
      */
     public Modele(Carte carte, Jeu jeu, Difficulte difficulte) {
+        this.carte = carte;
+        this.jeu = jeu;
         this.difficulte = difficulte;
         double probaClefInondation;
         if (this.difficulte == Difficulte.DETERMINISTE) {
@@ -57,19 +60,16 @@ public class Modele extends Observable {
         else {
             probaClefInondation = 0.2;
         }
-        this.grille = new Grille(carte);
-        this.grille.addObjets(jeu.objets);
-        this.ensemble = new ArrayList<>();
-        for (AbstractMap.SimpleImmutableEntry<Joueur, Coord> p: jeu.ensemble) {
+        this.getGrille().addObjets(jeu.objets);
+        for (Map.Entry<Joueur, Coord> p: jeu.ensemble) {
             Joueur j = p.getKey();
             Coord c = p.getValue();
-            j.setPosInitiale(this.grille.getCase(c));
+            j.setPosInitiale(this.getGrille().getCase(c));
             j.setProbaClefInondation(probaClefInondation);
-            this.ensemble.add(j);
         }
-        this.ensemble.forEach(j -> j.restart());
-        this.ensemble.forEach(j -> this.grille.getCase(j.getCoord()).setJoueur(j));
-        this.iter = this.ensemble.iterator();
+        this.getJoueurs().forEach(j -> j.restart());
+        this.getJoueurs().forEach(j -> this.getGrille().getCase(j.getCoord()).setJoueur(j));
+        this.iter = this.getJoueurs().iterator();
         this.finJeu = false;
         this.commenceTour();
     }
@@ -88,11 +88,11 @@ public class Modele extends Observable {
      * Rétablit les attributs initiaux du modèle.
      */
     public void restart() {
-        this.grille.restart();
-        this.ensemble.forEach(j -> j.restart());
-        this.ensemble.forEach(j -> this.grille.getCase(j.getCoord()).setJoueur(j));
+        this.getGrille().restart();
+        this.getJoueurs().forEach(j -> j.restart());
+        this.getJoueurs().forEach(j -> this.getGrille().getCase(j.getCoord()).setJoueur(j));
         this.tour = 1;
-        this.iter = this.ensemble.iterator();
+        this.iter = this.getJoueurs().iterator();
         this.joueurActuel = this.iter.next();
         this.finJeu = false;
     }
@@ -106,7 +106,7 @@ public class Modele extends Observable {
     private boolean estDeterministe() { return this.difficulte == Difficulte.DETERMINISTE; }
 
     public List<Joueur> getJoueurs(){
-        return this.ensemble;
+        return this.jeu.ensemble.stream().map(AbstractMap.SimpleImmutableEntry::getKey).collect(Collectors.toList());
     }
 
     /**
@@ -120,7 +120,7 @@ public class Modele extends Observable {
      * @return Renvoie le nombre de joueurs au total.
      */
     public int getNbJoueurs(){
-        return this.ensemble.size();
+        return this.getJoueurs().size();
     }
 
     /**
@@ -135,9 +135,9 @@ public class Modele extends Observable {
                 default:
             }
             if (!this.estDeterministe()) {
-                this.grille.inonde();
+                this.getGrille().inonde();
             }
-            this.ensemble.forEach(j -> j.noie());
+            this.getJoueurs().forEach(j -> j.noie());
             if (!this.tousJoueursMorts()) {
                 this.commenceTour();
             }
@@ -166,7 +166,7 @@ public class Modele extends Observable {
      * Renvoie la grille.
      * @return La grille.
      */
-    public Grille getGrille(){ return this.grille; }
+    public Grille getGrille(){ return this.carte.grille; }
 
     /**
      * Vérifie si est le jeu est gagné.
@@ -179,7 +179,7 @@ public class Modele extends Observable {
      * Vérifie si tous les joueurs sont sur le helipad.
      */
     private boolean tousJoueursSurHelipad() {
-        return this.ensemble.stream().allMatch(j -> j.surHelipad());
+        return this.getJoueurs().stream().allMatch(j -> j.surHelipad());
     }
 
     /**
@@ -187,7 +187,7 @@ public class Modele extends Observable {
      */
     private boolean tousArtefactsRecuperes() {
         Set<Artefact> a = new HashSet<>();
-        for (Joueur j: this.ensemble) {
+        for (Joueur j: this.getJoueurs()) {
             List<Objet> objets = j.getInventaire();
             for (Objet o: objets) {
                 if (o instanceof Artefact) {
@@ -213,13 +213,13 @@ public class Modele extends Observable {
     private Joueur prochainJoueurVivant() {
         if (!this.iter.hasNext()) {
             this.tour++;
-            this.iter = this.ensemble.iterator();
+            this.iter = this.getJoueurs().iterator();
         }
         Joueur joueur = this.iter.next();
         while (!joueur.estVivant()) {
             if (!this.iter.hasNext()) {
                 this.tour++;
-                this.iter = this.ensemble.iterator();
+                this.iter = this.getJoueurs().iterator();
             }
             else {
                 joueur = this.iter.next();
@@ -233,7 +233,7 @@ public class Modele extends Observable {
      * @return Vrai si tous les joueurs sont morts, Faux sinon.
      */
     public boolean tousJoueursMorts() {
-        if (this.ensemble.stream().noneMatch(j -> j.estVivant())) {
+        if (this.getJoueurs().stream().noneMatch(j -> j.estVivant())) {
             this.finJeu = true;
             return true;
         }

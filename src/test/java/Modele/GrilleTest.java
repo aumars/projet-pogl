@@ -9,7 +9,7 @@ public class GrilleTest {
 
     @BeforeEach
     void grilleInit() {
-        this.g0 = new Grille(new Carte("map1.txt"));
+        this.g0 = new Carte("map1.txt").grille;
     }
 
     @Test

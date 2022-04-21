@@ -9,9 +9,9 @@ import java.util.Scanner;
  */
 public final class Carte {
     /**
-     * Tableau de tableaux de {@link Terrain} qui modélise la carte.
+     * La grille générée.
      */
-    public final Terrain[][] map;
+    public final Grille grille;
 
     /**
      * Lit un fichier texte et le traduit.
@@ -24,13 +24,14 @@ public final class Carte {
         int hauteur = map_reader.nextInt();
         int largeur = map_reader.nextInt();
         map_reader.skip("\n");
-        this.map = new Terrain[hauteur][largeur];
+        Terrain[][] map = new Terrain[hauteur][largeur];
         for (int i = 0; i < hauteur; i++) {
             String line = map_reader.nextLine();
             for (int j = 0; j < largeur; j++) {
-                this.map[i][j] = terrainByID(line.charAt(j));
+                map[i][j] = terrainByID(line.charAt(j));
             }
         }
+        this.grille = new Grille(map);
     }
 
     /**

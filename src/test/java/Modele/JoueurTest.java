@@ -10,7 +10,7 @@ public class JoueurTest {
 
     @BeforeEach
     void joueurInit() {
-        this.g = new Grille(new Carte("map1.txt"));
+        this.g = new Carte("map1.txt").grille;
         this.j0 = new Joueur();
         this.j1 = new Joueur(this.g.getCase(new Coord(1, 1)));
     }

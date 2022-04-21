@@ -32,15 +32,6 @@ public class Grille {
     private final int WIDTH;
 
     /**
-     * Construit la grille à partir d'une carte.
-     * 
-     * @param carte Une {@link Carte}
-     */
-    public Grille(Carte carte) {
-        this(carte.map);
-    }
-
-    /**
      * Construit la grille à partir d'un tableau de tableaux de {@link Terrain}.
      * 
      * @param map Un tableau de tableaux de {@link Terrain}.
