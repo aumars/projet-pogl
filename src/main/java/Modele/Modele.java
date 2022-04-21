@@ -44,14 +44,14 @@ public class Modele extends Observable {
     private Difficulte difficulte;
 
     /**
-     * Construit un jeu à partir d'une carte et l'ensemble d'objets et de joueurs.
-     * @param carte Une carte
-     * @param jeu L'ensemble d'objets et de joueurs.
-     * @param difficulte La difficulté du jeu
+     * Construit un jeu à partir d'un fichier texte et d'un fichier XML.
+     * @param map_path Un fichier texte
+     * @param game_path Un fichier XML
+     * @param difficulte La difficulté du jeu.
      */
-    public Modele(Carte carte, Jeu jeu, Difficulte difficulte) {
-        this.carte = carte;
-        this.jeu = jeu;
+    public Modele (String map_path, String game_path, Difficulte difficulte) throws InvalidGameException {
+        this.carte = new Carte(map_path);
+        this.jeu = new Jeu(game_path);
         this.difficulte = difficulte;
         double probaClefInondation;
         if (this.difficulte == Difficulte.DETERMINISTE) {
@@ -72,16 +72,6 @@ public class Modele extends Observable {
         this.iter = this.getJoueurs().iterator();
         this.finJeu = false;
         this.commenceTour();
-    }
-
-    /**
-     * Construit un jeu à partir d'un fichier texte et d'un fichier XML.
-     * @param map_path Un fichier texte
-     * @param game_path Un fichier XML
-     * @param difficulte La difficulté du jeu.
-     */
-    public Modele (String map_path, String game_path, Difficulte difficulte) throws InvalidGameException {
-        this(new Carte(map_path), new Jeu(game_path), difficulte);
     }
 
     /**
