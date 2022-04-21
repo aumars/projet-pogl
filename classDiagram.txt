@@ -4,8 +4,6 @@ title L'Île Interdite - Diagramme de classe
 interface Observable
 Observable <-[dashed]- Modele
 Observable <-[dashed]- Controleur
-interface Observer
-Observer <-[dashed]- Vue
 
 class IleInterdite {
     {static} + main(): void
@@ -14,8 +12,6 @@ IleInterdite "1" *-- "1" Modele
 IleInterdite "1" *-- "1" Vue
 IleInterdite "1" *-- "1" Controleur
 
-Modele "1" -- "1" Vue
-Modele "1" -- "1" Controleur
 
 package Modele {
     enum Inondation {
@@ -86,32 +82,81 @@ package Modele {
     }
 }
 
-package Controleur {
-    class Controleur {
-      +demarrer(): void
-      +tourSuivant(): void
-      +seDeplacer(): void
-    }
-}
-
 package Vue {
+    interface Observer
+    Observer <-[dashed]- Vue
+
     class Vue
-    Vue "1" -- "1" Controleur
+    Vue "1" -- "1" Modele
 
-    class VueGrille{
-      +afficheGrille(): void
-    }
+    class VueStart
+    Vue "1" *-- "1" VueStart
+
+    class VueInfoHaut
+    Vue "1" *-- "1" VueInfoHaut
+    VueInfoHaut "1" -- "1" Modele
+
+    class VueContainerInventaires
+    Vue "1" *-- "1" VueContainerInventaires
+    VueContainerInventaires "1" -- "1" Modele
+
+    class VueGrille
     Vue "1" *-- "1" VueGrille
+    VueGrille "1" -- "1" Modele
 
-    class VueCase{
-      +afficheCase(): void
-    }
-    VueGrille "1" *-- "n*n" VueCase
+    class VueInfoBas
+    Vue "1" *-- "1" VueInfoBas
 
-    class VueCommande
-    Vue "1" *- "1" VueCommande
+    interface ContainerBoutonRadio
+    ContainerBoutonRadio <-[dashed]- VueStart
+
+    class VueBoutonRadio
+    VueStart "1" *-- "4" VueBoutonRadio
 
     class VueBouton
-    Vue "1" *-- "0..n" VueBouton
+    VueStart "1" *-- "1" VueBouton
+    VueInfoHaut "1" *-- "1" VueBouton
+
+    class VueInventaire
+    VueContainerInventaires "1" *-- "1..4" VueInventaire
+    VueInventaire "1" -- "1" Modele
+    VueInventaire "1" -- "1" Joueur
+
+    class VueObjet
+    VueInventaire "1" *-- "0..n" VueObjet
+    VueObjet "1" -- "1" Objet
+
+    class VueCase
+    VueGrille "1" *-- "0..n" VueCase
+    VueCase "1" -- "1" Modele
+    VueCase "1" -- "1" Case
+
+    class VueCommande
+    VueInfoBas "1" *-- "1" VueCommande
+    VueCommande "1" -- "1" Modele
+    VueCommande "1" *-- "3" VueBouton
+    VueCommande "1" *-- "3" VueBoutonRadio
+
+    class VueFinJeu
+    VueInfoBas "1" *-- "1" VueFinJeu
+
+    class VueAide
+    VueInfoBas "1" *-- "1" VueAide
+
+    class VueLog
+    VueInfoBas "1" *-- "1" VueLog
+
+    class Utils
+    class ConstIcon
+    class ConstValue
 }
+
+package Controleur {
+    class Controleur
+    Controleur "1" -- "1" Vue
+    Controleur "1" -- "1" VueCommande
+    Controleur "1" -- "1" Modele
+    Controleur "1" -- "1" Joueur
+}
+
 @enduml
