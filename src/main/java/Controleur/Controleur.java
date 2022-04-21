@@ -408,11 +408,14 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         return this.modele.getGrille().getCase(getMouseCoord(m_x, m_y));
     }
 
-    public void keyTyped(KeyEvent e) {
-    }
-
+    /**
+     * Methode appelé lorsqu'on relache une touche.
+     */
     public void keyReleased(KeyEvent e) {
         this.est_presse_touche = false;
+    }
+
+    public void keyTyped(KeyEvent e) {
     }
 
     public void mouseClicked(MouseEvent e) {
