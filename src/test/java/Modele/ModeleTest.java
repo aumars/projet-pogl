@@ -86,27 +86,27 @@ public class ModeleTest {
         Modele m = this.modeleM1G1;
         Case c0 = m.getGrille().getCase(1, 1);
         Case c1 = m.getGrille().getCase(2, 1);
-        Assertions.assertEquals(4, c0.getJoueurs().size());
-        Assertions.assertEquals(0, c1.getJoueurs().size());
+        Assertions.assertEquals(4, c0.getJOUEURS().size());
+        Assertions.assertEquals(0, c1.getJOUEURS().size());
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
-        Assertions.assertEquals(3, c0.getJoueurs().size());
-        Assertions.assertEquals(1, c1.getJoueurs().size());
+        Assertions.assertEquals(3, c0.getJOUEURS().size());
+        Assertions.assertEquals(1, c1.getJOUEURS().size());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
-        Assertions.assertEquals(2, c0.getJoueurs().size());
-        Assertions.assertEquals(2, c1.getJoueurs().size());
+        Assertions.assertEquals(2, c0.getJOUEURS().size());
+        Assertions.assertEquals(2, c1.getJOUEURS().size());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
-        Assertions.assertEquals(1, c0.getJoueurs().size());
-        Assertions.assertEquals(3, c1.getJoueurs().size());
+        Assertions.assertEquals(1, c0.getJOUEURS().size());
+        Assertions.assertEquals(3, c1.getJOUEURS().size());
         m.tourSuivant();
         m.getJoueurActuel().deplace(Direction.DROITE);
         Assertions.assertEquals(new Coord(2, 1), m.getJoueurActuel().getCoord());
-        Assertions.assertEquals(0, c0.getJoueurs().size());
-        Assertions.assertEquals(4, c1.getJoueurs().size());
+        Assertions.assertEquals(0, c0.getJOUEURS().size());
+        Assertions.assertEquals(4, c1.getJOUEURS().size());
     }
 
     @Test

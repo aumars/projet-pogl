@@ -36,12 +36,12 @@ public class VueObjet extends JPanel {
             if (afficheDescription)
                 pre_text = "";
 
-            description.setText(pre_text + o.element.toString().toLowerCase());
+            description.setText(pre_text + o.ELEMENT.toString().toLowerCase());
 
             this.add(description);
 
         } else {
-            switch (o.element) {
+            switch (o.ELEMENT) {
                 case EAU:
                     icon.setIcon(Utils.tailleImg(ConstsIcon.EAU, this.SIZE, this.SIZE));
                     break;
@@ -58,7 +58,7 @@ public class VueObjet extends JPanel {
                     break;
             }
 
-            description.setText("Artefact: " + o.element.toString().toLowerCase());
+            description.setText("Artefact: " + o.ELEMENT.toString().toLowerCase());
             if (afficheDescription)
                 this.add(description);
 

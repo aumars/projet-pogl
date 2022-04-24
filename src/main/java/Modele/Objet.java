@@ -8,7 +8,7 @@ public abstract class Objet {
     /**
      * Element auquel l'objet est associé.
      */
-    public final Element element;
+    public final Element ELEMENT;
 
     /**
      * Construit un objet associé à un élément.
@@ -16,6 +16,12 @@ public abstract class Objet {
      * @param el Element de l'objet
      */
     public Objet(Element el) {
-        this.element = el;
+        this.ELEMENT = el;
     }
+
+    /**
+     * @return Une chaine de caractère de l'objet
+     */
+    @Override
+    public abstract String toString();
 }

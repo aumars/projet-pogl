@@ -11,7 +11,7 @@ class CaseTest {
 
     @BeforeEach
     void caseInit() {
-        this.g = new Carte("map1.txt").grille;
+        this.g = new Carte("map1.txt").GRILLE;
         this.c0 = new Case(new Coord(0, 0), Terrain.TERRE, null);
         this.c1 = new Case(new Coord(1, 0), Terrain.MER, null);
         this.c2 = new Case(new Coord(0, 1), Terrain.HELIPAD, null);

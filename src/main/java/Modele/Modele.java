@@ -11,12 +11,12 @@ public class Modele extends Observable {
     /**
      * La carte du jeu.
      */
-    private final Carte carte;
+    private final Carte CARTE;
 
     /**
      * Le jeu.
      */
-    private final Jeu jeu;
+    private final Jeu JEU;
 
     /**
      * Un itérateur de l'ensemble de joueurs.
@@ -50,8 +50,8 @@ public class Modele extends Observable {
      * @param difficulte La difficulté du jeu.
      */
     public Modele (String map_path, String game_path, Difficulte difficulte) throws InvalidGameException {
-        this.carte = new Carte(map_path);
-        this.jeu = new Jeu(game_path);
+        this.CARTE = new Carte(map_path);
+        this.JEU = new Jeu(game_path);
         this.difficulte = difficulte;
         double probaClefInondation;
         if (this.difficulte == Difficulte.DETERMINISTE) {
@@ -60,8 +60,8 @@ public class Modele extends Observable {
         else {
             probaClefInondation = 0.2;
         }
-        this.getGrille().addObjets(jeu.objets);
-        for (Map.Entry<Joueur, Coord> p: jeu.ensemble) {
+        this.getGrille().addObjets(JEU.OBJETS);
+        for (Map.Entry<Joueur, Coord> p: JEU.ENSEMBLE) {
             Joueur j = p.getKey();
             Coord c = p.getValue();
             j.setPosInitiale(this.getGrille().getCase(c));
@@ -88,25 +88,26 @@ public class Modele extends Observable {
     }
 
     /**
-     * Modifie difficulté
+     * Modifie difficulté du jeu.
      * @param difficulte Nouvelle difficulté
      */
     public void setDifficulte(Difficulte difficulte) { this.difficulte = difficulte; }
 
+    /**
+     * @return Vrai si le jeu est déterministe, faux sinon.
+     */
     private boolean estDeterministe() { return this.difficulte == Difficulte.DETERMINISTE; }
 
     public List<Joueur> getJoueurs(){
-        return this.jeu.ensemble.stream().map(AbstractMap.SimpleImmutableEntry::getKey).collect(Collectors.toList());
+        return this.JEU.ENSEMBLE.stream().map(AbstractMap.SimpleImmutableEntry::getKey).collect(Collectors.toList());
     }
 
     /**
-     * Renvoie le joueur actuel.
      * @return Le joueur actuel.
      */
     public Joueur getJoueurActuel() { return this.joueurActuel; }
 
     /**
-     * Renvoie le nombre de joueurs au total.
      * @return Renvoie le nombre de joueurs au total.
      */
     public int getNbJoueurs(){
@@ -143,37 +144,35 @@ public class Modele extends Observable {
     private void commenceTour() {
         this.joueurActuel = this.prochainJoueurVivant();
         this.joueurActuel.newTurn();
-        System.out.printf("--- Tour %d | Joueur %d ---%n", this.getTour(), this.getJoueurActuel().id);
+        System.out.printf("--- Tour %d | Joueur %d ---%n", this.getTour(), this.getJoueurActuel().ID);
     }
 
     /**
-     * Renvoie le tour actuel.
      * @return Le tour actuel.
      */
     public int getTour() { return this.tour; }
 
     /**
-     * Renvoie la grille.
      * @return La grille.
      */
-    public Grille getGrille(){ return this.carte.grille; }
+    public Grille getGrille(){ return this.CARTE.GRILLE; }
 
     /**
-     * Vérifie si est le jeu est gagné.
+     * @return Vrai si est le jeu est gagné, Faux sinon.
      */
     public boolean verifieGagnants() {
         return this.tousJoueursSurHelipad() && this.tousArtefactsRecuperes();
     }
 
     /**
-     * Vérifie si tous les joueurs sont sur le helipad.
+     * @return Vrai si tous les joueurs sont sur le helipad, Faux sinon.
      */
     private boolean tousJoueursSurHelipad() {
         return this.getJoueurs().stream().allMatch(j -> j.surHelipad());
     }
 
     /**
-     * Vérifie si tous les artefacts sont récupérés.
+     * @return Vrai si tous les artefacts sont récupérés, Faux sinon.
      */
     private boolean tousArtefactsRecuperes() {
         Set<Artefact> a = new HashSet<>();
@@ -189,16 +188,14 @@ public class Modele extends Observable {
     }
 
     /**
-     * Vérifie si le tour actuel peut se terminer.
-     * @return Vrai si oui, Faux sinon.
+     * @return Vrai si le tour actuel peut se terminer, Faux sinon.
      */
     public boolean tourPeutFinir() {
         return this.joueurActuel.surCaseTraversable();
     }
 
     /**
-     * Calcule le joueur prochain vivant.
-     * @return le joueur prochain vivant.
+     * @return Le joueur prochain vivant.
      */
     private Joueur prochainJoueurVivant() {
         if (!this.iter.hasNext()) {
@@ -219,7 +216,6 @@ public class Modele extends Observable {
     }
 
     /**
-     * Vérifie si tous les joueurs sont morts.
      * @return Vrai si tous les joueurs sont morts, Faux sinon.
      */
     public boolean tousJoueursMorts() {
@@ -233,7 +229,6 @@ public class Modele extends Observable {
     }
 
     /**
-     * Vérifie si le jeu est terminé.
      * @return Vrai si le jeu est terminé, Faux sinon.
      */
     public boolean getFinJeu() { return this.finJeu; }

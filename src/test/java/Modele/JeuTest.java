@@ -16,7 +16,7 @@ public class JeuTest {
 
     @Test
     void jeuUneCaseUnObjet() {
-        List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets = this.jeu1.objets;
+        List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets = this.jeu1.OBJETS;
         Set<Coord> coords = new HashSet<>();
         for (AbstractMap.SimpleImmutableEntry<Objet, Coord> pair: objets) {
             coords.add(pair.getValue());
@@ -31,7 +31,7 @@ public class JeuTest {
 
     @Test
     void jeuPlusieursJoueurs() {
-        List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> joueurs = this.jeu1.ensemble;
+        List<AbstractMap.SimpleImmutableEntry<Joueur, Coord>> joueurs = this.jeu1.ENSEMBLE;
         Assertions.assertNotSame(joueurs.get(0).getKey(), joueurs.get(1).getKey());
         Assertions.assertNotSame(joueurs.get(0).getKey(), joueurs.get(2).getKey());
     }

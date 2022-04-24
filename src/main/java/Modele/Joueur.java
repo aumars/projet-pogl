@@ -7,6 +7,26 @@ import java.util.*;
  */
 public class Joueur {
     /**
+     * Les noms des Joueurs.
+     */
+    private final static String[] AVATARS = { "Jack", "Guy", "Ninja", "Pinky" };
+
+    /**
+     * Le nombre de Joueurs instanciés.
+     */
+    private static int numJoueurs = 0;
+
+    /**
+     * Le numéro d'identification du Joueur.
+     */
+    public final int ID;
+
+    /**
+     * L'inventaire d'objets en possession du Joueur.
+     */
+    private final List<Objet> INVENTAIRE;
+
+    /**
      * Si le Joueur vive ou pas.
      */
     private boolean vivant;
@@ -22,24 +42,9 @@ public class Joueur {
     private Case posInitiale;
 
     /**
-     * L'inventaire d'objets en possession du Joueur.
-     */
-    private final List<Objet> inventaire;
-
-    /**
      * Si le Joueur peut actuellement jouer son tour.
      */
     private boolean sonTour;
-
-    /**
-     * Le nombre de Joueurs instanciés.
-     */
-    private static int numJoueurs = 0;
-
-    /**
-     * Le numéro d'identification du Joueur.
-     */
-    public final int id;
 
     /**
      * Si le Joueur peut faire une action spéciale.
@@ -63,11 +68,6 @@ public class Joueur {
     private String log;
 
     /**
-     * Les noms des Joueurs.
-     */
-    private final static String[] avatars = { "Jack", "Guy", "Ninja", "Pinky" };
-
-    /**
      * Le nombre d'actions disponible
      */
     private int actions;
@@ -86,8 +86,8 @@ public class Joueur {
      */
     public Joueur(Case c) {
         this.posInitiale = c;
-        this.inventaire = new ArrayList<>();
-        this.id = numJoueurs;
+        this.INVENTAIRE = new ArrayList<>();
+        this.ID = numJoueurs;
         numJoueurs++;
         this.restart();
     }
@@ -98,7 +98,7 @@ public class Joueur {
     public void restart() {
         this.vivant = true;
         this.teleport(this.posInitiale);
-        this.inventaire.clear();
+        this.INVENTAIRE.clear();
         this.newTurn();
     }
 
@@ -110,10 +110,14 @@ public class Joueur {
         return actions == 0;
     }
 
+    /**
+     * Renvoie le nom du Joueur.
+     * @return Une chaine de caractères du nom du Joueur
+     */
     @Override
     public String toString() {
         //return String.format("%s (%d)", avatars[this.id % 4], this.id);
-        return avatars[this.id % 4];
+        return AVATARS[this.ID % 4];
     }
 
     /**
@@ -209,7 +213,7 @@ public class Joueur {
      * - on trouve une clef pour la première fois
      * - on survit 10 cases
      */
-    public void gagneActionSpeciale() {
+    private void gagneActionSpeciale() {
         this.actionSpeciale = true;
         this.log("gagne une action spéciale !");
     }
@@ -265,7 +269,7 @@ public class Joueur {
      * @return Vrai si le Joueur la possède, Faux sinon.
      */
     public boolean possedeClef(Element el) {
-        return this.inventaire.stream().anyMatch(o -> o instanceof Clef && o.element == el);
+        return this.INVENTAIRE.stream().anyMatch(o -> o instanceof Clef && o.ELEMENT == el);
     }
 
     /**
@@ -274,7 +278,7 @@ public class Joueur {
     private Objet prendObjet() {
         if (this.pos.aObjet()) {
             Objet objet = this.pos.getObjet();
-            this.inventaire.add(objet);
+            this.INVENTAIRE.add(objet);
             this.log(String.format("prend %s", objet));
             return objet;
         }
@@ -289,7 +293,7 @@ public class Joueur {
      * @return La liste d'{@link Objet}s en possession du Joueur.
      */
     public List<Objet> getInventaire() {
-        return this.inventaire;
+        return this.INVENTAIRE;
     }
 
     /**
@@ -297,7 +301,7 @@ public class Joueur {
      * @return Les coordonnées du Joueur.
      */
     public Coord getCoord() {
-        return this.pos.coord;
+        return this.pos.COORD;
     }
 
     /**
@@ -328,7 +332,7 @@ public class Joueur {
      * Récupère l'Artefact sur la case du Joueur, s'il a la clef correspondante.
      */
     public Objet recupereArtefact() {
-        if (this.estSonTour() && this.pos.aObjet(Artefact.class) && this.possedeClef(this.pos.getObjet().element)) {
+        if (this.estSonTour() && this.pos.aObjet(Artefact.class) && this.possedeClef(this.pos.getObjet().ELEMENT)) {
             Objet artefact = this.prendObjet();
             this.finishAction();
             return artefact;
@@ -416,6 +420,9 @@ public class Joueur {
         return this.pos.estHelipad();
     }
 
+    /**
+     * Renvoie une chaine de caractère du log actuel.
+     */
     public String getLogString() {
         return this.log;
     }

@@ -148,7 +148,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         if (this.vue_commande.btn_secher.estActive()) {
             Case case_over = this.getMouseCase(e.getX(), e.getY());
 
-            if (case_over.getEtat() == Inondation.INONDEE && this.joueur.getCoord().estAdjacent(case_over.coord))
+            if (case_over.getEtat() == Inondation.INONDEE && this.joueur.getCoord().estAdjacent(case_over.COORD))
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
 
             else
@@ -174,7 +174,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else {
             Case case_over = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_over.coord)
+            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_over.COORD)
                     && case_over.estTraversable())
                 this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
 
@@ -190,9 +190,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         if (this.vue_commande.btn_secher.estActive()) {
             Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.getCoord().estAdjacent(case_pressed.coord)) {
+            if (this.joueur.getCoord().estAdjacent(case_pressed.COORD)) {
                 this.joueur.asseche(case_pressed);
-                this.vue.vue_grille.metAJourCase(case_pressed.coord);
+                this.vue.vue_grille.metAJourCase(case_pressed.COORD);
             }
         }
 
@@ -201,7 +201,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
             if (case_pressed.getEtat() == Inondation.INONDEE) {
                 this.joueur.asseche(case_pressed);
-                this.vue.vue_grille.metAJourCase(case_pressed.coord);
+                this.vue.vue_grille.metAJourCase(case_pressed.COORD);
             }
         }
 
@@ -211,16 +211,16 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
             if (case_pressed.estTraversable()) {
                 this.joueur.helicoptere(case_pressed);
-                this.vue.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.coord);
+                this.vue.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.COORD);
             }
         }
 
         else {
             Case case_pressed = this.getMouseCase(e.getX(), e.getY());
 
-            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_pressed.coord)
+            if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_pressed.COORD)
                     && case_pressed.estTraversable())
-                this.deplaceJoueur(this.joueur.getCoord().adjacentDir(case_pressed.coord));
+                this.deplaceJoueur(this.joueur.getCoord().adjacentDir(case_pressed.COORD));
         }
 
         this.vue_commande.metAJourRadioBouton();
@@ -304,7 +304,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     private void deplaceJoueur(Direction dir) {
         Coord prev = this.joueur.getCoord();
-        Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).coord;
+        Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).COORD;
         this.joueur.deplace(dir);
         this.vue.vue_grille.metAJourDeplacementJoueur(prev, next);
         this.verifieFinJeu();
@@ -318,7 +318,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue.vue_info_haut.metAJourApresAction();
 
         for (Joueur j : this.modele.getJoueurs()) {
-            this.vue.vue_inventaires.inventaires[j.id].metAJourEtatJoueur(j);
+            this.vue.vue_inventaires.inventaires[j.ID].metAJourEtatJoueur(j);
         }
         if (fin_jeu) {
             this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
@@ -353,7 +353,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.metAJourRadioBouton();
 
         if (this.joueur.chercheCle() != null) {
-            this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
+            this.vue.vue_inventaires.inventaires[this.joueur.ID].metAJourAffichageObjet();
         }
 
         this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
@@ -367,7 +367,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.metAJourRadioBouton();
 
         if (this.joueur.recupereArtefact() != null) {
-            this.vue.vue_inventaires.inventaires[this.joueur.id].metAJourAffichageObjet();
+            this.vue.vue_inventaires.inventaires[this.joueur.ID].metAJourAffichageObjet();
             this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
         }
 

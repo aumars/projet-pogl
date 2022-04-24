@@ -10,12 +10,22 @@ public class Case {
     /**
      * Les coordonnées de la case. L'origine est la case le plus à haut-gauche.
      */
-    public final Coord coord;
+    public final Coord COORD;
 
     /**
      * Le terrain de la case.
      */
-    public final Terrain terrain;
+    public final Terrain TERRAIN;
+
+    /**
+     * La grille dans se trouve la case.
+     */
+    private final Grille GRILLE;
+
+    /**
+     * Une liste de Joueurs sur cette case.
+     */
+    private final List<Joueur> JOUEURS;
 
     /**
      * L'état d'inondation de la case.
@@ -33,27 +43,20 @@ public class Case {
     private boolean objetVisibilite;
 
     /**
-     * La grille dans se trouve la case.
-     */
-    private final Grille grille;
-
-    private final List<Joueur> joueurs;
-
-    /**
      * Construit une case dans la grille.
      * 
-     * @param coord   Coordonnées de la case.
-     * @param terrain Terrain de la case.
+     * @param COORD   Coordonnées de la case.
+     * @param TERRAIN Terrain de la case.
      * @param g       Grille associée à la case.
      */
-    public Case(Coord coord, Terrain terrain, Grille g) {
-        this.coord = coord;
-        this.terrain = terrain;
-        this.grille = g;
-        this.joueurs = new ArrayList<>();
+    public Case(Coord COORD, Terrain TERRAIN, Grille g) {
+        this.COORD = COORD;
+        this.TERRAIN = TERRAIN;
+        this.GRILLE = g;
+        this.JOUEURS = new ArrayList<>();
         this.setEtat(Inondation.SECHE);
         this.setObjetVisibilite(true);
-        this.joueurs.clear();
+        this.JOUEURS.clear();
     }
 
     /**
@@ -64,7 +67,7 @@ public class Case {
         if (this.aObjet()) {
             this.setObjetVisibilite(!this.getObjet().getClass().equals(Clef.class));
         }
-        this.joueurs.clear();
+        this.JOUEURS.clear();
     }
 
     /**
@@ -73,7 +76,7 @@ public class Case {
      * @param j Un Joueur
      */
     public void setJoueur(Joueur j) {
-        this.joueurs.add(j);
+        this.JOUEURS.add(j);
     }
 
     /**
@@ -82,19 +85,23 @@ public class Case {
      * @param j Un Joueur
      */
     public void removeJoueur(Joueur j) {
-        this.joueurs.remove(j);
+        this.JOUEURS.remove(j);
     }
 
     /**
      * Renvoie la liste de joueurs sur la case.
      */
-    public List<Joueur> getJoueurs() {
-        return this.joueurs;
+    public List<Joueur> getJOUEURS() {
+        return this.JOUEURS;
     }
 
+    /**
+     * Renvoie une chaine de caractères des coordonnées de cette case.
+     * @return Une chaine de caractères
+     */
     @Override
     public String toString() {
-        return "Case " + this.coord.toString();
+        return "Case " + this.COORD.toString();
     }
 
     /**
@@ -103,7 +110,7 @@ public class Case {
      * @return Vrai la case est traversable par un Joueur, Faux sinon.
      */
     public boolean estTraversable() {
-        return this.terrain == Terrain.HELIPAD || (this.terrain == Terrain.TERRE && this.etat != Inondation.SUBMERGEE);
+        return this.TERRAIN == Terrain.HELIPAD || (this.TERRAIN == Terrain.TERRE && this.etat != Inondation.SUBMERGEE);
     }
 
     /**
@@ -112,7 +119,7 @@ public class Case {
      * @return True si la case a un helipad, Faux sinon.
      */
     public boolean estHelipad() {
-        return this.terrain == Terrain.HELIPAD;
+        return this.TERRAIN == Terrain.HELIPAD;
     }
 
     /**
@@ -126,7 +133,7 @@ public class Case {
     public void ajoutObjet(Objet o) {
         if (this.objet != null) {
             throw new RuntimeException(String.format("Il existe déjà un objet dans %s", this));
-        } else if (this.terrain != Terrain.TERRE) {
+        } else if (this.TERRAIN != Terrain.TERRE) {
             throw new RuntimeException(String.format("%s n'a pas un terrain de type TERRE.", this));
         } else {
             this.objet = o;
@@ -182,7 +189,7 @@ public class Case {
      */
     public void setObjetVisibilite(boolean b) {
         this.objetVisibilite = b;
-        System.out.printf("Case %s: Visibilité est %b%n", this.coord, b);
+        System.out.printf("Case %s: Visibilité est %b%n", this.COORD, b);
     }
 
     /**
@@ -256,8 +263,8 @@ public class Case {
     public Case adjacent(Direction dir) {
         if (dir == Direction.NEUTRE) {
             return this;
-        } else if (this.grille != null) {
-            return this.grille.getCase(this.coord.adjacent(dir));
+        } else if (this.GRILLE != null) {
+            return this.GRILLE.getCase(this.COORD.adjacent(dir));
         } else {
             throw new RuntimeException("La case n'est pas associée à une grille.");
         }

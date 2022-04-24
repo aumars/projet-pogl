@@ -9,6 +9,9 @@ public enum Element {
     TERRE,
     FEU;
 
+    /**
+     * @return Une chaine de caractère de l'element.
+     */
     @Override
     public String toString() {
         switch (this) {

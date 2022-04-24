@@ -60,7 +60,7 @@ public class VueCase extends JPanel implements Observer {
         if (!j.estVivant()) {
             this.add(new JLabel(Utils.tailleImg(ConstsIcon.TOMBE, this.ICN_SIZEX, this.ICN_SIZEY)));
         } else {
-            this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(j.id), this.ICN_SIZEX, this.ICN_SIZEY)));
+            this.add(new JLabel(Utils.tailleImg(ConstsIcon.getImgAvatar(j.ID), this.ICN_SIZEX, this.ICN_SIZEY)));
         }
     }
 
@@ -97,7 +97,7 @@ public class VueCase extends JPanel implements Observer {
      * @param g Le graphique.
      */
     private void colorieSol(Graphics g) {
-        if (this.c.terrain == Terrain.MER)
+        if (this.c.TERRAIN == Terrain.MER)
             g.setColor(ConstsValue.COLOR_MER);
 
         else if (this.c.getObjetVisibilite() && this.c.estHelipad())
@@ -143,7 +143,7 @@ public class VueCase extends JPanel implements Observer {
         List<Joueur> joueurs = new ArrayList<>();
 
         for (Joueur joueur : this.modele.getJoueurs())
-            if (joueur.getCoord().equals(this.c.coord))
+            if (joueur.getCoord().equals(this.c.COORD))
                 joueurs.add(joueur);
 
         return joueurs;
@@ -168,7 +168,7 @@ public class VueCase extends JPanel implements Observer {
     private void dessineCaseAdjacent(Graphics g) {
         Joueur joueur = this.modele.getJoueurActuel();
 
-        if (joueur.estSonTour() && !joueur.aZeroAction() && joueur.getCoord().estAdjacent(this.c.coord) && this.c.estTraversable()) {
+        if (joueur.estSonTour() && !joueur.aZeroAction() && joueur.getCoord().estAdjacent(this.c.COORD) && this.c.estTraversable()) {
             int x = ConstsValue.BOX_SIZE / 2;
             int y = ConstsValue.BOX_SIZE / 2;
             int radius = ConstsValue.BOX_SIZE / 8;

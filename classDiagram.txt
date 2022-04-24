@@ -1,10 +1,6 @@
 @startuml
 title L'Île Interdite - Diagramme de classe
 
-interface Observable
-Observable <-[dashed]- Modele
-Observable <-[dashed]- Controleur
-
 class IleInterdite {
     {static} + main(): void
 }
@@ -14,6 +10,14 @@ IleInterdite "1" *-- "1" Controleur
 
 
 package Modele {
+    abstract class Observable {
+        -OBSERVERS: List<Observer>
+        +Observable()
+        +addObserver(Observer): void
+    }
+    Observable <-- Modele
+    Observable "0..n" o-- "0..n" Observer
+
     enum Inondation {
         SECHE
         INONDEE
@@ -25,6 +29,8 @@ package Modele {
         BAS
         GAUCHE
         DROITE
+        NEUTRE
+        +toString(): String
     }
 
     enum Element {
@@ -32,6 +38,7 @@ package Modele {
         EAU
         TERRE
         FEU
+        +toString(): String
     }
 
     enum Terrain {
@@ -41,38 +48,199 @@ package Modele {
     }
 
     enum Difficulte {
+        DETERMINISTE
         FACILE
         MOYEN
         DIFFICILE
-        DETERMINISTE
     }
 
-    abstract class Objet
+    abstract class Objet {
+        -ELEMENT: element
+        +Objet(Element)
+        {abstract} +toString(): String
+    }
+
+    class Artefact {
+        +Artefact(Element)
+        +toString(): String
+    }
     Objet <-- Artefact
+
+    class Clef {
+        +Clef(Element)
+        +toString(): String
+    }
     Objet <-- Clef
 
-    class Coord
+    class Coord {
+        -x: int
+        -y: int
+        +Coord(int, int)
+        +x(): int
+        +y(): int
+        +toString(): String
+        +equals(Object): boolean
+        +hashCode(): int
+        +adjacent(Direction): Coord
+        +estAdjacent(Coord): boolean
+        +adjacentDir(Coord): Direction
+    }
 
-    class Case
+    class Case {
+        +COORD: Coord
+        +TERRAIN: Terrain
+        -GRILLE: Grille
+        -JOUEURS: List<Joueur>
+        -etat: Inondation
+        -objet: Objet
+        -objetVisibilite: boolean
+        +Case(Coord, Terrain, Grille)
+        +restart(): void
+        +setJoueur(Joueur): void
+        +removeJoueur(Joueur): void
+        +getJoueurs(): List<Joueur>
+        +toString(): String
+        +estTraversable(): boolean
+        +estHelipad(): boolean
+        +ajoutObjet(Objet): void
+        +aObjet(): boolean
+        +aObjet(Class<?>): boolean
+        +getObjet(): Objet
+        +getObjetVisibilite(): boolean
+        +setObjetVisibilite(boolean): void
+        +detruitObjet(): void
+        +getEtat(): Inondation
+        +setEtat(Inondation): void
+        +asseche(): boolean
+        +monteEaux(): void
+        +adjacent(Direction): Case
+        +adjacentSubmergee(): boolean
+    }
     Case "0..1" o-- "1" Coord /' Case est associé à un Coord '/
     Case "0..1" -- "0..1" Objet /' Case est associé à un Objet '/
 
-    class Grille
+    class Grille {
+        -CASES: Case[][]
+        -ILE: Liste<Case>
+        -HEIGHT: int
+        -WIDTH: int
+        +Grille(Terrain[][])
+        +Grille(Terrain[][], List<SimpleImmutableEntry<Objet, Coord>>)
+        -remplitIle(): void
+        +restart(): void
+        +addObjet(SimpleImmutableEntry<Objet, Coord>)
+        +addObjet(Objet, Coord)
+        +addObjets(List<SimpleImmutableEntry<Objet, Coord>>)
+        +getWidth(): int
+        +getHeight(): int
+        +getCase(int, int): Case
+        +getCase(Coord): Case
+        +inonde(): void
+    }
     Grille "1" *-- "Case"
 
-    class Joueur
+    class Joueur {
+        {static} -AVATARS: String[]
+        {static} -numJoueurs: int
+        +ID: int
+        -INVENTAIRE: List<Objet>
+        -vivant: boolean
+        -pos: Case
+        -posInitiale: Case
+        -sonTour: boolean
+        -actionSpeciale: boolean
+        -casesSurvecuesConsecutives: int
+        -probaClefInondation: double
+        -log: String
+        -actions: int
+        +Joueur()
+        +Joueur(Case)
+        +restart(): void
+        +toString(): String
+        -log(String): void
+        +setProbaClefInondation(double): void
+        +meurt(): void
+        +revive(): void
+        +noie(): void
+        +estVivant(): boolean
+        +estSonTour(): boolean
+        +finishTurn(): void
+        +newTurn(): void
+        +nbActions(): int
+        +peutFaireAction(): boolean
+        -finishAction(): void
+        -gagneActionSpeciale(): void
+        -finishActionSpeciale(): void
+        +aActionSpeciale(): boolean
+        +deplace(Direction): boolean
+        +possedeClef(Element): boolean
+        -prendObjet(): Objet
+        +getInventaire(): List<Objet>
+        +getCoord(): Coord
+        +asseche(Direction): void
+        +asseche(Case): void
+        +recupereArtefact(): Objet
+        +chercheCle(): Objet
+        +teleport(Case): void
+        +helicoptere(Case): void
+        +setPosInitiale(Case): void
+        +surCaseTraversable(): boolean
+        +surHelipad(): boolean
+        +getLogString(): String
+    }
     Joueur "1" -- "0..n" Objet
     Case "0..1" -- "0..4" Joueur /' A modifier avec la liste de joueurs dans une case '/
 
-    class Carte
+    class Carte {
+        +GRILLE: Grille
+        +Carte(String)
+        {static} -terrainByID(char): Terrain
+    }
     Carte "1" *-- "1" Grille
 
-    class Jeu
+    class Jeu {
+        +OBJETS: List<SimpleImmutableEntry<Objet, Coord>>
+        +ENSEMBLE: List<SimpleImmutableEntry<Joueur, Coord>>
+        +Jeu(String)
+        +Jeu(String, boolean)
+        {static} -parseGame(String): Document
+        {static} -parseGameObjet(Document}: List<SimpleImmutableEntry<Objet, Coord>>
+        {static} -parseGameJoueur(Document): List<SimpleImmutableEntry<Joueur, Coord>>
+        {static} -parsePosition(NodeList): Coord
+        {static} -elementById(String): Element
+        {static} -objetsByID(String): Objet
+        {static} -joueurById(String): Joueur
+    }
     Jeu "1" *-- "0..n" Objet
     Jeu "1" *-- "0..n" Coord
     Jeu "1" *-- "0..4" Joueur
 
-    class Modele
+    class Modele {
+        -CARTE: Carte
+        -JEU: Jeu
+        -iter: Iterator<Joueur>
+        -tour: int
+        -joueurActuel: Joueur
+        -finJeu: boolean
+        -difficulte: Difficulte
+        +Modele(String, String, Difficulte)
+        +restart(): void
+        +setDifficulte(Difficulte): void
+        -estDeterministe(): boolean
+        +getJoueurActuel(): Joueur
+        +getNbJoueurs(): int
+        +tourSuivant(): void
+        -commenceTour(): void
+        +getTour(): int
+        +getGrille(): Grille
+        +verifieGagnants(): boolean
+        -tousJoueursSurHelipad(): boolean
+        -tousArtefactsRecuperes(): boolean
+        +tourPeutFinir(): boolean
+        -prochainJoueurVivant(): Joueur
+        +tousJoueursMorts(): boolean
+        +getFinJeu(): boolean
+    }
     Modele "1" *-- "1" Carte
     Modele "1" *-- "1" Jeu
     Modele "1" o-- "1..4" Joueur

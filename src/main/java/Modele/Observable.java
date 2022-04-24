@@ -1,22 +1,31 @@
 package Modele;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import Vue.Observer;
 
+/**
+ * Une entité observable par des observers.
+ */
 abstract class Observable {
-    private ArrayList<Observer> observers;
+    /**
+     * La liste d'observers qui peut accéder cette entité observable.
+     */
+    private final List<Observer> OBSERVERS;
 
+    /**
+     * Construit une nouvelle entité observable.
+     */
     public Observable() {
-        this.observers = new ArrayList<Observer>();
+        this.OBSERVERS = new ArrayList<>();
     }
 
+    /**
+     * Ajoute un nouveau observer.
+     * @param o Un observer
+     */
     public void addObserver(Observer o) {
-        this.observers.add(o);
-    }
-
-    public void notifyObservers() {
-        for (Observer observer : this.observers) {
-            observer.metAJourApresAction();
-        }
+        this.OBSERVERS.add(o);
     }
 }

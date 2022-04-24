@@ -23,7 +23,7 @@ public class VueInventaire extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
-        this.label_nom_joueur.setIcon(Utils.tailleImg(ConstsIcon.getImgAvatar(joueur.id), 24, 24));
+        this.label_nom_joueur.setIcon(Utils.tailleImg(ConstsIcon.getImgAvatar(joueur.ID), 24, 24));
         this.label_nom_joueur.setText(this.nom);
         this.label_nom_joueur.setPreferredSize(new Dimension(100, 50));
         this.label_nom_joueur.setBorder(BorderFactory.createEmptyBorder(20, 5, 5, 0));

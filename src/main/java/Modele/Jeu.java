@@ -22,12 +22,12 @@ public final class Jeu {
     /**
      * Une liste qui associe des {@link Objet}s à son {@link Coord}.
      */
-    public final List<SimpleImmutableEntry<Objet, Coord>> objets;
+    public final List<SimpleImmutableEntry<Objet, Coord>> OBJETS;
 
     /**
      * Une liste qui associe des {@link Joueur}s à son {@link Coord}.
      */
-    public final List<SimpleImmutableEntry<Joueur, Coord>> ensemble;
+    public final List<SimpleImmutableEntry<Joueur, Coord>> ENSEMBLE;
 
     /**
      * Modélise un jeu (avec {@link Joueur}s) à partir d'un fichier XML.
@@ -53,11 +53,11 @@ public final class Jeu {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new InvalidGameException(e.getMessage(), e.getCause());
         }
-        this.objets = parseGameObjet(game);
+        this.OBJETS = parseGameObjet(game);
         if (vide) {
-            this.ensemble = new ArrayList<>();
+            this.ENSEMBLE = new ArrayList<>();
         } else {
-            this.ensemble = parseGameJoueur(game);
+            this.ENSEMBLE = parseGameJoueur(game);
         }
     }
 

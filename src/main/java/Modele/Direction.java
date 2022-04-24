@@ -13,6 +13,9 @@ public enum Direction {
      */
     NEUTRE;
 
+    /**
+     * @return Une chaine de caractères de la direction.
+     */
     @Override
     public String toString() {
         switch (this) {

@@ -11,7 +11,7 @@ public final class Carte {
     /**
      * La grille générée.
      */
-    public final Grille grille;
+    public final Grille GRILLE;
 
     /**
      * Lit un fichier texte et le traduit.
@@ -31,7 +31,7 @@ public final class Carte {
                 map[i][j] = terrainByID(line.charAt(j));
             }
         }
-        this.grille = new Grille(map);
+        this.GRILLE = new Grille(map);
     }
 
     /**

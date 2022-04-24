@@ -1,6 +1,6 @@
 package Modele;
 
-import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,12 +14,12 @@ public class Grille {
     /**
      * Les cases qui composent la grille.
      */
-    private final Case[][] cases;
+    private final Case[][] CASES;
 
     /**
      * Les cases qui composent l'ile inondable et traversable.
      */
-    private final List<Case> ile;
+    private final List<Case> ILE;
 
     /**
      * La hauteur de la grille.
@@ -40,26 +40,39 @@ public class Grille {
         this.WIDTH = map[0].length;
         this.HEIGHT = map.length;
 
-        this.cases = new Case[this.HEIGHT][this.WIDTH];
-        this.ile = new ArrayList<>();
+        this.CASES = new Case[this.HEIGHT][this.WIDTH];
+        this.ILE = new ArrayList<>();
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {
-                this.cases[i][j] = new Case(new Coord(j, i), map[i][j], this);
+                this.CASES[i][j] = new Case(new Coord(j, i), map[i][j], this);
             }
         }
         this.remplitIle();
     }
 
     /**
+     * Construit une grille à partir d'un tableau de tableaux de {@link Terrain}
+     * avec une liste de pairs d'{@link Objet}
+     * et de {@link Coord}.
+     *
+     * @param map    Un tableau de tableaux de {@link Terrain}.
+     * @param objets Une liste de pairs d'{@link Objet} et de {@link Coord}.
+     */
+    public Grille(Terrain[][] map, List<SimpleImmutableEntry<Objet, Coord>> objets) {
+        this(map);
+        this.addObjets(objets);
+    }
+
+    /**
      * Marquer les cases inondables.
      */
     private void remplitIle() {
-        this.ile.clear();
+        this.ILE.clear();
         for (int i = 0; i < this.HEIGHT; i++) {
             for (int j = 0; j < this.WIDTH; j++) {
                 Case c = this.getCase(j, i);
-                if (c.terrain == Terrain.TERRE && !c.aObjet()) {
-                    this.ile.add(c);
+                if (c.TERRAIN == Terrain.TERRE && !c.aObjet()) {
+                    this.ILE.add(c);
                 }
             }
         }
@@ -79,26 +92,13 @@ public class Grille {
     }
 
     /**
-     * Construit une grille à partir d'un tableau de tableaux de {@link Terrain}
-     * avec une liste de pairs d'{@link Objet}
-     * et de {@link Coord}.
-     * 
-     * @param map    Un tableau de tableaux de {@link Terrain}.
-     * @param objets Une liste de pairs d'{@link Objet} et de {@link Coord}.
-     */
-    public Grille(Terrain[][] map, List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
-        this(map);
-        this.addObjets(objets);
-    }
-
-    /**
      * Ajout un {@link Objet} dans une case spécifiée de la grille.
      * 
      * @param p Un pair d'{@link Objet} et de {@link Coord}.
      * @throws IllegalArgumentException Si le point ne peut pas exister dans la
      *                                  grille.
      */
-    public void addObjet(AbstractMap.SimpleImmutableEntry<Objet, Coord> p) {
+    public void addObjet(SimpleImmutableEntry<Objet, Coord> p) {
         Objet o = p.getKey();
         Coord c = p.getValue();
         this.addObjet(o, c);
@@ -118,7 +118,7 @@ public class Grille {
                     c, this.getWidth(), this.getHeight()));
         } else {
             this.getCase(c).ajoutObjet(o);
-            this.ile.removeIf(k -> k.coord.equals(c));
+            this.ILE.removeIf(k -> k.COORD.equals(c));
         }
     }
 
@@ -129,7 +129,7 @@ public class Grille {
      * @throws IllegalArgumentException Si un point ne peut pas exister dans la
      *                                  grille.
      */
-    public void addObjets(List<AbstractMap.SimpleImmutableEntry<Objet, Coord>> objets) {
+    public void addObjets(List<SimpleImmutableEntry<Objet, Coord>> objets) {
         objets.forEach(this::addObjet);
     }
 
@@ -169,17 +169,17 @@ public class Grille {
      * @return Une {@link Case}.
      */
     public Case getCase(Coord c) {
-        return this.cases[c.y()][c.x()];
+        return this.CASES[c.y()][c.x()];
     }
 
     /**
      * Inonde aléatoirement trois cases traversables de la grille.
      */
     public void inonde() {
-        if (this.ile.size() > 0) {
+        if (this.ILE.size() > 0) {
             Random rng = new Random();
-            int case1 = (int) floor(rng.nextDouble() * (this.ile.size() - 1));
-            this.ile.get(case1).monteEaux();
+            int case1 = (int) floor(rng.nextDouble() * (this.ILE.size() - 1));
+            this.ILE.get(case1).monteEaux();
         }
     }
 }
