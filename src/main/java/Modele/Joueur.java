@@ -102,7 +102,11 @@ public class Joueur {
         this.newTurn();
     }
 
-    public boolean zeroAction(){
+    /**
+     * Verifie si le joueurs a zero action
+     * @return True si le joueur n'as plus d'action. False sinon.
+     */
+    public boolean aZeroAction(){
         return actions == 0;
     }
 

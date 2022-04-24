@@ -57,7 +57,7 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
      */
     public void gereVisibiliteBoutons() {
         Joueur joueur = this.modele.getJoueurActuel();
-        boolean peut_jouer = joueur.estSonTour() && !joueur.zeroAction();
+        boolean peut_jouer = joueur.estSonTour() && !joueur.aZeroAction();
 
         this.btn_clef.setEnabled(peut_jouer);
         this.btn_secher.setEnabled(peut_jouer && this.estAdjacentJoueurInondee());
