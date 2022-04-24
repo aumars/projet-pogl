@@ -7,8 +7,8 @@ import java.awt.Cursor;
 import java.awt.event.*;
 
 public class Controleur implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
-    private final Modele modele;
-    private final Vue vue;
+    private final Modele MODELE;
+    private final Vue VUE;
     private VueCommande vue_commande;
     private Joueur joueur;
     private boolean est_presse_touche = false;
@@ -20,9 +20,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * @param v La vue.
      */
     public Controleur(Modele m, Vue v) {
-        this.modele = m;
-        this.vue = v;
-        this.joueur = this.modele.getJoueurActuel();
+        this.MODELE = m;
+        this.VUE = v;
+        this.joueur = this.MODELE.getJoueurActuel();
         this.metsAJourEventListener();
     }
 
@@ -30,14 +30,13 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * Mets à jours les events listener.
      */
     private void metsAJourEventListener() {
-        this.vue.getFenetre().addKeyListener(this);
-        this.vue_commande = this.vue.vue_info_bas.vue_commande;
+        this.VUE.getFenetre().addKeyListener(this);
+        this.vue_commande = this.VUE.vue_info_bas.vue_commande;
 
-        this.vue.vue_start.btn_facile.addActionListener(this);
-        this.vue.vue_start.btn_normal.addActionListener(this);
-        this.vue.vue_start.btn_difficile.addActionListener(this);
-        this.vue.vue_start.btn_deterministe.addActionListener(this);
-        this.vue.vue_start.btn_jouer.addActionListener(this);
+        this.VUE.vue_start.btn_facile.addActionListener(this);
+        this.VUE.vue_start.btn_normal.addActionListener(this);
+        this.VUE.vue_start.btn_difficile.addActionListener(this);
+        this.VUE.vue_start.btn_jouer.addActionListener(this);
 
         this.vue_commande.btn_secher.addActionListener(this);
 
@@ -48,10 +47,10 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.btn_sac_sable.addActionListener(this);
         this.vue_commande.btn_teleporte.addActionListener(this);
 
-        this.vue.vue_info_haut.btn_aide.addActionListener(this);
-        this.vue.vue_grille.addMouseMotionListener(this);
+        this.VUE.vue_info_haut.btn_aide.addActionListener(this);
+        this.VUE.vue_grille.addMouseMotionListener(this);
 
-        this.vue.vue_grille.addMouseListener(this);
+        this.VUE.vue_grille.addMouseListener(this);
     }
 
     /**
@@ -63,7 +62,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         else
             this.est_presse_touche = true;
 
-        if (!this.modele.getFinJeu()) {
+        if (!this.MODELE.getFinJeu()) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_Z:
@@ -118,12 +117,12 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
                     break;
 
                 case KeyEvent.VK_ESCAPE:
-                    this.vue.getFenetre().setVisible(false);
-                    this.vue.getFenetre().dispose();
+                    this.VUE.getFenetre().setVisible(false);
+                    this.VUE.getFenetre().dispose();
                     break;
 
                 case KeyEvent.VK_H:
-                    this.vue.vue_info_bas.affichePanneauAide();
+                    this.VUE.vue_info_bas.affichePanneauAide();
                     break;
 
                 default:
@@ -138,7 +137,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * Methode appelé lorsque la souris quitte la VueGrille.
      */
     public void mouseExited(MouseEvent e) {
-        this.vue.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.VUE.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     /**
@@ -149,26 +148,26 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
             Case case_over = this.getMouseCase(e.getX(), e.getY());
 
             if (case_over.getEtat() == Inondation.INONDEE && this.joueur.getCoord().estAdjacent(case_over.COORD))
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
 
             else
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
         }
 
         else if (this.vue_commande.btn_sac_sable.estActive()) {
             if (this.getMouseCase(e.getX(), e.getY()).getEtat() == Inondation.INONDEE)
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_SECHER);
 
             else
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
         }
 
         else if (this.vue_commande.btn_teleporte.estActive()) {
             if (this.getMouseCase(e.getX(), e.getY()).estTraversable())
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
 
             else
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
         }
 
         else {
@@ -176,10 +175,10 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
             if (this.joueur.estSonTour() && this.joueur.getCoord().estAdjacent(case_over.COORD)
                     && case_over.estTraversable())
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_TELEPORTE);
 
             else
-                this.vue.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
+                this.VUE.vue_grille.setCursor(ConstsIcon.CURSEUR_INTERDIT);
         }
     }
 
@@ -192,7 +191,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
             if (this.joueur.getCoord().estAdjacent(case_pressed.COORD)) {
                 this.joueur.asseche(case_pressed);
-                this.vue.vue_grille.metAJourCase(case_pressed.COORD);
+                this.VUE.vue_grille.metAJourCase(case_pressed.COORD);
             }
         }
 
@@ -201,7 +200,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
             if (case_pressed.getEtat() == Inondation.INONDEE) {
                 this.joueur.asseche(case_pressed);
-                this.vue.vue_grille.metAJourCase(case_pressed.COORD);
+                this.VUE.vue_grille.metAJourCase(case_pressed.COORD);
             }
         }
 
@@ -211,7 +210,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
 
             if (case_pressed.estTraversable()) {
                 this.joueur.helicoptere(case_pressed);
-                this.vue.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.COORD);
+                this.VUE.vue_grille.metAJourDeplacementJoueur(case_prev_joueur, case_pressed.COORD);
             }
         }
 
@@ -244,54 +243,49 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
             this.tourSuivant();
         }
 
-        if (this.vue.vue_info_haut.btn_aide.getModel().isArmed()) {
-            this.vue.vue_info_bas.affichePanneauAide();
+        if (this.VUE.vue_info_haut.btn_aide.getModel().isArmed()) {
+            this.VUE.vue_info_bas.affichePanneauAide();
         }
 
         // Gere les radio boutons.
         if (this.vue_commande.btn_sac_sable.getModel().isArmed()) {
-            this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_sac_sable.getId());
+            this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_sac_sable.getID());
         }
 
         if (this.vue_commande.btn_teleporte.getModel().isArmed()) {
-            this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_teleporte.getId());
+            this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_teleporte.getID());
         }
 
         if (this.vue_commande.btn_secher.getModel().isArmed()) {
-            this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_secher.getId());
+            this.vue_commande.metAJourRadioBouton(this.vue_commande.btn_secher.getID());
         }
 
-        if (this.vue.vue_start.btn_facile.getModel().isArmed()) {
-            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_facile.getId());
-            this.modele.setDifficulte(Difficulte.FACILE);
+        if (this.VUE.vue_start.btn_facile.getModel().isArmed()) {
+            this.VUE.vue_start.metAJourRadioBouton(this.VUE.vue_start.btn_facile.getID());
+            this.MODELE.setDifficulte(Difficulte.FACILE);
         }
 
-        if (this.vue.vue_start.btn_normal.getModel().isArmed()) {
-            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_normal.getId());
-            this.modele.setDifficulte(Difficulte.MOYEN);
+        if (this.VUE.vue_start.btn_normal.getModel().isArmed()) {
+            this.VUE.vue_start.metAJourRadioBouton(this.VUE.vue_start.btn_normal.getID());
+            this.MODELE.setDifficulte(Difficulte.MOYEN);
         }
 
-        if (this.vue.vue_start.btn_difficile.getModel().isArmed()) {
-            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_difficile.getId());
-            this.modele.setDifficulte(Difficulte.DIFFICILE);
+        if (this.VUE.vue_start.btn_difficile.getModel().isArmed()) {
+            this.VUE.vue_start.metAJourRadioBouton(this.VUE.vue_start.btn_difficile.getID());
+            this.MODELE.setDifficulte(Difficulte.DIFFICILE);
         }
 
-        if (this.vue.vue_start.btn_deterministe.getModel().isArmed()) {
-            this.vue.vue_start.metAJourRadioBouton(this.vue.vue_start.btn_deterministe.getId());
-            this.modele.setDifficulte(Difficulte.DETERMINISTE);
-        }
-
-        if (this.vue.vue_start.btn_jouer.getModel().isArmed()) {
-            this.vue.afficheMenuDemarrage = false;
-            this.vue.afficheFenetre();
+        if (this.VUE.vue_start.btn_jouer.getModel().isArmed()) {
+            this.VUE.afficheMenuDemarrage = false;
+            this.VUE.afficheFenetre();
             this.metsAJourEventListener();
         }
 
-        if (this.vue.vue_info_bas.vue_fin_jeu != null
-                && this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
+        if (this.VUE.vue_info_bas.vue_fin_jeu != null
+                && this.VUE.vue_info_bas.vue_fin_jeu.btn_rejouer.getModel().isArmed()) {
             this.metAJourApresAction();
-            this.modele.restart();
-            this.vue.commencer();
+            this.MODELE.restart();
+            this.VUE.commencer();
         }
 
         this.metAJourApresAction();
@@ -304,9 +298,9 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     private void deplaceJoueur(Direction dir) {
         Coord prev = this.joueur.getCoord();
-        Coord next = this.modele.getGrille().getCase(prev).adjacent(dir).COORD;
+        Coord next = this.MODELE.getGrille().getCase(prev).adjacent(dir).COORD;
         this.joueur.deplace(dir);
-        this.vue.vue_grille.metAJourDeplacementJoueur(prev, next);
+        this.VUE.vue_grille.metAJourDeplacementJoueur(prev, next);
         this.verifieFinJeu();
     }
 
@@ -314,14 +308,14 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * Verifie si c'est la fin du jeu.
      */
     private void verifieFinJeu() {
-        boolean fin_jeu = this.vue.vue_info_bas.verifieFinJeu();
-        this.vue.vue_info_haut.metAJourApresAction();
+        boolean fin_jeu = this.VUE.vue_info_bas.verifieFinJeu();
+        this.VUE.vue_info_haut.metAJourApresAction();
 
-        for (Joueur j : this.modele.getJoueurs()) {
-            this.vue.vue_inventaires.inventaires[j.ID].metAJourEtatJoueur(j);
+        for (Joueur j : this.MODELE.getJoueurs()) {
+            this.VUE.vue_inventaires.inventaires[j.ID].metAJourEtatJoueur(j);
         }
         if (fin_jeu) {
-            this.vue.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
+            this.VUE.vue_info_bas.vue_fin_jeu.btn_rejouer.addActionListener(this);
         }
     }
 
@@ -330,11 +324,11 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     private void metAJourApresAction() {
         this.verifieFinJeu();
-        this.vue.vue_info_bas.vue_log.ajoutLog(this.joueur.getLogString());
-        this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
-        this.vue.vue_info_bas.vue_commande.gereVisibiliteBoutons();
-        this.vue.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        this.joueur = this.modele.getJoueurActuel();
+        this.VUE.vue_info_bas.vue_log.ajoutLog(this.joueur.getLogString());
+        this.VUE.vue_grille.metAJourCase(this.joueur.getCoord());
+        this.VUE.vue_info_bas.vue_commande.gereVisibiliteBoutons();
+        this.VUE.vue_grille.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.joueur = this.MODELE.getJoueurActuel();
     }
 
     /**
@@ -342,8 +336,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      */
     private void tourSuivant() {
         this.vue_commande.metAJourRadioBouton();
-        this.modele.tourSuivant();
-        this.vue.vue_info_haut.metAJourApresAction();
+        this.MODELE.tourSuivant();
+        this.VUE.vue_info_haut.metAJourApresAction();
     }
 
     /**
@@ -353,10 +347,10 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.metAJourRadioBouton();
 
         if (this.joueur.chercheCle() != null) {
-            this.vue.vue_inventaires.inventaires[this.joueur.ID].metAJourAffichageObjet();
+            this.VUE.vue_inventaires.inventaires[this.joueur.ID].metAJourAffichageObjet();
         }
 
-        this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
+        this.VUE.vue_grille.metAJourCase(this.joueur.getCoord());
         this.verifieFinJeu();
     }
 
@@ -367,8 +361,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         this.vue_commande.metAJourRadioBouton();
 
         if (this.joueur.recupereArtefact() != null) {
-            this.vue.vue_inventaires.inventaires[this.joueur.ID].metAJourAffichageObjet();
-            this.vue.vue_grille.metAJourCase(this.joueur.getCoord());
+            this.VUE.vue_inventaires.inventaires[this.joueur.ID].metAJourAffichageObjet();
+            this.VUE.vue_grille.metAJourCase(this.joueur.getCoord());
         }
 
         this.verifieFinJeu();
@@ -385,8 +379,8 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
         int coord_x = Math.floorDiv(m_x - ConstsValue.BORDER_GRID, ConstsValue.BOX_SIZE + ConstsValue.GAP_CASE);
         int coord_y = Math.floorDiv(m_y, ConstsValue.BOX_SIZE + ConstsValue.GAP_CASE);
 
-        int grid_width = this.modele.getGrille().getWidth();
-        int grid_height = this.modele.getGrille().getHeight();
+        int grid_width = this.MODELE.getGrille().getWidth();
+        int grid_height = this.MODELE.getGrille().getHeight();
 
         coord_x = Math.max(coord_x, 0);
         coord_y = Math.max(coord_y, 0);
@@ -405,7 +399,7 @@ public class Controleur implements ActionListener, KeyListener, MouseListener, M
      * @return la case qui correspond au coordonnées de la souris.
      */
     private Case getMouseCase(int m_x, int m_y) {
-        return this.modele.getGrille().getCase(getMouseCoord(m_x, m_y));
+        return this.MODELE.getGrille().getCase(getMouseCoord(m_x, m_y));
     }
 
     /**

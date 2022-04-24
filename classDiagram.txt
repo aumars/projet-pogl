@@ -1,6 +1,19 @@
 @startuml
 title L'Île Interdite - Diagramme de classe
 
+package javax.Swing {
+    class JPanel
+    class JLabel
+    class JButton
+}
+
+package java.util {
+    interface ActionListener
+    interface KeyListener
+    interface MouseListener
+    interface MouseMotionListener
+}
+
 class IleInterdite {
     {static} + main(): void
 }
@@ -8,15 +21,12 @@ IleInterdite "1" *-- "1" Modele
 IleInterdite "1" *-- "1" Vue
 IleInterdite "1" *-- "1" Controleur
 
-
 package Modele {
     abstract class Observable {
         -OBSERVERS: List<Observer>
         +Observable()
         +addObserver(Observer): void
     }
-    Observable <-- Modele
-    Observable "0..n" o-- "0..n" Observer
 
     enum Inondation {
         SECHE
@@ -60,17 +70,15 @@ package Modele {
         {abstract} +toString(): String
     }
 
-    class Artefact {
+    class Artefact extends Objet{
         +Artefact(Element)
         +toString(): String
     }
-    Objet <-- Artefact
 
-    class Clef {
+    class Clef extends Objet {
         +Clef(Element)
         +toString(): String
     }
-    Objet <-- Clef
 
     class Coord {
         -x: int
@@ -215,7 +223,7 @@ package Modele {
     Jeu "1" *-- "0..n" Coord
     Jeu "1" *-- "0..4" Joueur
 
-    class Modele {
+    class Modele extends Observable {
         -CARTE: Carte
         -JEU: Jeu
         -iter: Iterator<Joueur>
@@ -251,80 +259,270 @@ package Modele {
 }
 
 package Vue {
-    interface Observer
-    Observer <-[dashed]- Vue
+    class Utils {
+        {static} +positionneGrille(int, int, int, int): GridBagConstraints
+        {static} +positionneGrille(int, int, int): GridBagConstraints
+        {static} +positionneGrille(int, int): GridBagConstraints
+        {static} +tailleImg(ImageIcon, int, int): ImageIcon
+        {static} +souligneLabel(String): String
+    }
+    class ConstsIcon
+    class ConstsValue
 
-    class Vue
+    interface Observer {
+        +metAJourApresAction(): void
+    }
+    Observable "0..n" o-- "0..n" Observer
+
+    class Vue {
+        -MODELE: Modele
+        -FENETRE_JEU: JFrame
+        -FENETRE_DEMARRAGE: JFrame
+        +vue_start: VueStart
+        +vue_info_haut: VueInfoHaut
+        +vue_inventaires: VueContainerInventaires
+        +vue_grille: VueGrille
+        +vue_info_bas: VueInfoBas
+        +afficheMenuDemarrage: boolean
+        +Vue(Modele)
+        +afficheFenetre(): void
+        +commencer(): void
+        +getFenetre(): JFrame
+    }
     Vue "1" -- "1" Modele
-
-    class VueStart
     Vue "1" *-- "1" VueStart
-
-    class VueInfoHaut
     Vue "1" *-- "1" VueInfoHaut
-    VueInfoHaut "1" -- "1" Modele
-
-    class VueContainerInventaires
     Vue "1" *-- "1" VueContainerInventaires
-    VueContainerInventaires "1" -- "1" Modele
-
-    class VueGrille
     Vue "1" *-- "1" VueGrille
-    VueGrille "1" -- "1" Modele
-
-    class VueInfoBas
     Vue "1" *-- "1" VueInfoBas
+    Vue --- Utils
 
-    interface ContainerBoutonRadio
-    ContainerBoutonRadio <-[dashed]- VueStart
-
-    class VueBoutonRadio
+    class VueStart extends JPanel implements ContainerBoutonRadio {
+        +id_difficulte_active: int
+        +btn_facile: VueBoutonRadio
+        +btn_normal: VueBoutonRadio
+        +btn_difficile: VueBoutonRadio
+        +btn_jouer: VueBouton
+        +VueStart()
+        -sousTitre(): JLabel
+        +metAJourRadioBouton(int): void
+        +metAJourRadioBouton(): void
+    }
     VueStart "1" *-- "4" VueBoutonRadio
-
-    class VueBouton
     VueStart "1" *-- "1" VueBouton
+    VueStart "1" *-- "1" JLabel
+    VueStart --- ConstsValue
+    VueStart --- Utils
+
+    class VueInfoHaut extends JPanel {
+        -MODELE: Modele
+        -LABEL_TOUR: JLabel
+        +btn_aide: VueBouton
+        +VueInfoHaut(Modele)
+        +metAJourApresAction(): void
+        -getTextTitre(): String
+    }
+    VueInfoHaut "1" --- "1" Modele
     VueInfoHaut "1" *-- "1" VueBouton
+    VueInfoHaut --- ConstsValue
 
-    class VueInventaire
+    class VueContainerInventaires extends JPanel {
+        -MODELE: Modele
+        +inventaires: VueInventaire[]
+        +VueContainerInventaires(Modele)
+        -afficheInventaires(): void
+    }
+    VueContainerInventaires "1" --- "1" Modele
     VueContainerInventaires "1" *-- "1..4" VueInventaire
-    VueInventaire "1" -- "1" Modele
-    VueInventaire "1" -- "1" Joueur
+    VueContainerInventaires --- ConstsValue
 
-    class VueObjet
-    VueInventaire "1" *-- "0..n" VueObjet
-    VueObjet "1" -- "1" Objet
-
-    class VueCase
+    class VueGrille extends JPanel {
+        -WIDTH: int
+        -HEIGHT: int
+        -MODELE: Modele
+        -GRILLE: VueCase[][]
+        +VueGrille(Modele)
+        -afficheGrille(): void
+        +metAJourCase(Coord): void
+        +metAJourDeplacementJoueur(Coord, Coord): void
+    }
+    VueGrille "1" --- "1" Modele
     VueGrille "1" *-- "0..n" VueCase
-    VueCase "1" -- "1" Modele
-    VueCase "1" -- "1" Case
+    VueGrille --- Utils
+    VueGrille --- ConstsValue
 
-    class VueCommande
+    class VueInfoBas extends JPanel {
+        -MODELE: Modele
+        -CONTAINER: JPanel
+        +vue_commande: VueCommande
+        +vue_fin_jeu: VueFinJeu
+        +vue_aide: VueAide
+        +vue_log: VueLog
+        -affiche_aide: boolean
+        -est_fin_jeu: boolean
+        +VueInfoBas(Modele)
+        +verifieFinJeu(): boolean
+        +affichePanneauAide(): void
+    }
+    VueInfoBas "1" *-- "1" JPanel
     VueInfoBas "1" *-- "1" VueCommande
-    VueCommande "1" -- "1" Modele
+    VueInfoBas "1" *-- "1" VueFinJeu
+    VueInfoBas "1" *-- "1" VueAide
+    VueInfoBas "1" *-- "1" VueLog
+    VueInfoBas --- Utils
+
+    interface ContainerBoutonRadio {
+        +metAJourRadioBouton(int): void
+        +metAJourRadioBouton(): void
+    }
+
+    class VueBouton extends JButton {
+        +VueBouton(String)
+        +VueBouton(String, String)
+        +VueBouton(String, Icon)
+        +VueBouton(String, String, Icon)
+    }
+    VueBouton --- ConstsValue
+
+    class VueBoutonRadio extends VueBouton {
+        -COLOR_ACTIVE: Color
+        -ID: int
+        +id_active: int
+        +VueBoutonRadio(int, int, String, String)
+        +estActive(): boolean
+        +getID(): int
+        +update(): void
+    }
+    VueBoutonRadio --- ConstsValue
+
+    class VueInventaire extends JPanel {
+        -MODELE: Modele
+        -LABEL_NOM_JOUEUR: JLabel
+        -PANEL_OBJETS: JPanel
+        -NOM: String
+        +VueInventaire(Modele, Joueur)
+        +metAJourAffichageObjet(): void /' Ici, on construit VueObjet '/
+        +remplieInventaireVide(): void
+        +metAJourEtatJoueur(Joueur): void
+    }
+    VueInventaire "1" --- "1" Modele
+    VueInventaire "1" --- "1" Joueur
+    VueStart "1" *-- "1" JLabel
+    VueStart "1" *-- "1" JPanel
+    VueInventaire "1" *-- "0..n" VueObjet
+
+    class VueObjet extends JPanel implements Observer {
+        +VueObjet(Objet, Color, boolean)
+        +VueObjet(Objet)
+        +VueObjet(Objet, Color)
+        +VueObjet(Objet, boolean)
+    }
+    VueObjet "1" --- "1" Objet
+    VueObjet *-- JLabel
+    VueObjet --- ConstsValue
+    VueObjet --- ConstsIcon
+    VueObjet --- Utils
+
+    class VueCase extends JPanel implements Observer {
+        -ICN_SIZEX: int
+        -ICN_SIZEY: int
+        -NB_JOUEURS: int
+        -MODELE: Modele
+        -CASE: Case
+        -ICN_OBJET: JLabel
+        +VueCase(Modele, Case)
+        +metAJourApresAction(): void
+        +paintComponent(Graphics): void
+        -afficheUnJoueur(Joueur): void
+        -afficheTousJoueurs(): void
+        -afficheObjet(): void
+        -colorieSol(Graphics): void
+        +estCaseJoueur(): boolean
+        -getJoueurs(): List<Joueur>
+        -metAJourTailleIcon(): void
+        -dessineCaseAdjacent(Graphics): void
+    }
+    VueCase "1" --- "1" Modele
+    VueCase "1" --- "1" Case
+    VueCase "1" --- "1" Joueur
+    VueObjet *-- JLabel
+    VueCase --- ConstsValue
+    VueCase --- ConstsIcon
+    VueCase --- Utils
+
+    class VueCommande extends JPanel implements ContainerBoutonRadio {
+        -MODELE: Modele
+        +btn_clef: VueBouton
+        +btn_prendre: VueBouton
+        +btn_fin_tour: VueBouton
+        +btn_secher: VueBoutonRadio
+        +btn_sac_sable: VueBoutonRadio
+        +btn_teleporte: VueBoutonRadio
+        +VueCommande(Modele)
+        +gereVisibiliteBoutons(): void
+        -estCaseArtefact(): boolean
+        -estAdjacentJoueurInondee(): boolean
+        -titre(String): JLabel
+        +metAJourRadioBouton(int): void
+        +metAJourRadioBouton(): void
+    }
+    VueCommande "1" --- "1" Modele
     VueCommande "1" *-- "3" VueBouton
     VueCommande "1" *-- "3" VueBoutonRadio
 
-    class VueFinJeu
-    VueInfoBas "1" *-- "1" VueFinJeu
+    class VueFinJeu extends JPanel {
+        +btn_rejouer: VueBouton
+        +VueFinJeu(boolean)
+    }
+    VueCommande "1" *-- "1" VueBouton
 
-    class VueAide
-    VueInfoBas "1" *-- "1" VueAide
+    class VueAide extends JPanel {
+        +VueAide()
+        -getLabel(String): JLabel
+        -getTitre(String): JLabel
+    }
 
-    class VueLog
-    VueInfoBas "1" *-- "1" VueLog
-
-    class Utils
-    class ConstIcon
-    class ConstValue
+    class VueLog extends JPanel {
+        -text_area: JTextArea
+        -panel: JScrollPane
+        +VueLog()
+        +ajoutLog(String): void
+    }
 }
 
 package Controleur {
-    class Controleur
-    Controleur "1" -- "1" Vue
-    Controleur "1" -- "1" VueCommande
-    Controleur "1" -- "1" Modele
-    Controleur "1" -- "1" Joueur
+    class Controleur implements ActionListener, KeyListener, MouseListener, MouseMotionListener {
+        -MODELE: Modele
+        -VUE: Vue
+        -vue_commande: VueCommande
+        -joueur: Joueur
+        -est_presse_touche: boolean
+        +Controleur(Modele, Vue)
+        -metsAJourEventListener(): void
+        +keyPressed(KeyEvent): void
+        +mouseExited(MouseEvent): void
+        +mouseMoved(MouseEvent): void
+        +mousePressed(MouseEvent): void
+        +actionPerformed(ActionEvent): void
+        -deplaceJoueur(Direction): void
+        -verifieFinJeu(): void
+        -metAJourApresAction(): void
+        -tourSuivant(): void
+        -chercheClef(): void
+        -prendArtefact(): void
+        -getMouseCoord(int, int): Coord
+        -getMouseCase(int, int): Case
+        +keyReleased(KeyEvent): void
+        +keyTyped(KeyEvent): void
+        +mouseClicked(MouseEvent): void
+        +mouseReleased(MouseEvent): void
+        +mouseDragged(MouseEvent): void
+        +mouseEntered(MouseEvent): void
+    }
+    Controleur "1" --- "1" Vue
+    Controleur "1" --- "1" VueCommande
+    Controleur "1" --- "1" Modele
+    Controleur "1" --- "1" Joueur
 }
 
 @enduml

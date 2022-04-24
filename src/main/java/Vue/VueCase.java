@@ -7,14 +7,38 @@ import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * L'interface graphique d'une case
+ */
 public class VueCase extends JPanel implements Observer {
+    /**
+     * Largeur de la case
+     */
     private int ICN_SIZEX = ConstsValue.BOX_SIZE / 2;
+    /**
+     * Hauteur de la case
+     */
     private int ICN_SIZEY = ConstsValue.BOX_SIZE / 2;
-    private int nb_joueurs;
 
-    private Modele modele;
-    private final Case c;
-    private final JLabel icn_objet = new JLabel();
+    /**
+     * Nombre de joueurs sur la case
+     */
+    private final int NB_JOUEURS;
+
+    /**
+     * Le modèle que l'interface graphique représente
+     */
+    private final Modele MODELE;
+
+    /**
+     * La case que l'interface graphique représente
+     */
+    private final Case CASE;
+
+    /**
+     * JLabel des objets/Joueurs sur la case.
+     */
+    private final JLabel ICN_OBJET = new JLabel();
 
     /**
      * Affichage d'une case de la grille.
@@ -23,10 +47,10 @@ public class VueCase extends JPanel implements Observer {
      * @param c La case dans la grille du jeu.
      */
     public VueCase(Modele m, Case c) {
-        this.modele = m;
-        this.c = c;
-        this.modele.addObserver(this);
-        this.nb_joueurs = this.getJoueurs().size();
+        this.MODELE = m;
+        this.CASE = c;
+        this.MODELE.addObserver(this);
+        this.NB_JOUEURS = this.getJoueurs().size();
 
         this.setPreferredSize(new Dimension(ConstsValue.BOX_SIZE, ConstsValue.BOX_SIZE));
 
@@ -75,18 +99,18 @@ public class VueCase extends JPanel implements Observer {
      * Affiche un objet sur la case.
      */
     private void afficheObjet() {
-        this.remove(this.icn_objet);
-        this.icn_objet.setVisible(this.c.getObjetVisibilite());
+        this.remove(this.ICN_OBJET);
+        this.ICN_OBJET.setVisible(this.CASE.getObjetVisibilite());
 
-        if (this.c.estHelipad()) {
-            this.icn_objet.setIcon(Utils.tailleImg(ConstsIcon.HELICOPTERE, ICN_SIZEX, ICN_SIZEY));
-            this.add(this.icn_objet);
+        if (this.CASE.estHelipad()) {
+            this.ICN_OBJET.setIcon(Utils.tailleImg(ConstsIcon.HELICOPTERE, ICN_SIZEX, ICN_SIZEY));
+            this.add(this.ICN_OBJET);
         }
 
-        else if (this.c.aObjet()) {
-            VueObjet objet = new VueObjet(this.c.getObjet(), new Color(255, 255, 255), false);
+        else if (this.CASE.aObjet()) {
+            VueObjet objet = new VueObjet(this.CASE.getObjet(), new Color(255, 255, 255), false);
             objet.setOpaque(false);
-            objet.setVisible(this.c.getObjetVisibilite());
+            objet.setVisible(this.CASE.getObjetVisibilite());
             this.add(objet);
         }
     }
@@ -97,14 +121,14 @@ public class VueCase extends JPanel implements Observer {
      * @param g Le graphique.
      */
     private void colorieSol(Graphics g) {
-        if (this.c.TERRAIN == Terrain.MER)
+        if (this.CASE.TERRAIN == Terrain.MER)
             g.setColor(ConstsValue.COLOR_MER);
 
-        else if (this.c.getObjetVisibilite() && this.c.estHelipad())
+        else if (this.CASE.getObjetVisibilite() && this.CASE.estHelipad())
             g.setColor(Color.GRAY);
 
         else {
-            switch (this.c.getEtat()) {
+            switch (this.CASE.getEtat()) {
                 case SECHE:
                     g.setColor(ConstsValue.COLOR_SEC);
                     break;
@@ -142,8 +166,8 @@ public class VueCase extends JPanel implements Observer {
     private List<Joueur> getJoueurs() {
         List<Joueur> joueurs = new ArrayList<>();
 
-        for (Joueur joueur : this.modele.getJoueurs())
-            if (joueur.getCoord().equals(this.c.COORD))
+        for (Joueur joueur : this.MODELE.getJoueurs())
+            if (joueur.getCoord().equals(this.CASE.COORD))
                 joueurs.add(joueur);
 
         return joueurs;
@@ -154,8 +178,8 @@ public class VueCase extends JPanel implements Observer {
      */
     private void metAJourTailleIcon() {
         if (this.estCaseJoueur()) {
-            this.ICN_SIZEX = this.ICN_SIZEX / (this.nb_joueurs + 1) + this.ICN_SIZEX / 3;
-            this.ICN_SIZEY = this.ICN_SIZEY / (this.nb_joueurs + 1) + this.ICN_SIZEY;
+            this.ICN_SIZEX = this.ICN_SIZEX / (this.NB_JOUEURS + 1) + this.ICN_SIZEX / 3;
+            this.ICN_SIZEY = this.ICN_SIZEY / (this.NB_JOUEURS + 1) + this.ICN_SIZEY;
         }
     }
 
@@ -166,9 +190,9 @@ public class VueCase extends JPanel implements Observer {
      * @param g Le graphique.
      */
     private void dessineCaseAdjacent(Graphics g) {
-        Joueur joueur = this.modele.getJoueurActuel();
+        Joueur joueur = this.MODELE.getJoueurActuel();
 
-        if (joueur.estSonTour() && !joueur.aZeroAction() && joueur.getCoord().estAdjacent(this.c.COORD) && this.c.estTraversable()) {
+        if (joueur.estSonTour() && !joueur.aZeroAction() && joueur.getCoord().estAdjacent(this.CASE.COORD) && this.CASE.estTraversable()) {
             int x = ConstsValue.BOX_SIZE / 2;
             int y = ConstsValue.BOX_SIZE / 2;
             int radius = ConstsValue.BOX_SIZE / 8;

@@ -5,8 +5,11 @@ import Modele.*;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * L'interface graphique de la commande
+ */
 public class VueCommande extends JPanel implements ContainerBoutonRadio {
-    private Modele modele;
+    private final Modele MODELE;
     public int id_radio_active = -1;
 
     public VueBouton btn_clef = new VueBouton("Recherche une clef autour [A]", "Clef");
@@ -26,7 +29,7 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
      * @param m Le modele.
      */
     public VueCommande(Modele m) {
-        this.modele = m;
+        this.MODELE = m;
 
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -56,16 +59,16 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
      * actuel.
      */
     public void gereVisibiliteBoutons() {
-        Joueur joueur = this.modele.getJoueurActuel();
+        Joueur joueur = this.MODELE.getJoueurActuel();
         boolean peut_jouer = joueur.estSonTour() && !joueur.aZeroAction();
 
         this.btn_clef.setEnabled(peut_jouer);
         this.btn_secher.setEnabled(peut_jouer && this.estAdjacentJoueurInondee());
         this.btn_prendre.setEnabled(peut_jouer && estCaseArtefact());
-        this.btn_fin_tour.setEnabled(this.modele.tourPeutFinir());
+        this.btn_fin_tour.setEnabled(this.MODELE.tourPeutFinir());
 
-        this.btn_sac_sable.setEnabled(peut_jouer && this.modele.getJoueurActuel().aActionSpeciale());
-        this.btn_teleporte.setEnabled(peut_jouer && this.modele.getJoueurActuel().aActionSpeciale());
+        this.btn_sac_sable.setEnabled(peut_jouer && this.MODELE.getJoueurActuel().aActionSpeciale());
+        this.btn_teleporte.setEnabled(peut_jouer && this.MODELE.getJoueurActuel().aActionSpeciale());
 
         this.revalidate();
         this.repaint();
@@ -77,7 +80,7 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
      * @return True si l'objet contient un artefact. False sinon.
      */
     private boolean estCaseArtefact() {
-        return this.modele.getGrille().getCase(this.modele.getJoueurActuel().getCoord()).aObjet(Artefact.class);
+        return this.MODELE.getGrille().getCase(this.MODELE.getJoueurActuel().getCoord()).aObjet(Artefact.class);
     }
 
     /**
@@ -88,8 +91,8 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
      */
     private boolean estAdjacentJoueurInondee() {
         for (Direction dir : Direction.values()) {
-            Coord coord_joueurs = this.modele.getJoueurActuel().getCoord();
-            Case case_joueurs = this.modele.getGrille().getCase(coord_joueurs).adjacent(dir);
+            Coord coord_joueurs = this.MODELE.getJoueurActuel().getCoord();
+            Case case_joueurs = this.MODELE.getGrille().getCase(coord_joueurs).adjacent(dir);
 
             if (case_joueurs.getEtat() == Inondation.INONDEE)
                 return true;
@@ -99,10 +102,8 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
     }
 
     /**
-     * Créer un composent JLabel pour afficher un titre.
-     * 
      * @param text Le texte du label.
-     * @return
+     * @return Un composant JLabel pour afficher un titre.
      */
     private JLabel titre(String text) {
         JLabel titre = new JLabel(Utils.souligneLabel(text));

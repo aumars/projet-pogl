@@ -5,17 +5,53 @@ import Modele.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * L'interface graphique du jeu.
+ */
 public class Vue {
-    public JFrame fenetre_jeu;
-    private JFrame fenetre_demarrage;
-    private Modele modele;
+    /**
+     * Le modèle que l'interface graphique représente
+     */
+    private final Modele MODELE;
 
+    /**
+     * La fenêtre de l'interface graphique
+     */
+    private final JFrame FENETRE_JEU;
+
+    /**
+     * La fenêtre du menu de démarrage
+     */
+    private final JFrame FENETRE_DEMARRAGE;
+
+    /**
+     * L'interface graphique du menu de démarrage
+     */
     public VueStart vue_start;
+
+    /**
+     * L'interface graphique en haut de la fenêtre
+     */
     public VueInfoHaut vue_info_haut;
+
+    /**
+     * L'interface graphique de l'ensemble des inventaires
+     */
     public VueContainerInventaires vue_inventaires;
+
+    /**
+     * L'interface graphique de la grille
+     */
     public VueGrille vue_grille;
+
+    /**
+     * L'interface graphique en bas de la fenêtre
+     */
     public VueInfoBas vue_info_bas;
 
+    /**
+     * Drapeau pour afficher le menu de démarrage ou pas
+     */
     public boolean afficheMenuDemarrage = true;
 
     /**
@@ -24,15 +60,15 @@ public class Vue {
      * @param m Le modele du jeu.
      */
     public Vue(Modele m) {
-        this.modele = m;
-        this.fenetre_demarrage = new JFrame();
-        this.fenetre_jeu = new JFrame();
+        this.MODELE = m;
+        this.FENETRE_DEMARRAGE = new JFrame();
+        this.FENETRE_JEU = new JFrame();
 
         this.vue_start = new VueStart();
-        this.vue_info_haut = new VueInfoHaut(this.modele);
-        this.vue_inventaires = new VueContainerInventaires(this.modele);
-        this.vue_grille = new VueGrille(this.modele);
-        this.vue_info_bas = new VueInfoBas(this.modele);
+        this.vue_info_haut = new VueInfoHaut(this.MODELE);
+        this.vue_inventaires = new VueContainerInventaires(this.MODELE);
+        this.vue_grille = new VueGrille(this.MODELE);
+        this.vue_info_bas = new VueInfoBas(this.MODELE);
 
         this.afficheFenetre();
     }
@@ -40,33 +76,33 @@ public class Vue {
     /**
      * Selectionne d'afficher la fenetre de démarrage ou de jeu.
      */
-    public void afficheFenetre(){        
+    public void afficheFenetre(){
         if (afficheMenuDemarrage) {
-            this.fenetre_demarrage.setTitle("L'Ile Interdite");
-            this.fenetre_demarrage.setResizable(false);
-            
-            this.fenetre_demarrage.add(this.vue_start);
+            this.FENETRE_DEMARRAGE.setTitle("L'Ile Interdite");
+            this.FENETRE_DEMARRAGE.setResizable(false);
 
-            this.fenetre_demarrage.pack();
-            this.fenetre_demarrage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.fenetre_demarrage.setLocationRelativeTo(null);
-            this.fenetre_demarrage.setVisible(true);
+            this.FENETRE_DEMARRAGE.add(this.vue_start);
+
+            this.FENETRE_DEMARRAGE.pack();
+            this.FENETRE_DEMARRAGE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.FENETRE_DEMARRAGE.setLocationRelativeTo(null);
+            this.FENETRE_DEMARRAGE.setVisible(true);
         }
 
         else{
-            this.fenetre_demarrage.setVisible(false);
-            this.fenetre_demarrage.dispose();
+            this.FENETRE_DEMARRAGE.setVisible(false);
+            this.FENETRE_DEMARRAGE.dispose();
 
-            this.fenetre_jeu.setTitle("L'Ile Interdite");
-            this.fenetre_jeu.setLayout(new GridBagLayout());
-            this.fenetre_jeu.setResizable(false);
-    
+            this.FENETRE_JEU.setTitle("L'Ile Interdite");
+            this.FENETRE_JEU.setLayout(new GridBagLayout());
+            this.FENETRE_JEU.setResizable(false);
+
             this.commencer();
-    
-            this.fenetre_jeu.pack();
-            this.fenetre_jeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.fenetre_jeu.setLocationRelativeTo(null);
-            this.fenetre_jeu.setVisible(true);
+
+            this.FENETRE_JEU.pack();
+            this.FENETRE_JEU.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.FENETRE_JEU.setLocationRelativeTo(null);
+            this.FENETRE_JEU.setVisible(true);
         }
     }
     
@@ -74,27 +110,27 @@ public class Vue {
      * Créer l'affichage du jeu.
      */
     public void commencer() {
-        this.fenetre_jeu.getContentPane().removeAll();
+        this.FENETRE_JEU.getContentPane().removeAll();
 
         this.vue_start = new VueStart();
-        this.vue_info_haut = new VueInfoHaut(this.modele);
-        this.vue_inventaires = new VueContainerInventaires(this.modele);
-        this.vue_grille = new VueGrille(this.modele);
-        this.vue_info_bas = new VueInfoBas(this.modele);
+        this.vue_info_haut = new VueInfoHaut(this.MODELE);
+        this.vue_inventaires = new VueContainerInventaires(this.MODELE);
+        this.vue_grille = new VueGrille(this.MODELE);
+        this.vue_info_bas = new VueInfoBas(this.MODELE);
 
-        this.fenetre_jeu.add(this.vue_info_haut, Utils.positionneGrille(0, 0, 2, 1, 1));
-        this.fenetre_jeu.add(this.vue_inventaires, Utils.positionneGrille(0, 1, 0));
-        this.fenetre_jeu.add(this.vue_grille, Utils.positionneGrille(1, 1));
-        this.fenetre_jeu.add(this.vue_info_bas, Utils.positionneGrille(1, 2));
+        this.FENETRE_JEU.add(this.vue_info_haut, Utils.positionneGrille(0, 0, 2, 1, 1));
+        this.FENETRE_JEU.add(this.vue_inventaires, Utils.positionneGrille(0, 1, 0));
+        this.FENETRE_JEU.add(this.vue_grille, Utils.positionneGrille(1, 1));
+        this.FENETRE_JEU.add(this.vue_info_bas, Utils.positionneGrille(1, 2));
 
-        this.fenetre_jeu.revalidate();
-        this.fenetre_jeu.repaint();
+        this.FENETRE_JEU.revalidate();
+        this.FENETRE_JEU.repaint();
     }
 
     /**
      * Récupere la fenetre global du jeu.
      */
     public JFrame getFenetre() {
-        return this.fenetre_jeu;
+        return this.FENETRE_JEU;
     }
 }

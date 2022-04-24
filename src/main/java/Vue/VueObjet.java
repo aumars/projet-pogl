@@ -5,8 +5,10 @@ import java.awt.Font;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * L'interface graphique d'un objet
+ */
 public class VueObjet extends JPanel {
-    private final int SIZE = 40;
 
     /**
      * Affiche un objet.
@@ -24,13 +26,14 @@ public class VueObjet extends JPanel {
         description.setFont(new Font(ConstsValue.FONT_FAMILY, Font.ITALIC, 11));
         description.setForeground(foreground);
 
+        int SIZE = 40;
         if (o == null) {
-            icon.setIcon(Utils.tailleImg(ConstsIcon.PLH_VIDE, this.SIZE, this.SIZE));
+            icon.setIcon(Utils.tailleImg(ConstsIcon.PLH_VIDE, SIZE, SIZE));
             icon.setBorder(BorderFactory.createEmptyBorder(0, 0, 13, 0));
         }
 
         else if (o.getClass().equals(Clef.class)) {
-            icon.setIcon(Utils.tailleImg(ConstsIcon.CLEF, this.SIZE, this.SIZE));
+            icon.setIcon(Utils.tailleImg(ConstsIcon.CLEF, SIZE, SIZE));
             String pre_text = "Clef: ";
 
             if (afficheDescription)
@@ -43,16 +46,16 @@ public class VueObjet extends JPanel {
         } else {
             switch (o.ELEMENT) {
                 case EAU:
-                    icon.setIcon(Utils.tailleImg(ConstsIcon.EAU, this.SIZE, this.SIZE));
+                    icon.setIcon(Utils.tailleImg(ConstsIcon.EAU, SIZE, SIZE));
                     break;
                 case AIR:
-                    icon.setIcon(Utils.tailleImg(ConstsIcon.AIR, this.SIZE, this.SIZE));
+                    icon.setIcon(Utils.tailleImg(ConstsIcon.AIR, SIZE, SIZE));
                     break;
                 case FEU:
-                    icon.setIcon(Utils.tailleImg(ConstsIcon.FEU, this.SIZE, this.SIZE));
+                    icon.setIcon(Utils.tailleImg(ConstsIcon.FEU, SIZE, SIZE));
                     break;
                 case TERRE:
-                    icon.setIcon(Utils.tailleImg(ConstsIcon.TERRE, this.SIZE, this.SIZE));
+                    icon.setIcon(Utils.tailleImg(ConstsIcon.TERRE, SIZE, SIZE));
                     break;
                 default:
                     break;

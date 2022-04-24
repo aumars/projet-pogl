@@ -4,6 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import java.lang.String;
 
+/**
+ * L'interface graphique d'un bouton
+ */
 public class VueBouton extends JButton {
     /**
      * Affichage d'un bouton.

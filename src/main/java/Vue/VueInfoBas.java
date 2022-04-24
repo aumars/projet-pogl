@@ -4,16 +4,48 @@ import Modele.*;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * L'interface graphique en bas de la fenêtre
+ */
 public class VueInfoBas extends JPanel {
-    private final Modele modele;
+    /**
+     * Le modèle que l'interface graphique représente
+     */
+    private final Modele MODELE;
 
-    private JPanel container = new JPanel();
+    /**
+     * JPanel de l'interface graphique
+     */
+    private final JPanel CONTAINER = new JPanel();
+
+    /**
+     * L'interface graphique de la commande
+     */
     public VueCommande vue_commande;
+
+    /**
+     * L'interface graphique de la fin du jeu
+     */
     public VueFinJeu vue_fin_jeu;
+
+    /**
+     * L'interface graphique de l'aide
+     */
     public VueAide vue_aide;
+
+    /**
+     * L'interface graphique du log
+     */
     public VueLog vue_log;
 
+    /**
+     * Drapeau pour afficher l'aide
+     */
     private boolean affiche_aide = false;
+
+    /**
+     * Drapeau pour marqueur la fin du jeu
+     */
     private boolean est_fin_jeu = false;
 
     /**
@@ -23,18 +55,18 @@ public class VueInfoBas extends JPanel {
      * @param m Le modele.
      */
     public VueInfoBas(Modele m) {
-        this.modele = m;
-        this.vue_commande = new VueCommande(this.modele);
+        this.MODELE = m;
+        this.vue_commande = new VueCommande(this.MODELE);
         this.vue_aide = new VueAide();
         this.vue_log = new VueLog();
 
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        this.container.setLayout(new GridBagLayout());
-        this.container.add(this.vue_commande, Utils.positionneGrille(0, 0));
-        this.container.add(this.vue_log, Utils.positionneGrille(0, 1));
-        this.add(this.container);
+        this.CONTAINER.setLayout(new GridBagLayout());
+        this.CONTAINER.add(this.vue_commande, Utils.positionneGrille(0, 0));
+        this.CONTAINER.add(this.vue_log, Utils.positionneGrille(0, 1));
+        this.add(this.CONTAINER);
     }
 
     /**
@@ -43,10 +75,10 @@ public class VueInfoBas extends JPanel {
      * @return True si le jeu est terminée. False sinon.
      */
     public boolean verifieFinJeu() {
-        boolean jeuGagne = this.modele.verifieGagnants();
+        boolean jeuGagne = this.MODELE.verifieGagnants();
 
-        if (jeuGagne || this.modele.getFinJeu()) {
-            this.container.setVisible(false);
+        if (jeuGagne || this.MODELE.getFinJeu()) {
+            this.CONTAINER.setVisible(false);
             this.vue_fin_jeu = new VueFinJeu(!jeuGagne);
             this.est_fin_jeu = true;
             this.add(this.vue_fin_jeu);
@@ -61,12 +93,12 @@ public class VueInfoBas extends JPanel {
      */
     public void affichePanneauAide() {
         if (!affiche_aide) {
-            this.container.setVisible(false);
+            this.CONTAINER.setVisible(false);
             this.add(this.vue_aide, BorderLayout.LINE_START);
         }
 
         else {
-            this.container.setVisible(!this.est_fin_jeu);
+            this.CONTAINER.setVisible(!this.est_fin_jeu);
             this.remove(this.vue_aide);
         }
 

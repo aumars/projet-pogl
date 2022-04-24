@@ -2,10 +2,23 @@ package Vue;
 
 import java.awt.*;
 
+/**
+ * Un bouton réactif, avec la couleur
+ */
 public class VueBoutonRadio extends VueBouton {
-    private Color color_active = new Color(194, 255, 161);
+    /**
+     * Couleur actuelle du bouton
+     */
+    private final Color COLOR_ACTIVE = new Color(194, 255, 161);
 
-    private int id;
+    /**
+     * L'ID du bouton
+     */
+    private final int ID;
+
+    /**
+     * Marqueur pour dire si l'ID est active.
+     */
     public int id_active = -1;
 
     /**
@@ -24,7 +37,7 @@ public class VueBoutonRadio extends VueBouton {
         if (id == -1)
             throw new IllegalArgumentException("L'id du radio bouton doit être differents de -1");
 
-        this.id = id;
+        this.ID = id;
         this.id_active = id_active;
         this.update();
     }
@@ -35,7 +48,7 @@ public class VueBoutonRadio extends VueBouton {
      * @return True si le bouton est activé. False sinon.
      */
     public boolean estActive() {
-        return this.id == this.id_active;
+        return this.ID == this.id_active;
     }
 
     /**
@@ -43,8 +56,8 @@ public class VueBoutonRadio extends VueBouton {
      * 
      * @return l'ID du bouton.
      */
-    public int getId() {
-        return this.id;
+    public int getID() {
+        return this.ID;
     }
 
     /**
@@ -52,7 +65,7 @@ public class VueBoutonRadio extends VueBouton {
      */
     public void update() {
         if (this.estActive())
-            this.setBackground(this.color_active);
+            this.setBackground(this.COLOR_ACTIVE);
 
         else
             this.setBackground(ConstsValue.COLOR_DEFAULT);
