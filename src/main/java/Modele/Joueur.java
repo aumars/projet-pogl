@@ -102,6 +102,10 @@ public class Joueur {
         this.newTurn();
     }
 
+    public boolean zeroAction(){
+        return actions == 0;
+    }
+
     @Override
     public String toString() {
         //return String.format("%s (%d)", avatars[this.id % 4], this.id);

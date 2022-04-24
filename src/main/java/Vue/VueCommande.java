@@ -18,7 +18,7 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
     public VueBoutonRadio btn_sac_sable = new VueBoutonRadio(1, id_radio_active,
             "Cliquer sur une case pour l'ensabler.", "Sac de sable");
     public VueBoutonRadio btn_teleporte = new VueBoutonRadio(2, id_radio_active,
-            "Cliquer sur une case pour prendre une hélicoptère.", "Hélicoptère");
+            "Cliquer sur une case pour prendre un hélicoptère.", "Hélicoptère");
 
     /**
      * Affichage du menu de commande.
@@ -56,7 +56,8 @@ public class VueCommande extends JPanel implements ContainerBoutonRadio {
      * actuel.
      */
     public void gereVisibiliteBoutons() {
-        boolean peut_jouer = this.modele.getJoueurActuel().estSonTour();
+        Joueur joueur = this.modele.getJoueurActuel();
+        boolean peut_jouer = joueur.estSonTour() && !joueur.zeroAction();
 
         this.btn_clef.setEnabled(peut_jouer);
         this.btn_secher.setEnabled(peut_jouer && this.estAdjacentJoueurInondee());

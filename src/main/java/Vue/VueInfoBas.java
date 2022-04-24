@@ -45,7 +45,7 @@ public class VueInfoBas extends JPanel {
     public boolean verifieFinJeu() {
         boolean jeuGagne = this.modele.verifieGagnants();
 
-        if (this.modele.getFinJeu()) {
+        if (jeuGagne || this.modele.getFinJeu()) {
             this.container.setVisible(false);
             this.vue_fin_jeu = new VueFinJeu(!jeuGagne);
             this.est_fin_jeu = true;
@@ -62,13 +62,11 @@ public class VueInfoBas extends JPanel {
     public void affichePanneauAide() {
         if (!affiche_aide) {
             this.container.setVisible(false);
-            // this.vue_commande.setVisible(false);
             this.add(this.vue_aide, BorderLayout.LINE_START);
         }
 
         else {
             this.container.setVisible(!this.est_fin_jeu);
-            // this.vue_commande.setVisible(!this.est_fin_jeu);
             this.remove(this.vue_aide);
         }
 

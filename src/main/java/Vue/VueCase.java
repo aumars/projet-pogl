@@ -168,7 +168,7 @@ public class VueCase extends JPanel implements Observer {
     private void dessineCaseAdjacent(Graphics g) {
         Joueur joueur = this.modele.getJoueurActuel();
 
-        if (joueur.estSonTour() && joueur.getCoord().estAdjacent(this.c.coord) && this.c.estTraversable()) {
+        if (joueur.estSonTour() && !joueur.zeroAction() && joueur.getCoord().estAdjacent(this.c.coord) && this.c.estTraversable()) {
             int x = ConstsValue.BOX_SIZE / 2;
             int y = ConstsValue.BOX_SIZE / 2;
             int radius = ConstsValue.BOX_SIZE / 8;
